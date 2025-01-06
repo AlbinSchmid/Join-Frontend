@@ -1,0 +1,19 @@
+@import './../../styles.scss';
+
+section {
+    padding: 40px;
+}
+
+header {
+    @include position-center($jc: flex-end);
+    width: 100%;
+    gap: 35px;
+
+    button {
+        display: inline;
+    }
+
+    p {
+        @include font-design($fs: 20px);
+    }
+}
