@@ -1,0 +1,133 @@
+@import './../../styles.scss';
+$nav-width: 232px;
+
+header {
+    @include position-center($jc: space-between);
+    height: 96px;
+    background-color: white;
+    padding-left: calc($nav-width + 40px);
+    padding-right: 40px;
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.1);
+
+    h6 {
+        @include font-design($fs: 20px, $fw: 400);
+    }
+}
+
+.help-profile-container {
+    @include position-center();
+    gap: 16px;
+
+    mat-icon {
+        cursor: pointer;
+        font-size: 24px;
+        color: rgba($color: black, $alpha: 0.3);
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+
+    .profile {
+        @include position-center();
+        @include font-design($fs: 18px, $fw: 600);
+        cursor: pointer;
+        border: 3px solid black;
+        color: #29ABE2;
+        height: 56px;
+        width: 56px;
+        border-radius: 100%;
+
+        &:hover {
+            background-color: rgba($color: black, $alpha: 0.1);
+        }
+    }
+}
+
+.menu-item {
+    @include font-design($fs: 16px, $fw: 400);
+    color: rgba($color: white, $alpha: 0.7);
+    border-radius: 0;
+
+    &:hover {
+        background-color: $hover-color !important;
+    }
+}
+
+::ng-deep .mat-mdc-menu-panel {
+    background-color: #2A3647;
+    border-radius: 20px 0 20px 20px !important; 
+}
+
+::ng-deep .mat-mdc-menu-content {
+    background-color: #2A3647;
+    border-radius: 20px 0 20px 20px !important; 
+}
+
+nav {
+    @include position-center($fd: column, $jc: space-between);
+    position: fixed;
+    top: 0;
+    background-color: #2A3647;
+    width: $nav-width;
+    height: 100%;
+    padding: 64px 0;
+    
+
+    img {
+        width: 100px;
+        height: 120px;
+    }
+}
+
+.div-links {
+    @include position-center($fd: column, $jc: normal);
+    width: 100%;
+    gap: 20px;
+
+    .mt-80 {
+        margin-top: -80px;
+    }
+
+    button {
+        @include position-center();
+        @include font-design($fs: 16px, $fw: 400);
+        outline: none;
+        border: none;
+        width: 100%;
+        background-color: transparent;
+        border-radius: 0px;
+        color: white;
+        padding: 12px 0;
+
+        &:hover {
+            background-color: $hover-color;
+        }
+
+        div {
+            @include position-center($jc: flex-start);
+            width: 120px;
+            gap: 8px;
+
+            mat-icon {
+                color: white;
+            }
+        }
+    }
+}
+
+footer {
+    @include position-center($fd: column);
+
+    a {
+        color: rgba($color: white, $alpha: 0.2);
+
+        &:hover {
+            color: #29ABE2;
+        }
+    }
+}
+
+.content {
+    margin-left: $nav-width;
+}

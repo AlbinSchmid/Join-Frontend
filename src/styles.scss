@@ -1,10 +1,17 @@
+@use '@angular/material' as mat;
+
+$blue: #2A3647;
+$dark-blue: #091931;
+$light-blue: #29ABE2;
+$hover-color: #2A3D59;
+
 * {
     font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: 125ms ease-in-out;
 }
-
 
 @mixin position-center($d: flex, $jc: center, $ai: center, $fd: row) {
     display: $d;
@@ -13,50 +20,75 @@
     flex-direction: $fd;
 }
 
-
 @mixin font-design($fs: 16px, $fw: 400) {
     font-size: $fs;
     font-weight: $fw;
 }
 
-
-button {
-
-    // cursor: pointer;
-    // transition: 125ms ease-in-out;
-
-    // &.filled { 
-    //     @include font-design($fw: 600);
-    //     background-color: #2A3647;
-    //     color: white;
-    //     padding: 15px 16px;
-    //     border-radius: 10px;
-    //     border: none;
-
-    //     &:hover {
-    //         transform: scale(1.01);
-    //         background-color: #29ABE2;
-    //         box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.2);
-    //     }
-    // }
-
-    // &.outline { 
-    //     @include font-design($fw: 600);
-    //     background-color: transparent;
-    //     color: #2A3647;
-    //     padding: 15px 16px;
-    //     border-radius: 10px;
-    //     border: 1px solid #2A3647;
-
-    //     &:hover {
-    //         transform: scale(1.01);
-    //         color: #29ABE2;
-    //         border: 2px solid #29ABE2;
-    //         box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.2);
-    //     }
-    // }
+mat-icon {
+    font-family: 'Material Icons' !important;
 }
 
+h1 {
+    @include font-design($fs: 61px, $fw: 700);
+}
+
+label {
+    @include position-center($jc: space-between);
+    width: 300px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 12px;
+
+    input {
+        @include font-design($fs: 16px);
+        border: none;
+        outline: none;
+        width: 100%;
+
+        &::placeholder {
+            opacity: 0.8;
+        }
+
+        &:-webkit-autofill {
+            box-shadow: 0 0 0px 1000px white inset !important;
+            -webkit-text-fill-color: black !important;
+        }
+    }
+}
+
+button, a {
+    transition: 125ms ease-in-out;
+    @include font-design($fs: 16px, $fw: 600);
+    border-radius: 10px;
+    padding: 15px 16px;
+    cursor: pointer;
+
+    &.filled {
+        background-color: #2A3647;
+        color: white;
+        border: none;
+
+        &:hover {
+            background-color: #29ABE2;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+        }
+    }
+
+    &.outline {
+        @include font-design($fw: 600);
+        background-color: transparent;
+        color: #2A3647;
+        border: 1px solid #2A3647;
+
+        &:hover {
+            color: #29ABE2;
+            background-color: transparent;
+            border: 2px solid #29ABE2;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+        }
+    }
+}
 
 section {
     background-color: #F6F7F8;
@@ -64,11 +96,16 @@ section {
     width: 100vw;
 }
 
-
-a { 
+a {
     text-decoration: none;
-    color: inherit;
     cursor: pointer;
+    transition: 125ms ease-in-out;
+}
+
+.content-dashboard {
+    @include position-center($fd: column, $ai: flex-start);
+    gap: 80px;
+    padding: 64px;
 }
 
 
@@ -143,4 +180,14 @@ a {
     font-style: normal;
     font-weight: 900;
     src: url('../public/fonts/inter-v18-latin-900.woff2') format('woff2');
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
 }

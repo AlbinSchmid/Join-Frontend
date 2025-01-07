@@ -1,0 +1,65 @@
+<div class="background">
+    <header>
+        <mat-icon *ngIf="formType === 'signUp'" fontIcon="arrow_back" (click)="goToPreviousPage()"></mat-icon>
+        <h1 *ngIf="formType === 'signUp'">Sign up</h1>
+        <h1 *ngIf="formType === 'logIn'">Log in</h1>
+    </header>
+    <form (ngSubmit)="submitForm(form)" #form="ngForm">
+        <label *ngIf="formType === 'signUp'" for="">
+            <input type="name" placeholder="Name" required minlength="1" name="name" #name="ngModel"
+                [(ngModel)]="fromData.nameValue">
+            <mat-icon fontIcon="mail_outlined"></mat-icon>
+            @if (!name.valid && name.touched) {
+            <span>Oops! it seems your name is missing</span>
+            }
+        </label>
+        <label for="">
+            <input type="email" placeholder="Email" required name="email"
+                pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" #email="ngModel"
+                [(ngModel)]="fromData.emailValue">
+            <mat-icon fontIcon="mail_outlined"></mat-icon>
+            @if (!email.valid && email.touched) {
+            <span *ngIf="fromData.emailValue.length === 0">Hoppla! your email is required</span>
+            <span *ngIf="fromData.emailValue.length > 0">We need a valid e-mail address!</span>
+            }
+        </label>
+        <label>
+            <input type="password" placeholder="Password" name="password" required minlength="6" #password="ngModel"
+                [(ngModel)]="fromData.passwordValue">
+            <mat-icon fontIcon="lock_outlined" class="material-symbols-outlined"></mat-icon>
+            @if (!password.valid && password.touched) {
+            <span *ngIf="fromData.passwordValue.length === 0">Please enter a valid password</span>
+            <span *ngIf="fromData.passwordValue.length > 0">Your password must be at least 6 characters</span>
+            }
+        </label>
+        <label *ngIf="formType === 'signUp'" for="">
+            <input type="password" placeholder="Confirm Password" required="" minlength="6" name="confirmPassword"
+                #confirmPassword="ngModel" [(ngModel)]="fromData.confirmPasswordValue">
+            <mat-icon fontIcon="mail_outlined"></mat-icon>
+            @if (!confirmPassword.valid && confirmPassword.touched || fromData.confirmPasswordValue.length >=6 &&
+            fromData.passwordValue !== fromData.confirmPasswordValue) {
+            <span *ngIf="fromData.confirmPasswordValue.length === 0">Please enter a valid password</span>
+            <span *ngIf="fromData.confirmPasswordValue.length > 0 && fromData.confirmPasswordValue.length < 6">Your
+                password must be at least 6 characters</span>
+            <span
+                *ngIf="fromData.confirmPasswordValue.length >= 6 && fromData.passwordValue !== fromData.confirmPasswordValue">Oops!
+                Your password doesn't match</span>
+            }
+        </label>
+        <label *ngIf="formType === 'signUp'" for="" class="checkbox-label">
+            <input type="checkbox" #checkbox="ngModel" required name="checkbox"
+                [(ngModel)]="fromData.checkboxPrivacyPolicy">
+            <p>I accept the <a href="privacy-police">Privacy Police</a></p>
+            @if (showCheckboxError) {
+            <span class="checkbox-error">Please accept the privacy policy</span>
+            }
+        </label>
+        <div class="btn-div">
+            <button *ngIf="formType === 'logIn'" [ngClass]="{'disabled': !form.valid}" [disabled]="form.invalid"
+                type="submit" mat-flat-button class="filled">Log in</button>
+            <button *ngIf="formType === 'logIn'" mat-stroked-button class="outline">Guest Log in</button>
+            <button *ngIf="formType === 'signUp'" [ngClass]="{'disabled': !form.valid}" [disabled]="form.invalid"
+                type="submit" mat-stroked-button class="filled">Sign up</button>
+        </div>
+    </form>
+</div>

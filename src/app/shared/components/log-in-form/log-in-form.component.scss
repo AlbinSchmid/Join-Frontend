@@ -1,0 +1,93 @@
+@import './../../../../styles.scss';
+
+.background {
+    background-color: white;
+    @include position-center($fd: column);
+    padding: 50px;
+    border-radius: 30px;
+    gap: 50px;
+    min-width: 600px;
+
+    h1 {
+        @include font-design($fs: 61px, $fw: 
+        700);
+        text-decoration: underline;
+        text-decoration-thickness: 4px;
+        text-underline-offset: 20px;
+        text-decoration-color: #29ABE2;
+    }
+} 
+
+header {
+    @include position-center();
+    width: 100%;
+    position: relative;
+
+    mat-icon {
+        position: absolute;
+        left: 0;
+        color: #29ABE2;
+        font-size: 28px;
+        transition: 125ms ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            transform: translateX(-5px) scale(1.05);
+        }
+    }
+}
+
+form {
+    @include position-center($fd: column);
+    gap: 24px;
+
+    mat-icon {
+        color: rgba(0, 0, 0, 0.2);
+        font-size: 24px;
+    }
+    label {
+        position: relative;
+    }
+
+    span {
+        position: absolute;
+        @include font-design($fs: 12px, $fw: 300);
+        left: 0;
+        top: 50px;
+        color: red;
+    }
+
+    .checkbox-error {
+        top: 18px;
+        left: auto;
+    }
+
+    .disabled {
+        opacity: 0.5;
+    }
+}
+
+.btn-div {
+    @include position-center();
+    gap: 20px;
+}
+
+.checkbox-label {
+    padding: 0;
+    border: 0;
+    @include position-center($jc: center);
+    gap: 12px;
+
+    input {
+        width: auto;
+    }
+
+    a {
+        padding: 0;
+        color: #29ABE2;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

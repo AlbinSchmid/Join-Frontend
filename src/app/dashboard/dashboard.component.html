@@ -1,0 +1,65 @@
+<section>
+    <header>
+        <h6>Kanban Project Management Tool</h6>
+        <div class="help-profile-container">
+            <a href=""><mat-icon fontIcon="help_outlined"></mat-icon></a>
+            <div class="profile" mat-icon-button [matMenuTriggerFor]="menu">
+                <p>SM</p>
+            </div>
+            <mat-menu #menu="matMenu" class="profile-menu">
+                <a mat-menu-item class="menu-item">
+                    Help
+                </a>
+                <a mat-menu-item class="menu-item">
+                    Legal Notice
+                </a>
+                <a mat-menu-item class="menu-item">
+                    Privacy Policean
+                </a>
+                <button mat-menu-item class="menu-item">
+                   Log out
+                </button>
+            </mat-menu>
+        </div>
+
+    </header>
+    <nav>
+        <img src="assets/img/join-logo-white.png" alt="join-logo-white">
+        <div class="div-links">
+            <button class="mt-80" (click)="switchContent('summary')">
+                <div>
+                    <mat-icon fontIcon="dashboard_2"></mat-icon>
+                    <p>Summary</p>
+                </div>
+            </button>
+            <button (click)="switchContent('addTask')">
+                <div>
+                    <mat-icon fontIcon="task"></mat-icon>
+                    <p>Add Task</p>
+                </div>
+            </button>
+            <button (click)="switchContent('board')">
+                <div>
+                    <mat-icon fontIcon="view_column_outlined"></mat-icon>
+                    <p>Board</p>
+                </div>
+            </button>
+            <button (click)="switchContent('contacts')">
+                <div>
+                    <mat-icon fontIcon="contacts"></mat-icon>
+                    <p>Contacts</p>
+                </div>
+            </button>
+        </div>
+        <footer>
+            <a href="">Privacy Policy</a>
+            <a href="">Legal Notice</a>
+        </footer>
+    </nav>
+    <div class="content">
+        <app-summary *ngIf="dashboardService.showSummary"></app-summary>
+        <app-add-task *ngIf="dashboardService.showAddTask"></app-add-task>
+        <app-contacts *ngIf="dashboardService.showContacts"></app-contacts>
+        <app-board *ngIf="dashboardService.showBoard"></app-board>
+    </div>
+</section>
