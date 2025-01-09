@@ -60,6 +60,9 @@
             <button *ngIf="formType === 'logIn'" mat-stroked-button class="outline">Guest Log in</button>
             <button *ngIf="formType === 'signUp'" [ngClass]="{'disabled': !form.valid}" [disabled]="form.invalid"
                 type="submit" mat-stroked-button class="filled">Sign up</button>
+                @if (showLoginFailedError && formType === 'logIn') {
+                    <span [ngStyle]="{'left': 'auto'}">Email or password is incorrect</span>
+                }
         </div>
     </form>
 </div>

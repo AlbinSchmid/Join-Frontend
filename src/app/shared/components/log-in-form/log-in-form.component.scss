@@ -69,6 +69,7 @@ form {
 
 .btn-div {
     @include position-center();
+    position: relative;
     gap: 20px;
 }
 
