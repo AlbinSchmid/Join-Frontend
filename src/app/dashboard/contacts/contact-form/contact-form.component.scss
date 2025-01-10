@@ -1,0 +1,132 @@
+@import "./../../../../styles.scss";
+
+::ng-deep .cdk-overlay-pane.mat-mdc-dialog-panel {
+    max-width: none;
+}
+
+header {
+    mat-icon {
+        @include position-center();
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        border-radius: 100%;
+
+        &:hover {
+            background-color: rgba($color: #000000, $alpha: 0.1);
+        }
+    }
+}
+
+.frame {
+    @include position-center($jc: flex-start);
+    width: 1050px;
+    height: 460px;
+}
+
+.blue-part {
+    @include position-center($ai: flex-start, $fd: column);
+    height: 100%;
+    background-color: $blue;
+    color: white;
+    padding: 66px 48px;
+    gap: 12px;
+
+    img {
+        width: 55px;
+        height: 66px;
+        margin-top: -70px;
+    }
+
+    .text-div {
+        @include position-center($ai: flex-start, $fd: column);
+        gap: 8px;
+
+        h1 {
+            @include font-design($fs: 52px, $fw: 700);
+        }
+
+        h6 {
+            @include font-design($fs: 24px, $fw: 300);
+        }
+    }
+
+    .line-blue {
+        width: 100px;
+        height: 3px;
+        border-radius: 25px;
+        background-color: $light-blue;
+    }
+}
+
+.add-part {
+    @include position-center($jc: space-between);
+    gap: 40px;
+}
+
+.white-part {
+    @include position-center($fd: column, $jc: space-around);
+    height: 100%;
+    padding: 40px;
+    flex: 1;
+
+    header {
+        @include position-center($jc: flex-end);
+        width: 100%;
+    }
+}
+
+.profile {
+    @include position-center();
+    width: 120px;
+    height: 120px;
+    background-color: #D1D1D1;
+    border-radius: 100%;
+    border: 4px solid white;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+    color: white;
+    margin-top: -75px;
+
+    mat-icon {
+        font-size: 50px;
+        width: 50px;
+        height: 50px;
+    }
+}
+
+form {
+    .btn-div {
+        @include position-center();
+        gap: 20px;
+        margin-top: 10px;
+
+        mat-icon {
+            @include position-center();
+            font-size: 16px;
+            height: 20px;
+        }
+    }
+
+    .outline {
+        &:hover>mat-icon {
+            color: $light-blue;
+        }
+
+        mat-icon {
+            color: $dark-blue;
+        }
+    }
+
+    .filled {
+        mat-icon {
+            color: white;
+        }
+    }
+
+    input {
+        &:-webkit-autofill {
+            box-shadow: 0 0 0px 1000px #F6F7F8 inset !important;
+            -webkit-text-fill-color: black !important;
+        }
+    }
+}

@@ -1,0 +1,164 @@
+@import "./../../../styles.scss";
+
+a {
+    @include font-design($fs: 16px, $fw: 400);
+    padding: 0;
+    color: #007CEE;
+}
+
+.frame {
+    @include position-center($jc: flex-start, $ai: flex-start);
+    height: 100%;
+}
+
+.contacts-view {
+    background-color: white;
+    height: 100%;
+    width: 450px;
+    padding: 20px 40px;
+    box-shadow: 4px 0px 4px 0px rgba(0,0,0,0.1);
+
+    .add-contact-btn {
+        @include font-design($fs: 21px, $fw: 700);
+        gap: 18px;
+        width: 100%;
+    }
+}
+
+.contact-profile {
+    @include position-center();
+    border-radius: 100%;
+    color: white;
+    border: 4px solid white;
+}
+
+.contacts {
+    width: 100%;
+    margin-top: 20px;
+
+    p {
+        @include font-design($fs: 20px, $fw: 400);
+        padding-left: 30px;
+    }
+
+    .line-grey {
+        margin-top: 10px;
+        width: 100%;
+        height: 1px;
+        background-color: rgba($color: #000000, $alpha: 0.2);
+    }
+
+    .contact-btn {
+        @include position-center($jc: flex-start);
+        width: 100%;
+        background-color: transparent;
+        border: none;
+
+        &:hover {
+            background-image: linear-gradient(0deg, #EEEEEEFF 0%, #FFFFFFFF 99%);
+        }
+
+        .contact-info {
+            @include position-center($ai: flex-start, $fd: column);
+            margin-left: 30px;
+            gap: 4px;
+
+            .name {
+                @include font-design($fs: 20px, $fw: 400);
+                padding: 0
+            }
+        }
+
+        .contact-profile {
+            @include position-center();
+            @include font-design($fs: 14px, $fw: 300);
+            height: 45px;
+            width: 45px;
+            background-color: rgb(random(256), random(256), random(256));
+
+        }
+    }
+}
+
+.content-dashboard {
+    
+    header {
+        @include position-center($jc: flex-start);
+        gap: 40px;
+
+        .line-blue {
+            height: 60px;
+            width: 3px;
+            border-radius: 25px;
+            background-color: $light-blue;
+        }
+
+        h4 {
+            @include font-design($fs: 27px, $fw: 400);
+        }
+    }
+}
+
+.profile-name-div {
+    @include position-center();
+    gap: 54px;
+
+    .profile-detail {
+        @include font-design($fs: 47px, $fw: 500);
+        width: 120px;
+        height: 120px;
+        background-color: blue;
+    }
+
+    .name-detail {
+        @include position-center($fd: column, $ai: flex-start);
+        gap: 12px;
+        h2 {
+            @include font-design($fs: 47px, $fw: 500);
+        }
+
+        .edit-delete-div {
+            @include position-center($jc: flex-start);
+            gap: 15px;
+
+            button {
+                @include font-design($fs: 16px, $fw: 400);
+                background-color: transparent;
+                padding: 0;
+                border: none;
+                
+                &:hover {
+                    color: $light-blue;
+                    transform: scale(1.05);
+                }
+
+                mat-icon {
+                    transition: none;
+                }
+            }
+        }
+    }
+}
+
+.contact-info-detail {
+    @include position-center($ai: flex-start, $fd: column);
+    gap: 40px;
+    margin-top: 50px;
+    
+    .contact-information-p {
+        @include font-design($fs: 20px, $fw: 400);
+    }
+
+    .email-div, .phone-div {
+        @include position-center($ai: flex-start, $fd: column);
+        gap: 8px;
+
+        p {
+            @include font-design($fs: 16px, $fw: 700);
+        }
+    }
+}
+
+.content-dashboard {
+    gap: 40px;
+}

@@ -1,0 +1,41 @@
+<div class="frame">
+    <div class="blue-part">
+        <img src="./../../../../../assets/img/join-logo-white.png" alt="join-logo-white">
+        <div class="text-div">
+            <h1 *ngIf="data.form == 'edit'">Edit contact</h1>
+            <h1 *ngIf="data.form == 'add'">Add contact</h1>
+            <h6 *ngIf="data.form == 'add'">Tasks are better with a team!</h6>
+            <div class="line-blue"></div>
+        </div>
+    </div>
+    <div class="white-part">
+        <header>
+            <mat-icon fontIcon="close" (click)="closeDialog()"></mat-icon>
+        </header>
+        <div class="add-part">
+            <div class="profile">
+                <mat-icon fontIcon="person_outlined"></mat-icon>
+            </div>
+            <form action="">
+                <label for="">
+                    <input type="text" placeholder="Name" #nameContact="ngModel" name="nameContact" [(ngModel)]="formData.nameContact">
+                    <mat-icon fontIcon="person_outlined"></mat-icon>
+                </label>
+                <label for="">
+                    <input type="text" placeholder="Email" #emailContact="ngModel" name="emailContact" [(ngModel)]="formData.emailContact">
+                    <mat-icon fontIcon="mail_outlined"></mat-icon>
+                </label>
+                <label for="">
+                    <input type="text" placeholder="Phone" #phoneContact="ngModel" name="phoneContact" [(ngModel)]="formData.phoneContact">
+                    <mat-icon fontIcon="phone_outlined"></mat-icon>
+                </label>
+                <div class="btn-div">
+                    <button *ngIf="data.form == 'add'" mat-stroked-button class="outline" (click)="closeDialog()">Cancel <mat-icon fontIcon="close"></mat-icon></button>
+                    <button *ngIf="data.form == 'add'" type="submit" mat-stroked-button class="filled">Create contact <mat-icon fontIcon="check"></mat-icon></button>
+                    <button *ngIf="data.form == 'edit'" mat-stroked-button class="outline">Delete</button>
+                    <button *ngIf="data.form == 'edit'" type="submit" mat-stroked-button class="filled">Save <mat-icon fontIcon="check"></mat-icon></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -6,7 +6,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ApiService } from '../../services/api.service';
 import { DashboardService } from '../../services/dashboard.service';
-import { log } from 'console';
 import { Router } from '@angular/router';
 
 @Component({
@@ -24,7 +23,7 @@ export class LogInFormComponent {
 
   @Input() formType: string;
 
-  fromData = {
+  formData = {
     nameValue: '',
     emailValue: '',
     passwordValue: '',
@@ -36,7 +35,7 @@ export class LogInFormComponent {
 
 
   resetForm(): void {
-    this.fromData = {
+    this.formData = {
       nameValue: '',
       emailValue: '',
       passwordValue: '',
@@ -48,19 +47,20 @@ export class LogInFormComponent {
 
 
   LogInSuccess(response: any): void {
-    this.dashboardService.UserLogedIn = true;
-    this.dashboardService.UserToken = response.token;
+    this.apiService.UserLogedIn = true;
+    this.apiService.UserToken = response.token;
     this.dashboardService.showSummary = true;
     this.showLoginFailedError = false;
-    this.router.navigate(['dashboard']);
+    this.router.navigate([`dashboard/${response.token}`]);
+    this.apiService.userData = response;
     this.resetForm()
   }
 
 
   sendLogInRequest() {
     const data = {
-      "email": this.fromData.emailValue,
-      "password": this.fromData.passwordValue
+      "email": this.formData.emailValue,
+      "password": this.formData.passwordValue
     }
     this.apiService.postLogInData(data).subscribe((response) => {
       if (response.token === undefined) {
@@ -75,10 +75,10 @@ export class LogInFormComponent {
 
   sendSingUpRequest() {
     const data = {
-      "username": this.fromData.nameValue,
-      "email": this.fromData.emailValue,
-      "password": this.fromData.passwordValue,
-      "repeated_password": this.fromData.confirmPasswordValue
+      "username": this.formData.nameValue,
+      "email": this.formData.emailValue,
+      "password": this.formData.passwordValue,
+      "repeated_password": this.formData.confirmPasswordValue
     }
     this.apiService.postSingUpData(data).subscribe((response) => {
       console.log(response)
@@ -102,7 +102,7 @@ export class LogInFormComponent {
       }
       console.log(ngForm);
     } else {
-      this.fromData.checkboxPrivacyPolicy === false ? this.showCheckboxError = true : this.showCheckboxError = false
+      this.formData.checkboxPrivacyPolicy === false ? this.showCheckboxError = true : this.showCheckboxError = false
     }
   }
 }

@@ -1,1 +1,52 @@
-<p>contacts works!</p>
+<div class="frame">
+    <div class="contacts-view">
+        <button class="filled add-contact-btn" (click)="openDialog('add')">Add new contact <mat-icon fontIcon="person_add"></mat-icon></button>
+        <div class="contacts">
+            <p>A</p>
+            <div class="line-grey"></div>
+            <div>
+                <button class="contact-btn">
+                    <div class="contact-profile">
+                        AM
+                    </div>
+                    <div class="contact-info">
+                        <p class="name">Anton Mayer</p>
+                        <a href="mailto:antom@gmail.com">antom&#64;gmail.com</a>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="content-dashboard">
+        <header>
+            <h1>Contacts</h1>
+            <div class="line-blue"></div>
+            <h4>Better with a team</h4>
+        </header>
+        <div class="contact-detail">
+            <div class="profile-name-div">
+                <div class="profile-detail contact-profile">
+                    AM
+                </div>
+                <div class="name-detail">
+                    <h2>Anton Mayer</h2>
+                    <div class="edit-delete-div">
+                        <button (click)="openDialog('edit')"><mat-icon fontIcon="edit"></mat-icon>Edit</button>
+                        <button><mat-icon fontIcon="delete"></mat-icon>Delete</button>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-info-detail">
+                <p class="contact-information-p">Contact Information</p>
+                <div class="email-div">
+                    <p>Email</p>
+                    <a href="mailto:antom@gmail.com">antom&#64;gmail.com"</a>
+                </div>
+                <div class="phone-div">
+                    <p>Phone</p>
+                    <a href="tel:123456789">+43 123456789</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

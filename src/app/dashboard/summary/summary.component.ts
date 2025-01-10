@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { ApiService } from '../../shared/services/api.service';
 
 @Component({
   selector: 'app-summary',
@@ -8,5 +9,5 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './summary.component.scss'
 })
 export class SummaryComponent {
-
+apiService = inject(ApiService)
 }

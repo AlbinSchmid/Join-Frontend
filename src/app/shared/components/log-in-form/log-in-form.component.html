@@ -7,51 +7,51 @@
     <form (ngSubmit)="submitForm(form)" #form="ngForm">
         <label *ngIf="formType === 'signUp'" for="">
             <input type="name" placeholder="Name" required minlength="1" name="name" #name="ngModel"
-                [(ngModel)]="fromData.nameValue">
+                [(ngModel)]="formData.nameValue">
             <mat-icon fontIcon="mail_outlined"></mat-icon>
             @if (!name.valid && name.touched) {
-            <span>Oops! it seems your name is missing</span>
+            <span class="span-error">Oops! it seems your name is missing</span>
             }
         </label>
         <label for="">
             <input type="email" placeholder="Email" required name="email"
                 pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" #email="ngModel"
-                [(ngModel)]="fromData.emailValue">
+                [(ngModel)]="formData.emailValue">
             <mat-icon fontIcon="mail_outlined"></mat-icon>
             @if (!email.valid && email.touched) {
-            <span *ngIf="fromData.emailValue.length === 0">Hoppla! your email is required</span>
-            <span *ngIf="fromData.emailValue.length > 0">We need a valid e-mail address!</span>
+            <span class="span-error" *ngIf="formData.emailValue.length === 0">Hoppla! your email is required</span>
+            <span class="span-error" *ngIf="formData.emailValue.length > 0">We need a valid e-mail address!</span>
             }
         </label>
         <label>
             <input type="password" placeholder="Password" name="password" required minlength="6" #password="ngModel"
-                [(ngModel)]="fromData.passwordValue">
+                [(ngModel)]="formData.passwordValue">
             <mat-icon fontIcon="lock_outlined" class="material-symbols-outlined"></mat-icon>
             @if (!password.valid && password.touched) {
-            <span *ngIf="fromData.passwordValue.length === 0">Please enter a valid password</span>
-            <span *ngIf="fromData.passwordValue.length > 0">Your password must be at least 6 characters</span>
+            <span class="span-error" *ngIf="formData.passwordValue.length === 0">Please enter a valid password</span>
+            <span class="span-error" *ngIf="formData.passwordValue.length > 0">Your password must be at least 6 characters</span>
             }
         </label>
         <label *ngIf="formType === 'signUp'" for="">
             <input type="password" placeholder="Confirm Password" required="" minlength="6" name="confirmPassword"
-                #confirmPassword="ngModel" [(ngModel)]="fromData.confirmPasswordValue">
+                #confirmPassword="ngModel" [(ngModel)]="formData.confirmPasswordValue">
             <mat-icon fontIcon="mail_outlined"></mat-icon>
-            @if (!confirmPassword.valid && confirmPassword.touched || fromData.confirmPasswordValue.length >=6 &&
-            fromData.passwordValue !== fromData.confirmPasswordValue) {
-            <span *ngIf="fromData.confirmPasswordValue.length === 0">Please enter a valid password</span>
-            <span *ngIf="fromData.confirmPasswordValue.length > 0 && fromData.confirmPasswordValue.length < 6">Your
+            @if (!confirmPassword.valid && confirmPassword.touched || formData.confirmPasswordValue.length >=6 &&
+            formData.passwordValue !== formData.confirmPasswordValue) {
+            <span class="span-error" *ngIf="formData.confirmPasswordValue.length === 0">Please enter a valid password</span>
+            <span class="span-error" *ngIf="formData.confirmPasswordValue.length > 0 && formData.confirmPasswordValue.length < 6">Your
                 password must be at least 6 characters</span>
-            <span
-                *ngIf="fromData.confirmPasswordValue.length >= 6 && fromData.passwordValue !== fromData.confirmPasswordValue">Oops!
+            <span class="span-error"
+                *ngIf="formData.confirmPasswordValue.length >= 6 && formData.passwordValue !== formData.confirmPasswordValue">Oops!
                 Your password doesn't match</span>
             }
         </label>
         <label *ngIf="formType === 'signUp'" for="" class="checkbox-label">
             <input type="checkbox" #checkbox="ngModel" required name="checkbox"
-                [(ngModel)]="fromData.checkboxPrivacyPolicy">
+                [(ngModel)]="formData.checkboxPrivacyPolicy">
             <p>I accept the <a href="privacy-police">Privacy Police</a></p>
             @if (showCheckboxError) {
-            <span class="checkbox-error">Please accept the privacy policy</span>
+            <span class="span-error" class="checkbox-error">Please accept the privacy policy</span>
             }
         </label>
         <div class="btn-div">

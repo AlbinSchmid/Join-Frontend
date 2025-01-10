@@ -6,8 +6,16 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  http = inject(HttpClient)
-  APIURL = "http://127.0.0.1:8000/api/"
+  http = inject(HttpClient);
+  APIURL = "http://127.0.0.1:8000/api/";
+  UserToken = '';
+  UserLogedIn = false;
+
+  userData = {
+    username: '',
+    email: '',
+    token: ''
+  }
 
   postLogInData(data: any) {
     return this.http.post<any>(`${this.APIURL}logIn/`, data)

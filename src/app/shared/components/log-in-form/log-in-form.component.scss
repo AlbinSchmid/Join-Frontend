@@ -38,32 +38,9 @@ header {
 }
 
 form {
-    @include position-center($fd: column);
-    gap: 24px;
-
-    mat-icon {
-        color: rgba(0, 0, 0, 0.2);
-        font-size: 24px;
-    }
-    label {
-        position: relative;
-    }
-
-    span {
-        position: absolute;
-        @include font-design($fs: 12px, $fw: 300);
-        left: 0;
-        top: 50px;
-        color: red;
-    }
-
     .checkbox-error {
         top: 18px;
         left: auto;
-    }
-
-    .disabled {
-        opacity: 0.5;
     }
 }
 

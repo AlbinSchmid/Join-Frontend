@@ -1,0 +1,85 @@
+@import "./../../../../styles.scss";
+
+
+// mat-menu {
+//     @include mat.menu-overrides((item-label-text-color: orange,
+//             item-icon-color: red,
+//             container-color: green,
+//         ));
+// }
+
+.content {
+    @include position-center($fd: column, $ai: flex-start);
+    gap: 80px;
+}
+
+.left-part {
+    @include position-center($fd: column, $ai: flex-start);
+    gap: 30px;
+}
+
+form {
+
+    mat-form-field {
+        width: 100%;
+    }
+
+    .label-textarea {
+        height: 120px;
+    }
+
+    label {
+        background-color: white;
+        position: relative;
+    }
+}
+
+.dropdown-label {
+    padding: 0 12px 0 0;
+
+    input {
+        padding: 12px;
+    }
+
+    ;
+
+    mat-icon {
+        color: black;
+    }
+}
+
+.dropdown-menu {
+    display: block;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    list-style: none;
+    left: 0;
+    top: 50px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.dropdown-menu li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+    background-color: #f1f1f1;
+}
+
+.form-field-overlaying-div {
+    @include position-center($fd: column, $ai: flex-start);
+    gap: 8px;
+
+    p {
+        @include font-design($fs: 18px, $fw: 400);
+
+        mark {
+            color: red;
+            background-color: transparent;
+        }
+    }
+}

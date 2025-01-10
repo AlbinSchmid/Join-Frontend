@@ -1,0 +1,44 @@
+<div class="content">
+    <header>
+        <h1>Add Task</h1>
+    </header>
+    <main>
+        <form action="">
+            <div class="left-part">
+                <div class="form-field-overlaying-div">
+                    <p>Title<mark>*</mark></p>
+                    <label>
+                        <input type="title" placeholder="Enter a title" required minlength="1" name="title"
+                            #taskTitle="ngModel" [(ngModel)]="formData.taskTitle">
+                        @if (!taskTitle.valid && taskTitle.touched) {
+                        <span>Please enter a title!</span>
+                        }
+                    </label>
+                </div>
+                <div class="form-field-overlaying-div">
+                    <p>Desciption</p>
+                    <label class="label-textarea">
+                        <textarea type="Desciption" placeholder="Enter a Desciption" name="title"
+                            #taskDescription="ngModel" [(ngModel)]="formData.taskDescription"></textarea>
+                    </label>
+                </div>
+                <div class="form-field-overlaying-div">
+                    <p>Assigned to</p>
+                    <label for="" [matMenuTriggerFor]="menu" class="dropdown-label">
+                        <input type="" placeholder="Öffnen">
+                        <mat-icon fontIcon="arrow_drop_down"></mat-icon>
+                        <mat-menu #menu="matMenu" class="drop-drown-menu">
+                            <button mat-menu-item>Item 1</button>
+                            <button mat-menu-item>Item 2</button>
+                        </mat-menu>
+                    </label>
+
+                </div>
+            </div>
+            <div class="line-grey"></div>
+            <div class="right-part">
+
+            </div>
+        </form>
+    </main>
+</div>

@@ -10,7 +10,6 @@ $hover-color: #2A3D59;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    transition: 125ms ease-in-out;
 }
 
 @mixin position-center($d: flex, $jc: center, $ai: center, $fd: row) {
@@ -40,29 +39,33 @@ label {
     border-radius: 12px;
     padding: 12px;
 
-    input {
+    input, textarea, select {
         @include font-design($fs: 16px);
         border: none;
         outline: none;
+        resize: none;
         width: 100%;
+        height: 100%;
 
         &::placeholder {
-            opacity: 0.8;
+            opacity: 0.4;
         }
 
         &:-webkit-autofill {
-            box-shadow: 0 0 0px 1000px white inset !important;
+            box-shadow: 0 0 0px 1000px grey inset !important;
             -webkit-text-fill-color: black !important;
         }
     }
 }
 
 button, a {
-    transition: 125ms ease-in-out;
+    @include position-center();
     @include font-design($fs: 16px, $fw: 600);
+    transition: 125ms ease-in-out;
     border-radius: 10px;
     padding: 15px 16px;
     cursor: pointer;
+    transition: 125ms ease;
 
     &.filled {
         background-color: #2A3647;
@@ -84,7 +87,7 @@ button, a {
         &:hover {
             color: #29ABE2;
             background-color: transparent;
-            border: 2px solid #29ABE2;
+            border: 1px solid #29ABE2;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
         }
     }
@@ -102,13 +105,41 @@ a {
     transition: 125ms ease-in-out;
 }
 
+form {
+    @include position-center($fd: column);
+    gap: 24px;
+
+    mat-icon {
+        color: rgba(0, 0, 0, 0.2);
+        font-size: 24px;
+    }
+
+    input {
+        background-color: transparent;
+    }
+    
+    label {
+        position: relative;
+    }
+
+    .span-error {
+        position: absolute;
+        @include font-design($fs: 12px, $fw: 300);
+        left: 0;
+        top: 50px;
+        color: red;
+    }
+
+    .disabled {
+        opacity: 0.5;
+    }
+}
+
 .content-dashboard {
     @include position-center($fd: column, $ai: flex-start);
     gap: 80px;
     padding: 64px;
 }
-
-
 
 @font-face {
     font-display: swap;
