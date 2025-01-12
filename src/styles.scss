@@ -5,13 +5,6 @@ $dark-blue: #091931;
 $light-blue: #29ABE2;
 $hover-color: #2A3D59;
 
-* {
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 @mixin position-center($d: flex, $jc: center, $ai: center, $fd: row) {
     display: $d;
     justify-content: $jc;
@@ -24,38 +17,37 @@ $hover-color: #2A3D59;
     font-weight: $fw;
 }
 
+// Angular Material
+.mdc-icon-button svg, .mat-datepicker-toggle {
+    @include position-center();
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.mdc-checkbox__background, .mdc-checkbox {
+    width: 14px !important;
+    height: 14px !important;
+    flex: 0 0 12px !important;  
+}
+
+.mat-mdc-checkbox .mdc-checkbox__ripple, .mat-mdc-icon-button .mat-mdc-button-ripple, .mat-mdc-icon-button .mat-mdc-button-persistent-ripple, .mat-mdc-icon-button .mat-mdc-button-persistent-ripple::before {
+    display: none !important;
+}
+// Ende Angular Material
+
+* {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 mat-icon {
     font-family: 'Material Icons' !important;
 }
 
 h1 {
     @include font-design($fs: 61px, $fw: 700);
-}
-
-label {
-    @include position-center($jc: space-between);
-    width: 300px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
-    padding: 12px;
-
-    input, textarea, select {
-        @include font-design($fs: 16px);
-        border: none;
-        outline: none;
-        resize: none;
-        width: 100%;
-        height: 100%;
-
-        &::placeholder {
-            opacity: 0.4;
-        }
-
-        &:-webkit-autofill {
-            box-shadow: 0 0 0px 1000px grey inset !important;
-            -webkit-text-fill-color: black !important;
-        }
-    }
 }
 
 button, a {
@@ -66,6 +58,7 @@ button, a {
     padding: 15px 16px;
     cursor: pointer;
     transition: 125ms ease;
+    text-decoration: none;
 
     &.filled {
         background-color: #2A3647;
@@ -93,16 +86,36 @@ button, a {
     }
 }
 
-section {
-    background-color: #F6F7F8;
-    height: 100vh;
-    width: 100vw;
+label {
+    @include position-center($jc: space-between);
+    width: 300px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 12px;
+
+    input, textarea, select {
+        @include font-design($fs: 16px);
+        border: none;
+        outline: none;
+        resize: none;
+        width: 100%;
+        height: 100%;
+
+        &::placeholder {
+            opacity: 0.4;
+        }
+
+        &:-webkit-autofill {
+            box-shadow: 0 0 0px 1000px white inset !important;
+            -webkit-text-fill-color: black !important;
+        }
+    }
 }
 
-a {
-    text-decoration: none;
-    cursor: pointer;
-    transition: 125ms ease-in-out;
+section {
+    background-color: #F6F7F8;
+    height: 100%;
+    width: 100%;
 }
 
 form {
@@ -136,9 +149,17 @@ form {
 }
 
 .content-dashboard {
-    @include position-center($fd: column, $ai: flex-start);
+    @include position-center($fd: column, $ai: flex-start, $jc: flex-start);
     gap: 80px;
     padding: 64px;
+}
+
+.contact-profile {
+    @include position-center();
+    border-radius: 100%;
+    color: white;
+    border: 4px solid white;
+    background-color: rgb(random(256), random(256), random(256));
 }
 
 @font-face {
@@ -211,14 +232,4 @@ form {
     font-style: normal;
     font-weight: 900;
     src: url('../public/fonts/inter-v18-latin-900.woff2') format('woff2');
-}
-
-html,
-body {
-    height: 100%;
-}
-
-body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
 }

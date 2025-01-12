@@ -1,24 +1,43 @@
 @import "./../../../../styles.scss";
 
+::ng-deep .mdc-label {
+    @include position-center($jc: flex-start);
+    border: 0px;
+    width: 100%;
+    padding: 0;
+}
 
-// mat-menu {
-//     @include mat.menu-overrides((item-label-text-color: orange,
-//             item-icon-color: red,
-//             container-color: green,
-//         ));
-// }
+::ng-deep .mat-internal-form-field {
+    flex-direction: row-reverse;
+    width: 100%;
+}
 
-.content {
-    @include position-center($fd: column, $ai: flex-start);
+mark {
+    color: red;
+    background-color: transparent;
+}
+
+main {
+    width: 100%;
+}
+
+section {
+    @include position-center($fd: column, $ai: flex-start, $jc: flex-start);
+    position: relative;
     gap: 80px;
 }
 
-.left-part {
+.left-part, .right-part {
     @include position-center($fd: column, $ai: flex-start);
     gap: 30px;
+    width: 100%;
 }
 
 form {
+    @include position-center($jc: space-between, $ai: flex-start);
+    width: 100%;
+    gap: 60px;
+    max-width: 1020px;
 
     mat-form-field {
         width: 100%;
@@ -31,20 +50,25 @@ form {
     label {
         background-color: white;
         position: relative;
+        width: 100%;
     }
 }
 
-.dropdown-label {
-    padding: 0 12px 0 0;
+.label-frame {
+    position: relative;
+    width: 100%;
 
-    input {
-        padding: 12px;
-    }
+    .dropdown-label {
+        padding: 0 12px 0 0;
+        z-index: 10;
 
-    ;
+        input {
+            padding: 12px;
+        }
 
-    mat-icon {
-        color: black;
+        mat-icon {
+            color: black;
+        }
     }
 }
 
@@ -55,31 +79,175 @@ form {
     border: 1px solid #ccc;
     list-style: none;
     left: 0;
-    top: 50px;
+    top: 0px;
     margin: 0;
-    padding: 0;
+    padding: 45px 0 0 0;
     width: 100%;
-}
+    border-radius: 12px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+    z-index: 1;
 
-.dropdown-menu li {
-    padding: 10px;
-    cursor: pointer;
-}
+    .select-item {
+        @include position-center($jc: flex-start);
+        width: 100%;
+        padding: 6px;
+        border-radius: 8px;
+        cursor: pointer;
 
-.dropdown-menu li:hover {
-    background-color: #f1f1f1;
+        &:hover {
+            background-color: rgba($color: #000000, $alpha: 0.1);
+        }
+
+        input {
+            width: auto;
+
+            :checked {
+                background-color: transparent
+            }
+        }
+
+
+        .contact-profile {
+            @include font-design($fs: 12px, $fw: 400);
+            width: 35px;
+            height: 35px;
+            border: 2px solid white;
+        }
+
+        p {
+            @include font-design($fs: 16px, $fw: 400);
+            margin-left: 6px;
+        }
+
+    }
 }
 
 .form-field-overlaying-div {
     @include position-center($fd: column, $ai: flex-start);
     gap: 8px;
+    width: 100%;
 
     p {
         @include font-design($fs: 18px, $fw: 400);
+    }
 
-        mark {
-            color: red;
-            background-color: transparent;
+    mat-icon {
+        transition: 250ms ease;
+    }
+}
+
+.rotate-icon {
+    transform: rotate(180deg);
+}
+
+.line-grey {
+    width: 2px;
+    height: 420px;
+    border-radius: 16px;
+    background-color: rgba($color: #000000, $alpha: 0.1);
+}
+
+.prio-content {
+    @include position-center($jc: space-between);
+    width: 100%;
+
+    mat-icon {
+        @include font-design($fs: 32px, $fw: 400);
+        height: 32px;
+        width: 32px;
+    }
+
+    div {
+        @include position-center();
+        @include font-design($fs: 20px, $fw: 400);
+        background-color: white;
+        border-radius: 8px;
+        padding: 14px 20px;
+        box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.1);
+        transition: 125ms ease;
+        cursor: pointer;
+
+        &:hover {
+            box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.1);
         }
+    }
+
+    .urgent {
+        mat-icon {
+            color: red;
+        }
+    }
+
+    .active-low, .active-medium, .active-urgent {
+        @include font-design($fs: 20px, $fw: 700);
+        color: white;
+        mat-icon {
+            color: white !important;
+        }
+    }
+
+    .active-urgent {
+        background-color: red;
+    }
+
+    .medium {
+        mat-icon {
+            color: #FFA800;
+        }
+    }
+
+    .active-medium {
+        background-color: #FFA800;
+    }
+
+    .low {
+        mat-icon {
+            color: #7AE229;
+        }
+    }
+
+    .active-low {
+        background-color: #7AE229;
+    }
+}
+
+.subtask-input-btns {
+    @include position-center($jc: space-between);
+    gap: 4px;
+
+    .line-grey {
+        height: 20px;
+    }
+
+    mat-icon {
+        @include font-design($fs: 20px, $fw: 400);
+        height: 20px;
+        width: 20px;
+        cursor: pointer;
+        color: black;
+        border-radius: 100%;
+
+        &:hover {
+            background-color: rgba($color: #000000, $alpha: 0.1);
+        }
+    }
+}
+
+footer {
+    @include position-center($jc: space-between, $ai: flex-end);
+    width: 100%;
+    max-width: 1020px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    p {
+        display: flex;
+        align-items: flex-start
+    }
+
+    div {
+        @include position-center();
+        gap: 20px;
     }
 }

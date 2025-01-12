@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class DashboardService {
   showSummary = false;
-  showAddTask = false;
+  showAddTask = true;
   showBoard = false;
-  showContacts = true;
+  showContacts = false;
 
 }

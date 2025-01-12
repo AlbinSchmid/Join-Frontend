@@ -1,17 +1,17 @@
-<div class="content">
+<section>
     <header>
         <h1>Add Task</h1>
     </header>
     <main>
-        <form action="">
+        <form action="" (ngSubmit)="submitForm(form)" #form="ngForm">
             <div class="left-part">
                 <div class="form-field-overlaying-div">
-                    <p>Title<mark>*</mark></p>
+                    <p>Title<mark> *</mark></p>
                     <label>
                         <input type="title" placeholder="Enter a title" required minlength="1" name="title"
                             #taskTitle="ngModel" [(ngModel)]="formData.taskTitle">
                         @if (!taskTitle.valid && taskTitle.touched) {
-                        <span>Please enter a title!</span>
+                        <span class="span-error">Please enter a title!</span>
                         }
                     </label>
                 </div>
@@ -24,21 +24,86 @@
                 </div>
                 <div class="form-field-overlaying-div">
                     <p>Assigned to</p>
-                    <label for="" [matMenuTriggerFor]="menu" class="dropdown-label">
-                        <input type="" placeholder="Öffnen">
-                        <mat-icon fontIcon="arrow_drop_down"></mat-icon>
-                        <mat-menu #menu="matMenu" class="drop-drown-menu">
-                            <button mat-menu-item>Item 1</button>
-                            <button mat-menu-item>Item 2</button>
-                        </mat-menu>
-                    </label>
-
+                    <div class="label-frame">
+                        <label for="" class="dropdown-label" (click)="openDrowDown('assign')">
+                            <input type="" placeholder="Select contacts to assign">
+                            <mat-icon fontIcon="arrow_drop_down"
+                                [ngClass]="{'rotate-icon': showDrowDownAssign}"></mat-icon>
+                        </label>
+                        <div class="dropdown-menu" *ngIf="showDrowDownAssign">
+                            <mat-checkbox class="select-item">
+                                <div class="contact-profile">
+                                    MA
+                                </div>
+                                <p>Max Mustermann</p>
+                            </mat-checkbox>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="line-grey"></div>
             <div class="right-part">
-
+                <div class="form-field-overlaying-div">
+                    <p>Due date<mark> *</mark></p>
+                    <label>
+                        <input matInput [matDatepicker]="picker" required name="taskDueDate" placeholder="mm/dd/yyyy"
+                        #taskDueDate="ngModel" [(ngModel)]="formData.taskDueDate">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <!-- @if (asdfasdf) {
+                        <span class="span-error">Please enter a title!</span>
+                        } -->
+                    </label>
+                </div>
+                <div class="form-field-overlaying-div">
+                    <p>Prio</p>
+                    <div class="prio-content">
+                        <div class="urgent" [ngClass]="{'active-urgent': urgentBtn}" (click)="setPrio('urgent')">Urgent
+                            <mat-icon fontIcon="keyboard_double_arrow_up"></mat-icon></div>
+                        <div class="medium" [ngClass]="{'active-medium': mediumBtn}" (click)="setPrio('medium')">Medium
+                            <mat-icon fontIcon="drag_handle"></mat-icon></div>
+                        <div class="low" [ngClass]="{'active-low': lowBtn}" (click)="setPrio('low')">Low <mat-icon
+                                fontIcon="keyboard_double_arrow_down"></mat-icon></div>
+                    </div>
+                </div>
+                <div class="form-field-overlaying-div">
+                    <p>Category <mark>*</mark></p>
+                    <div class="label-frame">
+                        <label for="" class="dropdown-label" (click)="openDrowDown('category')">
+                            <input type="" placeholder="Select task Category">
+                            <mat-icon fontIcon="arrow_drop_down"
+                                [ngClass]="{'rotate-icon': showDrowDownCategory}"></mat-icon>
+                        </label>
+                        <div class="dropdown-menu" *ngIf="showDrowDownCategory">
+                            <div class="select-item">
+                                <p>Technical Task</p>
+                            </div>
+                            <div class="select-item">
+                                <p>User Story</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-field-overlaying-div">
+                    <p>Subtasks</p>
+                    <label>
+                        <input type="title" placeholder="Add new subtask" required minlength="1" name="subtaskTitle"
+                            #subtaskTitle="ngModel" [(ngModel)]="formData.taskSubtasks">
+                        <div class="subtask-input-btns" *ngIf="formData.taskSubtasks.length > 0">
+                            <mat-icon fontIcon="close"></mat-icon>
+                            <div class="line-grey"></div>
+                            <mat-icon fontIcon="check"></mat-icon>
+                        </div>
+                    </label>
+                </div>
             </div>
         </form>
     </main>
-</div>
+    <footer>
+        <p><mark>*</mark> This field is required</p>
+        <div>
+            <button class="outline">Create Task <mat-icon fontIcon="close"></mat-icon></button>
+            <button class="filled">Clear <mat-icon fontIcon="check"></mat-icon></button>
+        </div>
+    </footer>
+</section>

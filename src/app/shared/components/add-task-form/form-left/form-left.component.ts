@@ -1,35 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import {provideNativeDateAdapter} from '@angular/material/core';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatInputModule} from '@angular/material/input';
-import { FormLeftComponent } from './form-left/form-left.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-add-task-form',
-  providers: [provideNativeDateAdapter()],
+  selector: 'app-form-left',
   imports: [
-    FormsModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    MatMenuModule,
-    MatIconModule,
     CommonModule,
-    MatCheckboxModule,
-    MatDatepickerModule,
-    MatInputModule,
+    MatIconModule,
+    FormsModule,
+    MatCheckboxModule
   ],
-  templateUrl: './add-task-form.component.html',
-  styleUrl: './add-task-form.component.scss',
-  standalone: true
+  templateUrl: './form-left.component.html',
+  styleUrl: './form-left.component.scss'
 })
-export class AddTaskFormComponent {
+export class FormLeftComponent {
   formData = {
     taskTitle: '',
     taskDescription: '',
@@ -43,11 +29,6 @@ export class AddTaskFormComponent {
   urgentBtn = false;
   mediumBtn = true;
   lowBtn = false;
-
-  submitForm(ngForm: any): void {
-    
-    console.log(ngForm);
-  }
 
 
   openDrowDown(dropDownType: string): void {
