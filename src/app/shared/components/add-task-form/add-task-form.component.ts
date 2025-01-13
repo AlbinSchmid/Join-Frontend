@@ -6,11 +6,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import {provideNativeDateAdapter} from '@angular/material/core';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatInputModule} from '@angular/material/input';
-import { FormLeftComponent } from './form-left/form-left.component';
-
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { log } from 'console';
 @Component({
   selector: 'app-add-task-form',
   providers: [provideNativeDateAdapter()],
@@ -33,20 +32,53 @@ export class AddTaskFormComponent {
   formData = {
     taskTitle: '',
     taskDescription: '',
-    taskPriority: '',
+    taskPrio: '',
     taskDueDate: '',
-    taskStatus: '',
-    taskSubtasks: '',
+    taskCategory: '',
   }
+  taskSubtasks: string[] = [];
+  subtaskInput = '';
+  editSubtaskInput = '';
+  editSubtaskId = -1;
+
   showDrowDownAssign = false;
   showDrowDownCategory = false;
+
   urgentBtn = false;
   mediumBtn = true;
   lowBtn = false;
 
   submitForm(ngForm: any): void {
-    
-    console.log(ngForm);
+  }
+
+  safeEditSubtask(id: number): void {
+    this.taskSubtasks[id] = this.editSubtaskInput;
+    this.editSubtaskId = -1;
+  }
+  
+
+  removeSubtask(id: number): void {
+    this.taskSubtasks.splice(id, 1);
+    this.editSubtaskId = -1;
+    console.log(this.taskSubtasks);
+  }
+
+
+  editTheSubtask(subtask: string, id: number):void {
+    this.editSubtaskInput = subtask;
+    this.editSubtaskId = id;
+  }
+
+
+  addSubtask(): void {
+    this.taskSubtasks.unshift(this.subtaskInput);
+    this.subtaskInput = '';
+  }
+
+  
+  setCategory(categoryType: string): void {
+    categoryType === 'userStory' ? this.formData.taskCategory = 'User Story' : this.formData.taskCategory = 'Technical Task'
+    this.showDrowDownCategory = false;
   }
 
 

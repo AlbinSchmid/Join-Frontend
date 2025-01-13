@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormLeftComponent } from './form-left.component';
+import { TaskCardComponent } from './task-card.component';
 
-describe('FormLeftComponent', () => {
-  let component: FormLeftComponent;
-  let fixture: ComponentFixture<FormLeftComponent>;
+describe('TaskCardComponent', () => {
+  let component: TaskCardComponent;
+  let fixture: ComponentFixture<TaskCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormLeftComponent]
+      imports: [TaskCardComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FormLeftComponent);
+    fixture = TestBed.createComponent(TaskCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

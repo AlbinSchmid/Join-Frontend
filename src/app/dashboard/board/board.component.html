@@ -1,1 +1,75 @@
-<p>board works!</p>
+<section class="content-dashboard">
+    <header>
+        <h1>Board</h1>
+        <div class="right-part">
+            <label>
+                <input placeholder="Find Task">
+                <div class="line-grey"></div>
+                <mat-icon fontIcon="search"></mat-icon>
+            </label>
+            <button class="filled">Add task <mat-icon fontIcon="add"></mat-icon></button>
+        </div>
+    </header>
+    <div class="drag-and-drop">
+        <div class="drag-and-drop-list">
+            <header>
+                <h2>To do</h2>
+                <div>
+                    <mat-icon fontIcon="add"></mat-icon>
+                </div>
+            </header>
+            <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo"
+                [cdkDropListConnectedTo]="[doneList, progressList, awaitFeedbackList]" class="drop-list"
+                (cdkDropListDropped)="drop($event)">
+                @for (item of todo; track item) {
+                <app-task-card cdkDrag></app-task-card>
+                }
+            </div>
+        </div>
+        <div class="drag-and-drop-list">
+            <header>
+                <h2>In progress</h2>
+                <div>
+                    <mat-icon fontIcon="add"></mat-icon>
+                </div>
+            </header>
+            <div cdkDropList #progressList="cdkDropList" [cdkDropListData]="inProgress"
+                [cdkDropListConnectedTo]="[todoList, doneList, awaitFeedbackList]" class="drop-list"
+                (cdkDropListDropped)="drop($event)">
+                @for (item of inProgress; track item) {
+                <app-task-card cdkDrag></app-task-card>
+                }
+            </div>
+        </div>
+        <div class="drag-and-drop-list">
+            <header>
+                <h2>Await feedback</h2>
+                <div>
+                    <mat-icon fontIcon="add"></mat-icon>
+                </div>
+            </header>
+            <div cdkDropList #awaitFeedbackList="cdkDropList" [cdkDropListData]="awaitFeedback"
+                [cdkDropListConnectedTo]="[todoList, doneList, progressList]" class="drop-list"
+                (cdkDropListDropped)="drop($event)">
+                @for (item of awaitFeedback; track item) {
+                <app-task-card cdkDrag></app-task-card>
+                }
+            </div>
+        </div>
+        <div class="drag-and-drop-list">
+            <header>
+                <h2>Done</h2>
+                <div>
+                    <mat-icon fontIcon="add"></mat-icon>
+                </div>
+            </header>
+            <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done"
+                [cdkDropListConnectedTo]="[todoList, progressList, awaitFeedbackList]" class="drop-list"
+                (cdkDropListDropped)="drop($event)">
+                @for (item of done; track item) {
+                <app-task-card cdkDrag></app-task-card>
+                }
+            </div>
+        </div>
+    </div>
+</section>
