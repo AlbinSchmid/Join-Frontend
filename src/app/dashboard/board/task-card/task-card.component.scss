@@ -1,9 +1,25 @@
 @import "./../../../../styles.scss";
 
+::ng-deep .mdc-linear-progress {
+    border-radius: 25px;
+    height: 8px !important;
+}
+
+::ng-deep .mdc-linear-progress__buffer {
+    height: 8px !important;
+}
+::ng-deep .mdc-linear-progress__bar {
+    height: 8px !important;
+}
+::ng-deep .mdc-linear-progress__bar-inner {
+    border-top-width: 8px !important;
+    border-color: #4589FF !important;
+}
+
 section {
     @include position-center($jc: flex-start, $ai: flex-start, $fd: column);
     width: 100%;
-    gap: 24px;
+    gap: 12px;
     background-color: white;
     border-radius: 24px;
     padding: 16px;
@@ -28,6 +44,32 @@ section {
         p {
             @include font-design($fs: 16px, $fw: 400);
             color: #A8A8A8;
+        }
+    }
+}
+
+.progress-bar {
+    @include position-center($jc: space-between);
+    gap: 20px;
+    width: 100%;
+
+    p {
+        @include font-design($fs: 12px, $fw: 400);
+        min-width: fit-content;
+    }
+}
+
+footer {
+    @include position-center($jc: space-between);
+    width: 100%;
+    .contacts-assigned {
+        @include position-center($jc: flex-start);
+
+        .contact-profile {
+            @include font-design($fs: 12px, $fw: 400);
+            width: 32px;
+            height: 32px;
+            border: 1px solid white;
         }
     }
 }

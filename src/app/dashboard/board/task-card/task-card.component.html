@@ -4,4 +4,18 @@
         <h1>Kochwelt mit asdkjfsakdjf </h1>
         <p>Lorem ipsum dolor sit amet consectetur</p>
     </div>
+    <div class="progress-bar">
+        <mat-progress-bar mode="determinate" [value]="value"></mat-progress-bar>
+        <p>1/2 Subtasks</p>
+    </div>
+    <footer>
+        <div class="contacts-assigned">
+            @for (item of users; track $index) {
+                <div class="contact-profile" [ngStyle]="{'margin-left.px': $index > 0 ? -10 : 0}">
+                    {{ item }}
+                </div>
+            }
+        </div>
+        <mat-icon fontIcon="drag_handle"></mat-icon>
+    </footer>
 </section>

@@ -4,6 +4,9 @@ $blue: #2A3647;
 $dark-blue: #091931;
 $light-blue: #29ABE2;
 $hover-color: #2A3D59;
+$prio-high-color: red;
+$prio-medium-color: #FFA800; 
+$prio-low-color: #7AE229;
 
 @mixin position-center($d: flex, $jc: center, $ai: center, $fd: row) {
     display: $d;
@@ -145,7 +148,8 @@ form {
     }
 
     .disabled {
-        opacity: 0.5;
+        cursor: auto;
+        opacity: 0.5;    
     }
 }
 
@@ -160,7 +164,17 @@ form {
     border-radius: 100%;
     color: white;
     border: 4px solid white;
-    background-color: rgb(random(256), random(256), random(256));
+    background-color: #29ABE2;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+} 
+
+input[type=number] {
+  appearance: textfield;
 }
 
 @font-face {

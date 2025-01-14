@@ -5,15 +5,17 @@
             <p>A</p>
             <div class="line-grey"></div>
             <div>
-                <button class="contact-btn">
-                    <div class="contact-profile">
-                        AM
-                    </div>
-                    <div class="contact-info">
-                        <p class="name">Anton Mayer</p>
-                        <a href="mailto:antom@gmail.com">antom&#64;gmail.com</a>
-                    </div>
-                </button>
+                @for (contact of dashboardService.contacts; track $index) {
+                    <button class="contact-btn">
+                        <div class="contact-profile">
+                            {{ dashboardService.getInitials(contact.name) }}
+                        </div>
+                        <div class="contact-info">
+                            <p class="name">{{ contact.name }}</p>
+                            <a href="mailto:antom@gmail.com">{{ contact.email }}</a>
+                        </div>
+                    </button>
+                }
             </div>
         </div>
     </div>

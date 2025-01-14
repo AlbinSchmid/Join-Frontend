@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, inject, Input } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,7 +16,6 @@ import { Router } from '@angular/router';
 })
 export class LogInFormComponent {
   apiService = inject(ApiService);
-  http = inject(HttpClient);
   dashboardService = inject(DashboardService);
   router = inject(Router);
 
@@ -47,13 +45,23 @@ export class LogInFormComponent {
 
 
   LogInSuccess(response: any): void {
-    this.apiService.UserLogedIn = true;
-    this.apiService.UserToken = response.token;
+    this.safeUserDataInLocalStorage(response);
+    this.apiService.userLogedIn = true;
     this.dashboardService.showSummary = true;
     this.showLoginFailedError = false;
-    this.router.navigate([`dashboard/${response.token}`]);
+    this.router.navigate(['dashboard']);
     this.apiService.userData = response;
     this.resetForm()
+  }
+
+  safeUserDataInLocalStorage(response: any): void {
+    const userData = {
+      username: response.username,
+      email: response.email,
+      token: response.token,
+      userId : response.id
+    }
+    localStorage.setItem('user', JSON.stringify(userData));
   }
 
 

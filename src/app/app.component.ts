@@ -1,13 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, inject, Inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ApiService } from './shared/services/api.service';
+import { log } from 'console';
+import { DashboardService } from './shared/services/dashboard.service';
 
 @Component({
-    selector: 'app-root',
-    imports: [RouterOutlet],
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.scss',
-    standalone: true
+  selector: 'app-root',
+  imports: [RouterOutlet],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+  standalone: true
 })
 export class AppComponent {
+  dashboardService = inject(DashboardService)
   title = 'join-front-end';
+  apiService = inject(ApiService)
+
+  ngOnInit(): void {
+    const storedUser = JSON.parse(localStorage.getItem('user') ?? '{}');
+    this.apiService.userData = storedUser
+
+    this.apiService.getContactData().subscribe((response) => {
+      this.dashboardService.contacts = response
+    })
+  }
 }

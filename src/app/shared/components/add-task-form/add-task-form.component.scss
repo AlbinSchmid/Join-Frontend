@@ -191,7 +191,7 @@ label {
 
     .urgent {
         mat-icon {
-            color: red;
+            color: $prio-high-color;
         }
     }
 
@@ -204,27 +204,27 @@ label {
     }
 
     .active-urgent {
-        background-color: red;
+        background-color: $prio-high-color;
     }
 
     .medium {
         mat-icon {
-            color: #FFA800;
+            color: $prio-medium-color;
         }
     }
 
     .active-medium {
-        background-color: #FFA800;
+        background-color: $prio-medium-color;
     }
 
     .low {
         mat-icon {
-            color: #7AE229;
+            color: $prio-medium-color;
         }
     }
 
     .active-low {
-        background-color: #7AE229;
+        background-color: $prio-medium-color;
     }
 }
 
