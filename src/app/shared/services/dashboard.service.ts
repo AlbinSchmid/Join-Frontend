@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ContactInterface } from '../interfaces/contact-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +9,17 @@ export class DashboardService {
   showAddTask = false;
   showBoard = false;
   showContacts = true;
-
-  contacts: any[] = [
-  ];
+  
+  contactDetailView = false;
+  showContactsList = true;
+  currentContact: ContactInterface = {
+    id: 0,
+    name: '',
+    email: '',
+    phone: '',
+    color: ''
+  }
+  contactCategoryLetters: string[] = []
 
   getInitials(name: string): string {
     let splitedWord = name.split(' ')

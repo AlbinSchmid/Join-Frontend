@@ -4,7 +4,7 @@
         <div class="help-profile-container">
             <a href=""><mat-icon fontIcon="help_outlined"></mat-icon></a>
             <div class="profile" mat-icon-button [matMenuTriggerFor]="menu">
-                <p>{{ dashboardService.getInitials(this.apiService.userData.username) }}</p>
+                <p>{{ dashboardService.getInitials(this.apiService.user.username) }}</p>
             </div>
             <mat-menu #menu="matMenu" class="profile-menu">
                 <a mat-menu-item class="menu-item">

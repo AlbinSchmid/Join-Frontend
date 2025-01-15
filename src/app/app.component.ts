@@ -13,15 +13,17 @@ import { DashboardService } from './shared/services/dashboard.service';
 })
 export class AppComponent {
   dashboardService = inject(DashboardService)
-  title = 'join-front-end';
   apiService = inject(ApiService)
+  title = 'join-front-end';
 
   ngOnInit(): void {
-    const storedUser = JSON.parse(localStorage.getItem('user') ?? '{}');
-    this.apiService.userData = storedUser
+    this.getUserFormLocalStorage();
+    this.apiService.getContactData();
+  }
 
-    this.apiService.getContactData().subscribe((response) => {
-      this.dashboardService.contacts = response
-    })
+
+  getUserFormLocalStorage():void {
+    const storedUser = JSON.parse(localStorage.getItem('user') ?? '{}');
+    this.apiService.user = storedUser
   }
 }

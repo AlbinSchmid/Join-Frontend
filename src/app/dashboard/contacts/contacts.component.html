@@ -1,22 +1,11 @@
 <section>
     <div class="contacts-view">
-        <button class="filled add-contact-btn" (click)="openDialog('add')">Add new contact <mat-icon fontIcon="person_add"></mat-icon></button>
-        <div class="contacts">
-            <p>A</p>
-            <div class="line-grey"></div>
-            <div>
-                @for (contact of dashboardService.contacts; track $index) {
-                    <button class="contact-btn">
-                        <div class="contact-profile">
-                            {{ dashboardService.getInitials(contact.name) }}
-                        </div>
-                        <div class="contact-info">
-                            <p class="name">{{ contact.name }}</p>
-                            <a href="mailto:antom@gmail.com">{{ contact.email }}</a>
-                        </div>
-                    </button>
-                }
-            </div>
+        <button class="filled add-contact-btn" (click)="openDialog('add')">Add new contact <mat-icon
+                fontIcon="person_add"></mat-icon></button>
+        <div class="contacts" *ngIf="dashboardService.showContactsList">
+            @for (contact of apiService.contacts; track $index) {
+                <app-contact-button [contact]="contact"></app-contact-button>
+            }
         </div>
     </div>
     <div class="content-dashboard">
@@ -25,6 +14,6 @@
             <div class="line-blue"></div>
             <h4>Better with a team</h4>
         </header>
-        <app-contact-detail></app-contact-detail>
+        <app-contact-detail *ngIf="dashboardService.contactDetailView"></app-contact-detail>
     </div>
 </section>

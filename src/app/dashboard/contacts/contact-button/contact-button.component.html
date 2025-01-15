@@ -1,0 +1,13 @@
+<div class="category-letter" *ngIf="showCaterogyLetter">
+    <p>{{ categoryLetter }}</p>
+    <div class="line-grey"></div>
+</div>
+<button class="contact-btn" (click)="openContactDetailView()">
+    <div class="contact-profile" [ngStyle]="{'background-color': contact.color, 'border-width.px': 2}">
+        {{ dashboardService.getInitials(contact.name) }}
+    </div>
+    <div class="contact-info">
+        <p class="name">{{ contact.name }}</p>
+        <a>{{ contact.email }}</a>
+    </div>
+</button>

@@ -2,9 +2,9 @@
     <div class="blue-part">
         <img src="./../../../../../assets/img/join-logo-white.png" alt="join-logo-white">
         <div class="text-div">
-            <h1 *ngIf="data.form == 'edit'">Edit contact</h1>
-            <h1 *ngIf="data.form == 'add'">Add contact</h1>
-            <h6 *ngIf="data.form == 'add'">Tasks are better with a team!</h6>
+            <h1 *ngIf="data[0].form == 'edit'">Edit contact</h1>
+            <h1 *ngIf="data[0].form == 'add'">Add contact</h1>
+            <h6 *ngIf="data[0].form == 'add'">Tasks are better with a team!</h6>
             <div class="line-blue"></div>
         </div>
     </div>
@@ -37,10 +37,10 @@
                     <mat-icon fontIcon="phone_outlined"></mat-icon>
                 </label>
                 <div class="btn-div">
-                    <button *ngIf="data.form == 'add'" mat-stroked-button class="outline" (click)="closeDialog()">Cancel <mat-icon fontIcon="close"></mat-icon></button>
-                    <button *ngIf="data.form == 'add'" [ngClass]="{'disabled': !contactForm.valid}" [disabled]="contactForm.invalid" type="submit" mat-stroked-button class="filled">Create contact <mat-icon fontIcon="check"></mat-icon></button>
-                    <button *ngIf="data.form == 'edit'" mat-stroked-button class="outline">Delete</button>
-                    <button *ngIf="data.form == 'edit'" type="submit" mat-stroked-button class="filled">Save <mat-icon fontIcon="check"></mat-icon></button>
+                    <button *ngIf="data[0].form == 'add'" mat-stroked-button class="outline" (click)="closeDialog()">Cancel <mat-icon fontIcon="close"></mat-icon></button>
+                    <button *ngIf="data[0].form == 'add'" [ngClass]="{'disabled': !contactForm.valid}" [disabled]="contactForm.invalid" type="submit" mat-stroked-button class="filled">Create contact <mat-icon fontIcon="check"></mat-icon></button>
+                    <button *ngIf="data[0].form == 'edit'" (click)="deleteContact()" mat-stroked-button class="outline">Delete</button>
+                    <button *ngIf="data[0].form == 'edit'" (click)="updateContact()" [ngClass]="{'disabled': !contactForm.valid}" [disabled]="contactForm.invalid"  type="submit" mat-stroked-button class="filled">Save <mat-icon fontIcon="check"></mat-icon></button>
                 </div>
             </form>
         </div>

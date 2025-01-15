@@ -1,3 +1,4 @@
+import { CdkDrag, CdkDragPreview, CdkDropList } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,7 +10,7 @@ import { CommonEngine } from '@angular/ssr/node';
   imports: [
     MatProgressBarModule,
     MatIconModule,
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './task-card.component.html',
   styleUrl: './task-card.component.scss'

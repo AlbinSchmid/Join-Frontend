@@ -77,11 +77,9 @@ header {
 
         .drop-list {
             @include position-center($fd: column, $jc: flex-start);
-            gap: 20px;
             height: 100%;
             width: 100%;
             overflow: auto;
-            padding: 10px 10px;
 
             app-task-card {
                 width: 100%;
@@ -101,4 +99,8 @@ header {
             border-radius: 30px;
         }
     }
+}
+
+app-task-card {
+    padding: 10px;
 }

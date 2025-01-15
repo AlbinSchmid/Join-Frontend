@@ -11,6 +11,7 @@ section {
 }
 
 .contacts-view {
+    @include position-center($ai: flex-start, $fd: column, $jc: flex-start);
     background-color: white;
     height: 100%;
     width: 450px;
@@ -22,56 +23,29 @@ section {
         gap: 18px;
         width: 100%;
     }
+
+    ::-webkit-scrollbar {
+        width: 3px !important;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background-color: white !important;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background-color: $light-blue;
+        border-radius: 30px;
+    }
 }
 
 .contacts {
     width: 100%;
-    margin-top: 20px;
-
-    p {
-        @include font-design($fs: 20px, $fw: 400);
-        padding-left: 30px;
-    }
-
-    .line-grey {
-        margin-top: 10px;
-        width: 100%;
-        height: 1px;
-        background-color: rgba($color: #000000, $alpha: 0.2);
-    }
-
-    .contact-btn {
-        @include position-center($jc: flex-start);
-        width: 100%;
-        background-color: transparent;
-        border: none;
-
-        &:hover {
-            background-image: linear-gradient(0deg, #EEEEEEFF 0%, #FFFFFFFF 99%);
-        }
-
-        .contact-info {
-            @include position-center($ai: flex-start, $fd: column);
-            margin-left: 30px;
-            gap: 4px;
-
-            .name {
-                @include font-design($fs: 20px, $fw: 400);
-                padding: 0
-            }
-        }
-
-        .contact-profile {
-            @include position-center();
-            @include font-design($fs: 14px, $fw: 300);
-            height: 45px;
-            width: 45px;
-        }
-    }
+    max-height: 100%;
+    overflow-y: auto;
 }
 
 .content-dashboard {
-    
+    overflow: hidden;
     header {
         @include position-center($jc: flex-start);
         gap: 40px;
@@ -91,4 +65,17 @@ section {
 
 .content-dashboard {
     gap: 40px;
+}
+
+app-contact-detail {
+    animation: right-to-left 500ms ease-in-out;
+}
+
+@keyframes right-to-left {
+    from {
+        transform: translateX(200%);
+    }
+    to {
+        transform: translateX(0);
+    }
 }

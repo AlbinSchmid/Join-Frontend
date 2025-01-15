@@ -57,7 +57,6 @@ h1 {
 button, a {
     @include position-center();
     @include font-design($fs: 16px, $fw: 600);
-    transition: 125ms ease-in-out;
     border-radius: 10px;
     padding: 15px 16px;
     cursor: pointer;

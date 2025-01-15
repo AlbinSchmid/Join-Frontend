@@ -24,7 +24,7 @@ import { TaskCardComponent } from './task-card/task-card.component';
 export class BoardComponent {
   todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
 
-  done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
+  done = ['Get up'];
   inProgress = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
   awaitFeedback = [''];
 

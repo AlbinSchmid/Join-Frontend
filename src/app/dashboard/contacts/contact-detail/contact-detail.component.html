@@ -1,13 +1,13 @@
 <section>
     <div class="profile-name-div">
-        <div class="profile-detail contact-profile">
-            AM
+        <div class="profile-detail contact-profile" [ngStyle]="{'background-color': dashboardService.currentContact.color}">
+            {{ dashboardService.getInitials(dashboardService.currentContact.name) }}
         </div>
         <div class="name-detail">
-            <h2>Anton Mayer</h2>
+            <h2>{{ dashboardService.currentContact.name }}</h2>
             <div class="edit-delete-div">
                 <button (click)="openDialog('edit')"><mat-icon fontIcon="edit"></mat-icon>Edit</button>
-                <button><mat-icon fontIcon="delete"></mat-icon>Delete</button>
+                <button (click)="deleteContact()"><mat-icon fontIcon="delete"></mat-icon>Delete</button>
             </div>
         </div>
     </div>
@@ -15,11 +15,11 @@
         <p class="contact-information-p">Contact Information</p>
         <div class="email-div">
             <p>Email</p>
-            <a href="mailto:antom@gmail.com">antom&#64;gmail.com"</a>
+            <a href="mailto:{{ dashboardService.currentContact.email }}">{{ dashboardService.currentContact.email }}</a>
         </div>
-        <div class="phone-div">
+        <div class="phone-div" *ngIf="dashboardService.currentContact.phone">
             <p>Phone</p>
-            <a href="tel:123456789">+43 123456789</a>
+            <a href="tel:{{ dashboardService.currentContact.phone }}">{{ dashboardService.currentContact.phone }}</a>
         </div>
     </div>
 </section>

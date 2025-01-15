@@ -16,6 +16,20 @@
     border-color: #4589FF !important;
 }
 
+::ng-deep .cdk-drop-list-dragging {
+    cursor: grabbing !important;
+}
+
+::ng-deep .cdk-drag-preview {
+    rotate: 2deg !important;
+    top: -11px !important;
+    left: 13px !important;
+}
+
+::ng-deep .cdk-drag-placeholder {
+    opacity: 0;
+}
+
 section {
     @include position-center($jc: flex-start, $ai: flex-start, $fd: column);
     width: 100%;
@@ -24,6 +38,15 @@ section {
     border-radius: 24px;
     padding: 16px;
     box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
+
+    &:hover {
+        cursor: grab;
+        rotate: 2deg !important;
+    }
+
+    &:active {
+        cursor: grabbing !important;
+    }
 
     h2 {
         @include font-design($fs: 16px, $fw: 400);

@@ -50,7 +50,7 @@ export class LogInFormComponent {
     this.dashboardService.showSummary = true;
     this.showLoginFailedError = false;
     this.router.navigate(['dashboard']);
-    this.apiService.userData = response;
+    this.apiService.user = response;
     this.resetForm()
   }
 
