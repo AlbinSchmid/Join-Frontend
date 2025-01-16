@@ -21,8 +21,9 @@
             <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo"
                 [cdkDropListConnectedTo]="[doneList, progressList, awaitFeedbackList]" class="drop-list"
                 (cdkDropListDropped)="drop($event)">
-                @for (item of todo; track item) {
-                <app-task-card cdkDrag></app-task-card>
+                @for (task of todo; track task) {
+                <app-task-card cdkDrag [task]="task" [contacts]="task.contacts"
+                    [subtasks]="task.subtasks"></app-task-card>
                 }
             </div>
         </div>
@@ -36,8 +37,9 @@
             <div cdkDropList #progressList="cdkDropList" [cdkDropListData]="inProgress"
                 [cdkDropListConnectedTo]="[todoList, doneList, awaitFeedbackList]" class="drop-list"
                 (cdkDropListDropped)="drop($event)">
-                @for (item of inProgress; track item) {
-                <app-task-card cdkDrag></app-task-card>
+                @for (task of inProgress; track task) {
+                <app-task-card cdkDrag [task]="task" [contacts]="task.contacts"
+                    [subtasks]="task.subtasks"></app-task-card>
                 }
             </div>
         </div>
@@ -51,8 +53,9 @@
             <div cdkDropList #awaitFeedbackList="cdkDropList" [cdkDropListData]="awaitFeedback"
                 [cdkDropListConnectedTo]="[todoList, doneList, progressList]" class="drop-list"
                 (cdkDropListDropped)="drop($event)">
-                @for (item of awaitFeedback; track item) {
-                <app-task-card cdkDrag></app-task-card>
+                @for (task of awaitFeedback; track task) {
+                <app-task-card cdkDrag [task]="task" [contacts]="task.contacts"
+                    [subtasks]="task.subtasks"></app-task-card>
                 }
             </div>
         </div>
@@ -66,8 +69,9 @@
             <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done"
                 [cdkDropListConnectedTo]="[todoList, progressList, awaitFeedbackList]" class="drop-list"
                 (cdkDropListDropped)="drop($event)">
-                @for (item of done; track item) {
-                <app-task-card cdkDrag></app-task-card>
+                @for (task of done; track task) {
+                <app-task-card cdkDrag [task]="task" [contacts]="task.contacts"
+                    [subtasks]="task.subtasks"></app-task-card>
                 }
             </div>
         </div>

@@ -1,21 +1,21 @@
 <section>
     <h2>User Story</h2>
     <div class="title-description">
-        <h1>Kochwelt mit asdkjfsakdjf </h1>
-        <p>Lorem ipsum dolor sit amet consectetur</p>
+        <h1>{{ task.title }}</h1>
+        <p>{{ task.description }}</p>
     </div>
-    <div class="progress-bar">
+    <div class="progress-bar" *ngIf="subtaskValue">
         <mat-progress-bar mode="determinate" [value]="value"></mat-progress-bar>
-        <p>1/2 Subtasks</p>
+        <p>1/{{ subtasks.length }} Subtasks</p>
     </div>
     <footer>
         <div class="contacts-assigned">
-            @for (item of users; track $index) {
-                <div class="contact-profile" [ngStyle]="{'margin-left.px': $index > 0 ? -10 : 0}">
-                    {{ item }}
+            @for (contact of contacts; track $index) {
+                <div class="contact-profile" [ngStyle]="{'margin-left.px': $index > 0 ? -10 : 0, 'background-color': contact.color}">
+                    {{ dashboardService.getInitials(contact.name) }}
                 </div>
             }
         </div>
-        <mat-icon fontIcon="drag_handle"></mat-icon>
+        <mat-icon fontIcon="{{ controllPrio() }}" [ngClass]="{'high-prio': task.prio == 'high', 'medium-prio': task.prio == 'medium', 'low-prio': task.prio == 'low'}"></mat-icon>
     </footer>
 </section>

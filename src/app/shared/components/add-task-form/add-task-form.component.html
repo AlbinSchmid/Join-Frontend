@@ -8,8 +8,8 @@
                 <div class="form-field-overlaying-div">
                     <p>Title<mark> *</mark></p>
                     <label>
-                        <input type="title" placeholder="Enter a title" required minlength="1" name="title"
-                            #taskTitle="ngModel" [(ngModel)]="formData.taskTitle">
+                        <input type="title" placeholder="Enter a title" required name="title" #taskTitle="ngModel"
+                            [(ngModel)]="formData.taskTitle">
                         @if (!taskTitle.valid && taskTitle.touched) {
                         <span class="span-error">Please enter a title!</span>
                         }
@@ -26,18 +26,32 @@
                     <p>Assigned to</p>
                     <div class="label-frame">
                         <label for="" class="dropdown-label" (click)="openDrowDown('assign')">
-                            <input type="" placeholder="Select contacts to assign">
+                            <input type="" placeholder="Select contacts to assign"
+                                (input)="searchAssign($event.target)">
                             <mat-icon fontIcon="arrow_drop_down"
                                 [ngClass]="{'rotate-icon': showDrowDownAssign}"></mat-icon>
                         </label>
                         <div class="dropdown-menu" *ngIf="showDrowDownAssign">
-                            <mat-checkbox class="select-item">
-                                <div class="contact-profile">
-                                    MA
-                                </div>
-                                <p>Max Mustermann</p>
-                            </mat-checkbox>
+                            <div class="select-item-container">
+                                @for (contact of contactToAssinged; track $index) {
+                                <mat-checkbox class="select-item" [checked]="assingedContact.includes(contact)"
+                                    (click)="setAssign(contact)"
+                                    [ngClass]="{'assigned-contact': assingedContact.includes(contact)}">
+                                    <div class="contact-profile" [ngStyle]="{'background-color': contact.color}">
+                                        {{ dashboardService.getInitials(contact.name) }}
+                                    </div>
+                                    <p>{{ contact.name }}</p>
+                                </mat-checkbox>
+                                }
+                            </div>
                         </div>
+                    </div>
+                    <div class="assigned-contact-list">
+                        @for (contact of assingedContact; track $index) {
+                        <div class="contact-profile"
+                            [ngStyle]="{'background-color': contact.color, 'margin-left.px': $index > 0 ? -10 : 0}">{{
+                            dashboardService.getInitials(contact.name) }}</div>
+                        }
                     </div>
                 </div>
             </div>
@@ -58,7 +72,7 @@
                 <div class="form-field-overlaying-div">
                     <p>Prio</p>
                     <div class="prio-content">
-                        <div class="urgent" [ngClass]="{'active-urgent': urgentBtn}" (click)="setPrio('urgent')">Urgent
+                        <div class="urgent" [ngClass]="{'active-urgent': urgentBtn}" (click)="setPrio('high')">Urgent
                             <mat-icon fontIcon="keyboard_double_arrow_up"></mat-icon>
                         </div>
                         <div class="medium" [ngClass]="{'active-medium': mediumBtn}" (click)="setPrio('medium')">Medium
@@ -73,15 +87,16 @@
                     <div class="label-frame">
                         <label for="" class="dropdown-label" (click)="openDrowDown('category')">
                             <input class="category-input" placeholder="Select task Category" #taskCategory="ngModel"
-                                name="taskCategory" [(ngModel)]="formData.taskCategory" readonly>
+                                name="taskCategory" [(ngModel)]="formData.taskCategory" readonly required>
                             <mat-icon fontIcon="arrow_drop_down"
                                 [ngClass]="{'rotate-icon': showDrowDownCategory}"></mat-icon>
                         </label>
                         <div class="dropdown-menu" *ngIf="showDrowDownCategory">
-                            <div class="select-item" (click)="setCategory('technicalTask')">
+                            <div class="select-item" (click)="setCategory('technicalTask')"
+                                [ngStyle]="{'padding.px': 6}">
                                 <p>Technical Task</p>
                             </div>
-                            <div class="select-item" (click)="setCategory('userStory')">
+                            <div class="select-item" (click)="setCategory('userStory')" [ngStyle]="{'padding.px': 6}">
                                 <p>User Story</p>
                             </div>
                         </div>
@@ -101,28 +116,33 @@
                     <div class="subtask-list">
                         <ul>
                             @for (subtask of taskSubtasks; track $index) {
-                                <li [ngClass]="{'li-backgroundcolor-active' : editSubtaskId === $index}">
-                                    <p *ngIf="editSubtaskId !== $index">{{ subtask }}</p>
-                                    <input *ngIf="editSubtaskId === $index" maxlength="30" name="editSubtask" [ngClass]="{'active-input': editSubtaskId === $index}" #subtaskTitle="ngModel" [(ngModel)]="editSubtaskInput">
-                                    <div class="subtask-input-btns">
-                                        <mat-icon *ngIf="editSubtaskId !== $index" fontIcon="edit" (click)="editTheSubtask(subtask, $index)" ></mat-icon>
-                                        <mat-icon *ngIf="editSubtaskId === $index" fontIcon="check" (click)="safeEditSubtask($index)"></mat-icon>
-                                        <div class="line-grey"></div>
-                                        <mat-icon fontIcon="delete" (click)="removeSubtask($index)"></mat-icon>
-                                    </div>
-                                </li>
+                            <li [ngClass]="{'li-backgroundcolor-active' : editSubtaskId === $index}">
+                                <p *ngIf="editSubtaskId !== $index">{{ subtask }}</p>
+                                <input *ngIf="editSubtaskId === $index" maxlength="30" name="editSubtask"
+                                    [ngClass]="{'active-input': editSubtaskId === $index}" #subtaskTitle="ngModel"
+                                    [(ngModel)]="editSubtaskInput">
+                                <div class="subtask-input-btns">
+                                    <mat-icon *ngIf="editSubtaskId !== $index" fontIcon="edit"
+                                        (click)="editTheSubtask(subtask, $index)"></mat-icon>
+                                    <mat-icon *ngIf="editSubtaskId === $index" fontIcon="check"
+                                        (click)="safeEditSubtask($index)"></mat-icon>
+                                    <div class="line-grey"></div>
+                                    <mat-icon fontIcon="delete" (click)="removeSubtask($index)"></mat-icon>
+                                </div>
+                            </li>
                             }
                         </ul>
                     </div>
                 </div>
             </div>
+            <footer>
+                <p><mark>*</mark> This field is required</p>
+                <div>
+                    <button class="outline" mat-stroked-button>Clear <mat-icon fontIcon="close"></mat-icon></button>
+                    <button class="filled" type="submit" [ngClass]="{'disabled': form.invalid}" [disabled]="form.invalid"
+                        mat-stroked-button>Create Task <mat-icon fontIcon="check"></mat-icon></button>
+                </div>
+            </footer>
         </form>
     </main>
-    <footer>
-        <p><mark>*</mark> This field is required</p>
-        <div>
-            <button class="outline">Create Task <mat-icon fontIcon="close"></mat-icon></button>
-            <button class="filled">Clear <mat-icon fontIcon="check"></mat-icon></button>
-        </div>
-    </footer>
 </section>

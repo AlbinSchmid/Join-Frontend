@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { ContactInterface } from '../interfaces/contact-interface';
 import { log } from 'node:console';
 import { DashboardService } from './dashboard.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,7 @@ export class ApiService {
     userId: 0
   };
   contacts: ContactInterface[] = [];
+  task: any[] = [];
 
 
   postLogInData(data: any) {
@@ -34,8 +36,8 @@ export class ApiService {
   }
 
 
-  postContactData(data: any) {
-    return this.http.post<any>(`${this.APIURL}contact/`, data)
+  postRequest(data: any, endpoint: string) {
+    return this.http.post<any>(`${this.APIURL}${endpoint}/`, data)
   }
 
 
@@ -87,6 +89,11 @@ export class ApiService {
       this.contacts = response
       this.sortContacts();
     })
+  }
+
+
+  getTaskData(): any {
+    return this.http.get<any>(`${this.APIURL}user-profile/${this.user.userId}/task/`);
   }
 
 

@@ -115,10 +115,10 @@ export class ContactFormComponent {
       "user_id": this.apiService.user.userId,
       "color": this.createRandomColor()
     }
-    this.apiService.postContactData(data).subscribe((response) => {
+    this.apiService.postRequest(data, 'contact').subscribe((response) => {
       this.apiService.contacts.push(response);
       this.apiService.relaodContact(),
-        this.apiService.sortContacts();
+      this.apiService.sortContacts();
       this.closeDialog();
     }, (error) => {
       console.error(error);

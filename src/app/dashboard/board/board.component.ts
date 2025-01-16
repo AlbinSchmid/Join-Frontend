@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import {
   CdkDragDrop,
@@ -9,6 +9,10 @@ import {
 } from '@angular/cdk/drag-drop';
 import { log } from 'console';
 import { TaskCardComponent } from './task-card/task-card.component';
+import { ApiService } from '../../shared/services/api.service';
+import { firstValueFrom } from 'rxjs';
+import { appConfig } from '../../app.config';
+import { TaskInterface } from '../../shared/interfaces/task-interface';
 
 @Component({
   selector: 'app-board',
@@ -22,11 +26,17 @@ import { TaskCardComponent } from './task-card/task-card.component';
   styleUrl: './board.component.scss'
 })
 export class BoardComponent {
-  todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
+  apiService = inject(ApiService);
+  todo: any[] = [];
+  done: any[] = [];
+  inProgress: any[] = [];
+  awaitFeedback: any[] = [];
 
-  done = ['Get up'];
-  inProgress = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
-  awaitFeedback = [''];
+  async ngOnInit() {
+    const response: any = await firstValueFrom(this.apiService.getTaskData());
+    this.apiService.task = response;
+    this.todo = this.apiService.task.filter((task) => task.taskCategory === 'to-do');
+  }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {

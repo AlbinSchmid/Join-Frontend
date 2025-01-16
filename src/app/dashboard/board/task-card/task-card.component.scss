@@ -96,3 +96,15 @@ footer {
         }
     }
 }
+
+.high-prio {
+    color: $prio-high-color;
+}
+
+.medium-prio {
+    color: $prio-medium-color;
+}
+
+.low-prio {
+    color: $prio-low-color;
+}

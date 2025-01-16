@@ -7,8 +7,8 @@ import { ContactInterface } from '../interfaces/contact-interface';
 export class DashboardService {
   showSummary = false;
   showAddTask = false;
-  showBoard = false;
-  showContacts = true;
+  showBoard = true;
+  showContacts = false;
   
   contactDetailView = false;
   showContactsList = true;
