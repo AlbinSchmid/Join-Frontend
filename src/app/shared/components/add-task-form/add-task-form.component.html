@@ -1,4 +1,4 @@
-<section>
+<section [ngStyle]="{'gap.px': type === 'dialog' ? 30 : 80}">
     <header>
         <h1>Add Task</h1>
     </header>
@@ -8,7 +8,7 @@
                 <div class="form-field-overlaying-div">
                     <p>Title<mark> *</mark></p>
                     <label>
-                        <input type="title" placeholder="Enter a title" required name="title" #taskTitle="ngModel"
+                        <input type="title" placeholder="Enter a title" required name="title" #taskTitle="ngModel" maxlength="50"
                             [(ngModel)]="formData.taskTitle">
                         @if (!taskTitle.valid && taskTitle.touched) {
                         <span class="span-error">Please enter a title!</span>
@@ -18,7 +18,7 @@
                 <div class="form-field-overlaying-div">
                     <p>Desciption</p>
                     <label class="label-textarea">
-                        <textarea type="Desciption" placeholder="Enter a Desciption" name="title"
+                        <textarea type="Desciption" placeholder="Enter a Desciption" name="title" maxlength="200"
                             #taskDescription="ngModel" [(ngModel)]="formData.taskDescription"></textarea>
                     </label>
                 </div>
@@ -32,7 +32,7 @@
                                 [ngClass]="{'rotate-icon': showDrowDownAssign}"></mat-icon>
                         </label>
                         <div class="dropdown-menu" *ngIf="showDrowDownAssign">
-                            <div class="select-item-container">
+                            <div class="select-item-container" [ngStyle]="{'max-height.px': type === 'dialog' ? 150 : 300}">
                                 @for (contact of contactToAssinged; track $index) {
                                 <mat-checkbox class="select-item" [checked]="assingedContact.includes(contact)"
                                     (click)="setAssign(contact)"

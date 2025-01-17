@@ -62,11 +62,18 @@ section {
 
         h1 {
             @include font-design($fs: 16px, $fw: 700);
+            word-break: break-all;
         }
 
         p {
             @include font-design($fs: 16px, $fw: 400);
             color: #A8A8A8;
+            max-width: 210px;
+            text-overflow: ellipsis;
+            max-height: 40px;
+            overflow: hidden;
+            text-wrap-mode: nowrap;
+            
         }
     }
 }

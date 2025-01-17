@@ -1,0 +1,11 @@
+@use '@angular/material' as mat;
+
+::ng-deep .cdk-overlay-pane.mat-mdc-dialog-panel {
+    max-width: none;
+}
+
+section {
+    padding: 40px;
+    width: 1200px;
+    height: 750px;
+}

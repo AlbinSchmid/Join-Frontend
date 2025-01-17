@@ -96,6 +96,13 @@ export class ApiService {
     return this.http.get<any>(`${this.APIURL}user-profile/${this.user.userId}/task/`);
   }
 
+  patchTaskData(data: any): void {
+    let request = this.http.patch<any>(`${this.APIURL}task/${data.id}/`, data)
+    request.subscribe((response) => {
+      this.task = this.task.map((task) => task.id === response.id ? response : task);      
+    })
+  }
+
 
   sortContacts(): void {
     this.contacts.sort((a, b) => {

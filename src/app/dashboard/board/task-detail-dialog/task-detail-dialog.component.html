@@ -1,0 +1,51 @@
+<section>
+    <header>
+        <h2 [ngStyle]="{'background-color': task.category === 'Technical Task' ? '#1FD7C1' : 'blue'}">{{ task.category
+            }}</h2>
+        <mat-icon fontIcon="close" (click)="closeDialog()"></mat-icon>
+    </header>
+    <h1>{{ task.title }}</h1>
+    <p class="description" *ngIf="task.description">{{ task.description }}</p>
+    <div class="flex">
+        <p>Due date:</p>
+        <p>{{ task.date }}</p>
+    </div>
+    <div class="flex prio">
+        <p>Priority:</p>
+        <span>
+            <p>{{ firstLetterBig(task.prio) }}</p>
+            <mat-icon fontIcon="{{ controllPrio() }}"
+                [ngClass]="{'high-prio': task.prio == 'high', 'medium-prio': task.prio == 'medium', 'low-prio': task.prio == 'low'}"></mat-icon>
+        </span>
+    </div>
+    <div class="contacts-part" *ngIf="contacts.length > 0">
+        <p>Assigned To:</p>
+        <div class="contacts-list">
+            @for (contact of contacts; track $index) {
+            <div class="contact">
+                <div class="contact-profile" [ngStyle]="{'background-color': contact.color}">
+                    {{ dashboardService.getInitials(contact.name) }}
+                </div>
+                <p>{{ contact.name }}</p>
+            </div>
+            }
+        </div>
+    </div>
+    <div class="substaks-part" *ngIf="subtasks.length > 0">
+        <p>Subtasks:</p>
+        <div>
+            @for (subtask of subtasks; track $index) {
+            <div class="subtask">
+                <mat-checkbox>
+                </mat-checkbox>
+                <p>{{ subtask.title }}</p>
+            </div>
+            }
+        </div>
+    </div>
+    <footer>
+        <button><mat-icon fontIcon="delete"></mat-icon>Delete</button>
+        <div class="line-grey"></div>
+        <button><mat-icon fontIcon="edit"></mat-icon>Edit</button>
+    </footer>
+</section>

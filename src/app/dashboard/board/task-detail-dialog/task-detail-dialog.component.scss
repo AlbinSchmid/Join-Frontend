@@ -1,0 +1,148 @@
+@import "./../:./../../../../styles.scss";
+
+section {
+    @include position-center($ai: flex-start, $fd: column);
+    padding: 48px;
+    gap: 20px;
+    min-width: 500px;
+
+    header {
+        @include position-center($jc: space-between);
+        width: 100%;
+
+        h2 {
+            @include font-design($fs: 24px, $fw: 400);
+            color: white;
+            padding: 4px 16px;
+            border-radius: 8px;
+        }
+
+        mat-icon {
+            @include position-center();
+            @include font-design($fs: 24px, $fw: 400);
+            height: 30px;
+            width: 30px;
+            transition: 125ms ease;
+            cursor: pointer;
+            border-radius: 100%;
+
+            &:hover {
+                background-color: rgba($color: #000000, $alpha: 0.1);
+            }
+        }
+    }
+
+    h1 {
+        @include font-design($fs: 34px, $fw: 700);
+        word-break: break-all;
+    }
+
+    .description {
+        @include font-design($fs: 20px, $fw: 400);
+        word-break: break-all;
+    }
+
+    .flex {
+        @include position-center($jc: flex-start);
+        @include font-design($fs: 20px, $fw: 400);
+        gap: 25px;
+    }
+}
+
+.prio {
+    span {
+        @include position-center($jc: flex-start);
+        gap: 4px;
+    }
+}
+
+.high-prio {
+    color: $prio-high-color;
+}
+
+.medium-prio {
+    color: $prio-medium-color;
+}
+
+.low-prio {
+    color: $prio-low-color;
+}
+
+.contacts-part {
+    width: 100%;
+
+    p {
+        @include font-design($fs: 20px, $fw: 400);
+        margin-bottom: 8px;
+    }
+
+    .contacts-list {
+        max-height: 150px;
+        overflow-y: auto;
+        width: 100%;
+    }
+
+    .contact {
+        @include position-center($jc: flex-start);
+        padding: 4px 8px;
+        gap: 8px;
+    
+        .contact-profile {
+            @include font-design($fs: 14px, $fw: 400);
+            width: 40px;
+            height: 40px;
+            max-width: 40px;
+            max-height: 40px;
+            border: 2px solid white;
+        }
+    
+        p {
+            @include font-design($fs: 18px, $fw: 400);
+        }
+    }
+}
+
+.substaks-part {
+    p {
+        @include font-design($fs: 20px, $fw: 400);
+    }
+}
+
+.subtask {
+    @include position-center($jc: flex-start);
+    gap: 8px;
+
+    p {
+        @include font-design($fs: 18px, $fw: 400);
+    }
+}
+
+footer {
+    @include position-center($jc: flex-end);
+    gap: 8px;
+    width: 100%;
+
+    .line-grey {
+        width: 2px;
+        border-radius: 25px;
+        height: 20px;
+        background-color: rgba($color: #000000, $alpha: 0.2);
+    }
+
+    button {
+        @include font-design($fs: 16px, $fw: 400);
+        background-color: transparent;
+        padding: 0;
+        border: none;
+
+        &:hover {
+            color: $light-blue;
+        }
+
+        mat-icon {
+            @include position-center();
+            @include font-design($fs: 20px, $fw: 400);
+        }
+    }
+}
+

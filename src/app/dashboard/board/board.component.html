@@ -7,7 +7,7 @@
                 <div class="line-grey"></div>
                 <mat-icon fontIcon="search"></mat-icon>
             </label>
-            <button class="filled">Add task <mat-icon fontIcon="add"></mat-icon></button>
+            <button class="filled" (click)="openDialog('add-task')">Add task <mat-icon fontIcon="add"></mat-icon></button>
         </div>
     </header>
     <div class="drag-and-drop">
@@ -20,9 +20,9 @@
             </header>
             <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo"
                 [cdkDropListConnectedTo]="[doneList, progressList, awaitFeedbackList]" class="drop-list"
-                (cdkDropListDropped)="drop($event)">
+                (cdkDropListDropped)="drop($event, 'to-do')">
                 @for (task of todo; track task) {
-                <app-task-card cdkDrag [task]="task" [contacts]="task.contacts"
+                <app-task-card (click)="openDialog('task-detail', task)" cdkDrag [task]="task" [contacts]="task.contacts"
                     [subtasks]="task.subtasks"></app-task-card>
                 }
             </div>
@@ -36,9 +36,9 @@
             </header>
             <div cdkDropList #progressList="cdkDropList" [cdkDropListData]="inProgress"
                 [cdkDropListConnectedTo]="[todoList, doneList, awaitFeedbackList]" class="drop-list"
-                (cdkDropListDropped)="drop($event)">
+                (cdkDropListDropped)="drop($event, 'in-progress')">
                 @for (task of inProgress; track task) {
-                <app-task-card cdkDrag [task]="task" [contacts]="task.contacts"
+                <app-task-card cdkDrag (click)="openDialog('task-detail', task)" [task]="task" [contacts]="task.contacts"
                     [subtasks]="task.subtasks"></app-task-card>
                 }
             </div>
@@ -52,9 +52,9 @@
             </header>
             <div cdkDropList #awaitFeedbackList="cdkDropList" [cdkDropListData]="awaitFeedback"
                 [cdkDropListConnectedTo]="[todoList, doneList, progressList]" class="drop-list"
-                (cdkDropListDropped)="drop($event)">
+                (cdkDropListDropped)="drop($event, 'await-feedback')">
                 @for (task of awaitFeedback; track task) {
-                <app-task-card cdkDrag [task]="task" [contacts]="task.contacts"
+                <app-task-card cdkDrag (click)="openDialog('task-detail', task)" [task]="task" [contacts]="task.contacts"
                     [subtasks]="task.subtasks"></app-task-card>
                 }
             </div>
@@ -68,9 +68,9 @@
             </header>
             <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done"
                 [cdkDropListConnectedTo]="[todoList, progressList, awaitFeedbackList]" class="drop-list"
-                (cdkDropListDropped)="drop($event)">
+                (cdkDropListDropped)="drop($event, 'done')">
                 @for (task of done; track task) {
-                <app-task-card cdkDrag [task]="task" [contacts]="task.contacts"
+                <app-task-card cdkDrag (click)="openDialog('task-detail', task)" [task]="task" [contacts]="task.contacts"
                     [subtasks]="task.subtasks"></app-task-card>
                 }
             </div>
