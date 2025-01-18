@@ -6,7 +6,7 @@ export interface TaskInterface {
     date: string;
     category: string;
     taskCategory: string;
-    subtasks: string[];
-    contacts: string[];
+    subtasks: any[];
+    contacts: any[];
     user: string;
 }

@@ -61,7 +61,7 @@ export class LogInFormComponent {
       token: response.token,
       userId : response.id
     }
-    localStorage.setItem('user', JSON.stringify(userData));
+    // localStorage.setItem('user', JSON.stringify(userData));
   }
 
 

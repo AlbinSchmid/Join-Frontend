@@ -50,6 +50,10 @@ $prio-low-color: #7AE229;
 .mat-mdc-checkbox .mdc-checkbox__ripple, .mat-mdc-icon-button .mat-mdc-button-ripple, .mat-mdc-icon-button .mat-mdc-button-persistent-ripple, .mat-mdc-icon-button .mat-mdc-button-persistent-ripple::before {
     display: none !important;
 }
+
+.mat-mdc-button:has(.material-icons,mat-icon,[matButtonIcon]) {
+    padding: 25px;
+}
 // Ende Angular Material
 
 
@@ -78,9 +82,16 @@ button, a {
     text-decoration: none;
 
     &.filled {
+        @include position-center($fd: row-reverse);
         background-color: #2A3647;
         color: white;
         border: none;
+        gap: 8px;
+
+        mat-icon {
+            color: white !important;
+            margin: 0 !important;
+        }
 
         &:hover {
             background-color: #29ABE2;
@@ -89,16 +100,27 @@ button, a {
     }
 
     &.outline {
+        @include position-center($fd: row-reverse);
         @include font-design($fw: 600);
         background-color: transparent;
         color: #2A3647;
         border: 1px solid #2A3647;
+        gap: 8px;
+
+        mat-icon {
+            color: $dark-blue;
+            margin: 0 !important;
+        }
 
         &:hover {
             color: #29ABE2;
             background-color: transparent;
             border: 1px solid #29ABE2;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+        }
+
+        &:hover > mat-icon {
+            color: #29ABE2 !important;
         }
     }
 }

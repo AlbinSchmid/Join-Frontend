@@ -107,15 +107,15 @@ form {
         }
     }
 
-    .outline {
-        &:hover>mat-icon {
-            color: $light-blue;
-        }
+    // .outline {
+    //     &:hover ~ mat-icon {
+    //         color: $light-blue !important;
+    //     }
 
-        mat-icon {
-            color: $dark-blue;
-        }
-    }
+    //     mat-icon {
+    //         color: $dark-blue;
+    //     }
+    // }
 
     .filled {
         mat-icon {

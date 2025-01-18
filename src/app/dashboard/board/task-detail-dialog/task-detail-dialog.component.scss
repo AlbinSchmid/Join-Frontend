@@ -1,3 +1,4 @@
+@use "./../../../shared/components/add-task-form/add-task-form.component.scss";
 @import "./../:./../../../../styles.scss";
 
 section {
@@ -119,6 +120,7 @@ section {
 
 footer {
     @include position-center($jc: flex-end);
+    position: relative;
     gap: 8px;
     width: 100%;
 
@@ -145,4 +147,3 @@ footer {
         }
     }
 }
-

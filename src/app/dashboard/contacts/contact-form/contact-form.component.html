@@ -16,31 +16,42 @@
             <div class="profile">
                 <mat-icon fontIcon="person_outlined"></mat-icon>
             </div>
-            <form #contactForm="ngForm" (ngSubmit)="submitForm(contactForm)" >
+            <form #contactForm="ngForm" (ngSubmit)="submitForm(contactForm)">
                 <label for="">
-                    <input type="text" placeholder="Name" #nameContact="ngModel" maxlength="30" required name="nameContact" [(ngModel)]="formData.nameContact">
+                    <input type="text" placeholder="Name" #nameContact="ngModel" maxlength="30" required
+                        name="nameContact" [(ngModel)]="formData.nameContact">
                     <mat-icon fontIcon="person_outlined"></mat-icon>
                     @if (!nameContact.valid && nameContact.touched) {
-                        <span class="span-error">What name has your contact?</span>
+                    <span class="span-error">What name has your contact?</span>
                     }
                 </label>
                 <label for="">
-                    <input type="text" placeholder="Email" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" #emailContact="ngModel" name="emailContact" [(ngModel)]="formData.emailContact">
+                    <input type="text" placeholder="Email" required
+                        pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" #emailContact="ngModel"
+                        name="emailContact" [(ngModel)]="formData.emailContact">
                     <mat-icon fontIcon="mail_outlined"></mat-icon>
                     @if (!emailContact.valid && emailContact.touched) {
-                        <span class="span-error" *ngIf="formData.emailContact.length === 0">Hoppla! email is required</span>
-                        <span class="span-error" *ngIf="formData.emailContact.length > 0">We need a valid e-mail address!</span>
-                        }
+                    <span class="span-error" *ngIf="formData.emailContact.length === 0">Hoppla! email is required</span>
+                    <span class="span-error" *ngIf="formData.emailContact.length > 0">We need a valid e-mail
+                        address!</span>
+                    }
                 </label>
                 <label for="">
-                    <input type="number" placeholder="Phone" #phoneContact="ngModel" name="phoneContact" [(ngModel)]="formData.phoneContact">
+                    <input type="number" placeholder="Phone" #phoneContact="ngModel" name="phoneContact"
+                        [(ngModel)]="formData.phoneContact">
                     <mat-icon fontIcon="phone_outlined"></mat-icon>
                 </label>
                 <div class="btn-div">
-                    <button *ngIf="data[0].form == 'add'" mat-stroked-button class="outline" (click)="closeDialog()">Cancel <mat-icon fontIcon="close"></mat-icon></button>
-                    <button *ngIf="data[0].form == 'add'" [ngClass]="{'disabled': !contactForm.valid}" [disabled]="contactForm.invalid" type="submit" mat-stroked-button class="filled">Create contact <mat-icon fontIcon="check"></mat-icon></button>
-                    <button *ngIf="data[0].form == 'edit'" (click)="deleteContact()" mat-stroked-button class="outline">Delete</button>
-                    <button *ngIf="data[0].form == 'edit'" (click)="updateContact()" [ngClass]="{'disabled': !contactForm.valid}" [disabled]="contactForm.invalid"  type="submit" mat-stroked-button class="filled">Save <mat-icon fontIcon="check"></mat-icon></button>
+                    <button *ngIf="data[0].form == 'add'" mat-button class="outline" (click)="closeDialog()">Cancel
+                        <mat-icon fontIcon="close"></mat-icon></button>
+                    <button *ngIf="data[0].form == 'add'" mat-button [ngClass]="{'disabled': !contactForm.valid}"
+                        [disabled]="contactForm.invalid" type="submit" class="filled">Create contact <mat-icon
+                            fontIcon="check"></mat-icon></button>
+                    <button *ngIf="data[0].form == 'edit'" mat-button (click)="deleteContact()"
+                        class="outline">Delete</button>
+                    <button *ngIf="data[0].form == 'edit'" mat-button (click)="updateContact()"
+                        [ngClass]="{'disabled': !contactForm.valid}" [disabled]="contactForm.invalid" type="submit"
+                        class="filled">Save <mat-icon fontIcon="check"></mat-icon></button>
                 </div>
             </form>
         </div>

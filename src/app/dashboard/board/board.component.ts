@@ -7,14 +7,11 @@ import {
   CdkDrag,
   CdkDropList,
 } from '@angular/cdk/drag-drop';
-import { log } from 'console';
 import { TaskCardComponent } from './task-card/task-card.component';
 import { ApiService } from '../../shared/services/api.service';
-import { firstValueFrom, identity } from 'rxjs';
-import { appConfig } from '../../app.config';
-import { TaskInterface } from '../../shared/interfaces/task-interface';
 import { MatDialog } from '@angular/material/dialog';
-import { TaskDetailDialogComponent } from './task-detail-dialog/task-detail-dialog.component';
+import { DashboardService } from '../../shared/services/dashboard.service';
+import { TaskInterface } from '../../shared/interfaces/task-interface';
 import { AddTaskDialogComponent } from './add-task-dialog/add-task-dialog.component';
 
 @Component({
@@ -30,33 +27,19 @@ import { AddTaskDialogComponent } from './add-task-dialog/add-task-dialog.compon
 })
 export class BoardComponent {
   apiService = inject(ApiService);
+  dashboardService = inject(DashboardService);
   dialog = inject(MatDialog);
-  todo: any[] = [];
-  done: any[] = [];
-  inProgress: any[] = [];
-  awaitFeedback: any[] = [];
 
-  async ngOnInit() {
-    const response: any = await firstValueFrom(this.apiService.getTaskData());
-    console.log(response)
-    this.apiService.task = response;
-    this.todo = this.apiService.task.filter((task) => task.taskCategory === 'to-do');
-    this.done = this.apiService.task.filter((task) => task.taskCategory === 'done');
-    this.inProgress = this.apiService.task.filter((task) => task.taskCategory === 'in-progress');
-    this.awaitFeedback = this.apiService.task.filter((task) => task.taskCategory === 'await-feedback');
+  ngOnInit() {
+    this.apiService.getTaskData();
   }
 
 
-  openDialog(dialogType: string, task?: TaskInterface, ): void {
-    if (dialogType === 'task-detail') {
-      this.dialog.open(TaskDetailDialogComponent, {
-        data: {
-          task
-        },
-      })
-    } else if (dialogType === 'add-task') {
-      this.dialog.open(AddTaskDialogComponent)
-    }
+  /**
+   * Opens the add task dialog.
+   */
+  openAddTaskDialog(): void {
+    this.dialog.open(AddTaskDialogComponent);
   }
 
 

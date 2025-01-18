@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, Optional, Output, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,6 +15,8 @@ import { DashboardService } from '../../services/dashboard.service';
 import { ContactInterface } from '../../interfaces/contact-interface';
 import { MatButtonModule } from '@angular/material/button';
 import { DatePipe } from '@angular/common';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { TaskInterface } from '../../interfaces/task-interface';
 @Component({
   selector: 'app-add-task-form',
   providers: [provideNativeDateAdapter(), DatePipe],
@@ -29,10 +31,10 @@ import { DatePipe } from '@angular/common';
     MatDatepickerModule,
     MatInputModule,
     MatButtonModule,
+    MatDialogModule
   ],
   templateUrl: './add-task-form.component.html',
-  styleUrl: './add-task-form.component.scss',
-  standalone: true
+  styleUrl: './add-task-form.component.scss'
 })
 export class AddTaskFormComponent {
   apiService = inject(ApiService);
@@ -40,32 +42,60 @@ export class AddTaskFormComponent {
   datePipe = inject(DatePipe);
 
   @Input() type?: string;
+  @Input() task: TaskInterface;
+  closeFormDialog = output<void>();
 
   formData = {
+    test: '',
     taskTitle: '',
     taskDescription: '',
     taskPrio: '',
     taskDueDate: '',
     taskCategory: '',
   }
-  taskSubtasks: string[] = [];
+  taskSubtasks: any[] = [];
   contactToAssinged: ContactInterface[] = [];
-  assingedContact: ContactInterface[] = [];
+  assingedContact: any[] = [];
+
+  editAssingedContact: any[] = [];
+  editTaskSubtasks: any[] = [];
+
   subtaskInput = '';
   editSubtaskInput = '';
+
   editSubtaskId = -1;
 
   showDrowDownAssign = false;
   showDrowDownCategory = false;
-
   urgentBtn = false;
   mediumBtn = true;
   lowBtn = false;
 
+
+  ngOnInit() {
+    if (this.type == 'editTask') {
+      this.formData.taskTitle = this.task.title;
+      this.formData.taskDescription = this.task.description;
+      this.formData.taskPrio = this.task.prio;
+      this.formData.taskDueDate = this.task.date;
+      this.formData.taskCategory = this.task.category;
+      this.editTaskSubtasks = JSON.parse(JSON.stringify(this.assingedContact));
+      this.editTaskSubtasks = this.task.subtasks;
+    }
+  }
+
+
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.apiService.contacts.forEach((contact) => this.contactToAssinged.push(contact));
+      if (this.apiService.contacts.length !== 0) {
+        this.apiService.contacts.forEach((contact) => this.contactToAssinged.push(contact));
+      }
     }, 10);
+  }
+
+
+  closeDialog(): void {
+    this.closeFormDialog.emit();
   }
 
 
@@ -80,12 +110,14 @@ export class AddTaskFormComponent {
     this.getPriority();
     let data = this.setData();
     this.apiService.postRequest(data, 'task').subscribe((response) => {
-      console.log(response);
+      this.dashboardService.todo.push(response);
       this.resestForm();
+      this.closeDialog();
     }, (error) => {
       console.log(error);
     });
   }
+
 
   resestForm(): void {
     this.formData.taskTitle = '';
@@ -97,11 +129,12 @@ export class AddTaskFormComponent {
     this.taskSubtasks = [];
   }
 
+
   setData(): any {
-    let formattdDate = this.datePipe.transform(this.formData.taskDueDate ,'yyyy-MM-dd');
+    let formattdDate = this.datePipe.transform(this.formData.taskDueDate, 'yyyy-MM-dd');
     let subtasks: object = [];
     subtasks = this.getSubtasks();
-    let contactIds = this.assingedContact.map((contact) => contact.id); 
+    let contactIds = this.assingedContact.map((contact) => contact.id);
     return {
       title: this.formData.taskTitle,
       description: this.formData.taskDescription,
@@ -159,8 +192,23 @@ export class AddTaskFormComponent {
    * Otherwise, it is added.
    * @param {ContactInterface} contact The contact to add or remove from the assigned contacts list.
    */
-  setAssign(contact: ContactInterface): void {
+  setAssign(contact: any): void {    
     this.assingedContact.includes(contact) ? this.assingedContact.splice(this.assingedContact.indexOf(contact), 1) : this.assingedContact.push(contact);
+  }
+
+
+  setAssignEdit(contact: any): void {    
+    if (this.editAssingedContact.some(contactObj => contactObj.id === contact.id)) {
+      this.editAssingedContact = this.editAssingedContact.filter(contactObj => contactObj.id !== contact.id);
+    } else {
+      this.editAssingedContact.push(contact);
+    }
+  }
+
+
+  checkIfIncluded(contact: any): boolean { 
+    const exists = this.editAssingedContact.some(contactObj => contactObj.id === contact.id);
+    return exists;
   }
 
 

@@ -7,7 +7,7 @@
                 <div class="line-grey"></div>
                 <mat-icon fontIcon="search"></mat-icon>
             </label>
-            <button class="filled" (click)="openDialog('add-task')">Add task <mat-icon fontIcon="add"></mat-icon></button>
+            <button class="filled" (click)="openAddTaskDialog()">Add task <mat-icon fontIcon="add"></mat-icon></button>
         </div>
     </header>
     <div class="drag-and-drop">
@@ -18,11 +18,11 @@
                     <mat-icon fontIcon="add"></mat-icon>
                 </div>
             </header>
-            <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo"
+            <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="dashboardService.todo"
                 [cdkDropListConnectedTo]="[doneList, progressList, awaitFeedbackList]" class="drop-list"
                 (cdkDropListDropped)="drop($event, 'to-do')">
-                @for (task of todo; track task) {
-                <app-task-card (click)="openDialog('task-detail', task)" cdkDrag [task]="task" [contacts]="task.contacts"
+                @for (task of dashboardService.todo; track task) {
+                <app-task-card cdkDrag [task]="task" [contacts]="task.contacts"
                     [subtasks]="task.subtasks"></app-task-card>
                 }
             </div>
@@ -34,11 +34,11 @@
                     <mat-icon fontIcon="add"></mat-icon>
                 </div>
             </header>
-            <div cdkDropList #progressList="cdkDropList" [cdkDropListData]="inProgress"
+            <div cdkDropList #progressList="cdkDropList" [cdkDropListData]="dashboardService.inProgress"
                 [cdkDropListConnectedTo]="[todoList, doneList, awaitFeedbackList]" class="drop-list"
                 (cdkDropListDropped)="drop($event, 'in-progress')">
-                @for (task of inProgress; track task) {
-                <app-task-card cdkDrag (click)="openDialog('task-detail', task)" [task]="task" [contacts]="task.contacts"
+                @for (task of dashboardService.inProgress; track task) {
+                <app-task-card cdkDrag [task]="task" [contacts]="task.contacts"
                     [subtasks]="task.subtasks"></app-task-card>
                 }
             </div>
@@ -50,11 +50,11 @@
                     <mat-icon fontIcon="add"></mat-icon>
                 </div>
             </header>
-            <div cdkDropList #awaitFeedbackList="cdkDropList" [cdkDropListData]="awaitFeedback"
+            <div cdkDropList #awaitFeedbackList="cdkDropList" [cdkDropListData]="dashboardService.awaitFeedback"
                 [cdkDropListConnectedTo]="[todoList, doneList, progressList]" class="drop-list"
                 (cdkDropListDropped)="drop($event, 'await-feedback')">
-                @for (task of awaitFeedback; track task) {
-                <app-task-card cdkDrag (click)="openDialog('task-detail', task)" [task]="task" [contacts]="task.contacts"
+                @for (task of dashboardService.awaitFeedback; track task) {
+                <app-task-card cdkDrag [task]="task" [contacts]="task.contacts"
                     [subtasks]="task.subtasks"></app-task-card>
                 }
             </div>
@@ -66,11 +66,11 @@
                     <mat-icon fontIcon="add"></mat-icon>
                 </div>
             </header>
-            <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done"
+            <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="dashboardService.done"
                 [cdkDropListConnectedTo]="[todoList, progressList, awaitFeedbackList]" class="drop-list"
                 (cdkDropListDropped)="drop($event, 'done')">
-                @for (task of done; track task) {
-                <app-task-card cdkDrag (click)="openDialog('task-detail', task)" [task]="task" [contacts]="task.contacts"
+                @for (task of dashboardService.done; track task) {
+                <app-task-card cdkDrag [task]="task" [contacts]="task.contacts"
                     [subtasks]="task.subtasks"></app-task-card>
                 }
             </div>

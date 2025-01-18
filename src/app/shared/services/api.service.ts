@@ -41,7 +41,7 @@ export class ApiService {
   }
 
 
-  deleteContactData(data: any):void {
+  deleteContactData(data: any): void {
     let request = this.http.delete<any>(`${this.APIURL}contact/${data.id}/`)
     request.subscribe((response) => {
       this.contacts = this.contacts.filter((contact) => contact.id !== data.id);
@@ -68,7 +68,7 @@ export class ApiService {
   }
 
 
-  patchContactData(data: any):void {
+  patchContactData(data: any): void {
     let request = this.http.patch<any>(`${this.APIURL}contact/${data.id}/`, data)
     request.subscribe((response) => {
       this.dashboardService.showContactsList = false;
@@ -83,7 +83,7 @@ export class ApiService {
   }
 
 
-  getContactData():void {
+  getContactData(): void {
     let request = this.http.get<any>(`${this.APIURL}user-profile/${this.user.userId}/contact/`)
     request.subscribe((response) => {
       this.contacts = response
@@ -93,13 +93,39 @@ export class ApiService {
 
 
   getTaskData(): any {
-    return this.http.get<any>(`${this.APIURL}user-profile/${this.user.userId}/task/`);
+    return this.http.get<any>(`${this.APIURL}user-profile/${this.user.userId}/task/`).subscribe((response) => {
+      this.task = response;
+      this.filterTaskWithTaskCategory();
+    });
   }
+
+
+  filterTaskWithTaskCategory(): void {
+    this.dashboardService.todo = this.task.filter((task) => task.taskCategory === 'to-do');
+    this.dashboardService.done = this.task.filter((task) => task.taskCategory === 'done');
+    this.dashboardService.inProgress = this.task.filter((task) => task.taskCategory === 'in-progress');
+    this.dashboardService.awaitFeedback = this.task.filter((task) => task.taskCategory === 'await-feedback');
+  }
+
 
   patchTaskData(data: any): void {
     let request = this.http.patch<any>(`${this.APIURL}task/${data.id}/`, data)
     request.subscribe((response) => {
-      this.task = this.task.map((task) => task.id === response.id ? response : task);      
+      this.task = this.task.map((task) => task.id === response.id ? response : task);
+    })
+  }
+
+
+  patchSubtaskData(data: any): Observable<any> {
+    return this.http.patch<any>(`${this.APIURL}subtask/${data.id}/`, data);
+  }
+
+
+  deleteTaskData(data: any): void {
+    this.task = this.task.filter((task) => task.id !== data.id);
+    let request = this.http.delete<any>(`${this.APIURL}task/${data.id}/`);
+    request.subscribe(response => {
+      this.filterTaskWithTaskCategory();
     })
   }
 
