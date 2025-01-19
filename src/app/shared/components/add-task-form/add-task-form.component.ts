@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input, Optional, Output, output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Form, FormsModule, NgForm } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,6 +17,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { DatePipe } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { TaskInterface } from '../../interfaces/task-interface';
+import { SubtaskInterface } from '../../interfaces/subtask-interface';
+import { Data } from '@angular/router';
 @Component({
   selector: 'app-add-task-form',
   providers: [provideNativeDateAdapter(), DatePipe],
@@ -41,29 +43,29 @@ export class AddTaskFormComponent {
   dashboardService = inject(DashboardService);
   datePipe = inject(DatePipe);
 
-  @Input() type?: string;
+  @Input() formType: string;
   @Input() task: TaskInterface;
   closeFormDialog = output<void>();
 
-  formData = {
-    test: '',
-    taskTitle: '',
-    taskDescription: '',
-    taskPrio: '',
-    taskDueDate: '',
-    taskCategory: '',
+  addTaskForm = {
+    title: '',
+    description: '',
+    prio: '',
+    date: new Date(),
+    category: '',
   }
-  taskSubtasks: any[] = [];
-  contactToAssinged: ContactInterface[] = [];
-  assingedContact: any[] = [];
+
+  createdSubtasks: SubtaskInterface[] = [];
+
+  allContacts: ContactInterface[] = [];
+  assingedContacts: ContactInterface[] = [];
 
   editAssingedContact: any[] = [];
-  editTaskSubtasks: any[] = [];
+
 
   subtaskInput = '';
   editSubtaskInput = '';
-
-  editSubtaskId = -1;
+  editSubtaskId: Number | null;
 
   showDrowDownAssign = false;
   showDrowDownCategory = false;
@@ -73,190 +75,224 @@ export class AddTaskFormComponent {
 
 
   ngOnInit() {
-    if (this.type == 'editTask') {
-      this.formData.taskTitle = this.task.title;
-      this.formData.taskDescription = this.task.description;
-      this.formData.taskPrio = this.task.prio;
-      this.formData.taskDueDate = this.task.date;
-      this.formData.taskCategory = this.task.category;
-      this.editTaskSubtasks = JSON.parse(JSON.stringify(this.assingedContact));
-      this.editTaskSubtasks = this.task.subtasks;
+    if (this.formType == 'editTask') {
+      this.getEditTaskData();
+    }
+    this.getAllContacts();
+  }
+
+
+  getEditTaskData(): void {
+    this.addTaskForm.title = this.task.title;
+    this.addTaskForm.description = this.task.description;
+    this.addTaskForm.prio = this.task.prio;
+    this.addTaskForm.date = new Date(this.task.date);
+    this.addTaskForm.category = this.task.category;
+    this.createdSubtasks = this.task.subtasks;
+    this.editAssingedContact = JSON.parse(JSON.stringify(this.task.contacts));
+  }
+
+
+  /**
+   * Gets all contacts from the API and stores them in the `allContacts` array.
+   * 
+   * This function is called in the `ngOnInit` lifecycle hook and is used to populate
+   * the contact list for the task assignee select menu.
+   */
+  getAllContacts(): void {
+    this.apiService.contacts.forEach((contact) => this.allContacts.push(contact));
+  }
+
+
+  submitEditTaskForm(ngForm: NgForm): void {
+    if (ngForm.valid && ngForm.submitted) {
+      this.saveEditTask();
     }
   }
 
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      if (this.apiService.contacts.length !== 0) {
-        this.apiService.contacts.forEach((contact) => this.contactToAssinged.push(contact));
-      }
-    }, 10);
+  saveEditTask(): void {
+    
+    let data = this.getCreatedTaskData(this.editAssingedContact);
+    console.log(data);
+    this.apiService.patchTaskData(data);
+    
   }
 
 
-  closeDialog(): void {
-    this.closeFormDialog.emit();
-  }
-
-
-  submitForm(ngForm: any): void {
+  /**
+   * Handles the form submission for creating a new task.
+   * 
+   * @param ngForm - The form object containing the user's input.
+   * 
+   * This function validates the form and checks if it has been submitted.
+   * If both conditions are true, it proceeds to create a new task using the provided data.
+   */
+  submitForm(ngForm: NgForm): void {
     if (ngForm.valid && ngForm.submitted) {
       this.createTask();
     }
   }
 
 
+  /**
+   * Creates a new task by sending a POST request to the API with the task data.
+   * 
+   * The task data is obtained by calling `getCreatedTaskData()`. Upon a successful
+   * response, the task is added to the `todo` list in the `dashboardService`, the
+   * form is reset, and the dialog is closed. If there is an error, it is logged to
+   * the console.
+   */
   createTask(): void {
-    this.getPriority();
-    let data = this.setData();
+    let data = this.getCreatedTaskData(this.assingedContacts);
     this.apiService.postRequest(data, 'task').subscribe((response) => {
       this.dashboardService.todo.push(response);
       this.resestForm();
       this.closeDialog();
     }, (error) => {
-      console.log(error);
+      console.error(error);
     });
   }
 
 
-  resestForm(): void {
-    this.formData.taskTitle = '';
-    this.formData.taskDescription = '';
-    this.formData.taskPrio = '';
-    this.formData.taskDueDate = '';
-    this.formData.taskCategory = '';
-    this.assingedContact = [];
-    this.taskSubtasks = [];
-  }
-
-
-  setData(): any {
-    let formattdDate = this.datePipe.transform(this.formData.taskDueDate, 'yyyy-MM-dd');
-    let subtasks: object = [];
-    subtasks = this.getSubtasks();
-    let contactIds = this.assingedContact.map((contact) => contact.id);
+  /**
+   * Takes the form data and formats it into an object that can be posted to the
+   * server to create a new task.
+   * 
+   * @returns The formatted data object.
+   */
+  getCreatedTaskData(contactJson: ContactInterface[]): Object {
+    let formattdDate = this.datePipe.transform(this.addTaskForm.date, 'yyyy-MM-dd');
+    let contactIds = contactJson.map((contact) => contact.id);
     return {
-      title: this.formData.taskTitle,
-      description: this.formData.taskDescription,
+      id: this.task.id,
+      title: this.addTaskForm.title,
+      description: this.addTaskForm.description,
       date: formattdDate,
-      prio: this.formData.taskPrio,
-      category: this.formData.taskCategory,
+      prio: this.addTaskForm.prio,
+      category: this.addTaskForm.category,
       taskCategory: 'to-do',
-      subtasks: subtasks,
+      // subtasks: this.createdSubtasks,
       contact_ids: contactIds,
       user_id: this.apiService.user.userId
     }
   }
 
 
-  getSubtasks(): object {
-    let subtasks = [];
-    for (let index = 0; index < this.taskSubtasks.length; index++) {
-      const substask = this.taskSubtasks[index];
-      let subtaskJson = { title: substask }
-      subtasks.push(subtaskJson);
-    }
-    return subtasks
-  }
-
-
-  getPriority(): void {
-    if (this.urgentBtn) {
-      this.formData.taskPrio = 'high';
-    } else if (this.mediumBtn) {
-      this.formData.taskPrio = 'medium';
-    } else {
-      this.formData.taskPrio = 'low';
-    }
-  }
-
-
-  /**
-   * Filters the list of contacts and updates the contacts to be assigned based on the search term.
-   *
-   * This method toggles the visibility of the dropdown menu for assigning contacts
-   * and filters the available contacts whose names start with the search term.
-   *
-   * @param {any} searchTerm - The search term used to filter contacts by name.
-   */
-  searchAssign(searchTerm: any): void {
+  searchContact(searchTerm: any): void {
     this.showDrowDownAssign = true;
-    this.contactToAssinged = this.apiService.contacts.filter((contact) => contact.name.toLowerCase().startsWith(searchTerm.value.toLowerCase()));
+    this.allContacts = this.apiService.contacts.filter((contact) => contact.name.toLowerCase().startsWith(searchTerm.value.toLowerCase()));
   }
 
 
-  /**
-   * Adds or removes a contact from the assigned contacts list.
-   *
-   * If the contact is already in the assigned contacts list, it is removed.
-   * Otherwise, it is added.
-   * @param {ContactInterface} contact The contact to add or remove from the assigned contacts list.
-   */
-  setAssign(contact: any): void {    
-    this.assingedContact.includes(contact) ? this.assingedContact.splice(this.assingedContact.indexOf(contact), 1) : this.assingedContact.push(contact);
+  setAssignContact(contact: any, type: string): void {
+    if (type == 'add') {
+      this.assingedContacts.includes(contact) ? this.assingedContacts.splice(this.assingedContacts.indexOf(contact), 1) : this.assingedContacts.push(contact);
+    } else if (type == 'edit') {
+      if (this.editAssingedContact.some(contactObj => contactObj.id === contact.id)) {
+        this.editAssingedContact = this.editAssingedContact.filter(contactObj => contactObj.id !== contact.id);
+      } else {
+        this.editAssingedContact.push(contact);
+      }
+    } 
   }
 
 
-  setAssignEdit(contact: any): void {    
-    if (this.editAssingedContact.some(contactObj => contactObj.id === contact.id)) {
-      this.editAssingedContact = this.editAssingedContact.filter(contactObj => contactObj.id !== contact.id);
-    } else {
-      this.editAssingedContact.push(contact);
-    }
-  }
-
-
-  checkIfIncluded(contact: any): boolean { 
+  checkIfIncluded(contact: any): boolean {
     const exists = this.editAssingedContact.some(contactObj => contactObj.id === contact.id);
     return exists;
   }
 
 
+
+
+
+  // safeEditSubtaskInEditTask(id: number): void {
+  //   this.editTaskSubtasks[id].title = this.editSubtaskInput;
+  //   this.editSubtaskId = -1;
+  // }
+
+
+  // removeSubtaskInEditTask(id: number): void {
+  //   this.editTaskSubtasks.splice(id, 1);
+  //   this.editSubtaskId = -1;
+  // }
+
+
+  // addSubtaskInEditTask() {
+  //   console.log(this.subtaskInput)
+  //   this.editTaskSubtasks.unshift(this.subtaskInput);
+  //   this.subtaskInput = '';
+  //   console.log(this.editTaskSubtasks)
+  // }
+
+
+
+  // editTheSubtaskInEditTask(subtaskTitle: string, id: number): void {
+  //   this.editSubtaskInput = subtaskTitle;
+  //   this.editSubtaskId = id;
+  // }
+
+
   /**
-   * Safely edits a subtask at the specified index with the current input.
-   * Updates the subtask in the taskSubtasks array and resets editSubtaskId to -1.
-   * @param {number} id The index of the subtask to edit.
+   * Creates a new subtask and adds it to the list of created subtasks.
+   *
+   * This function generates a clean JSON object representing a new subtask
+   * with default properties using `gedCreatedSubtaskCleanJson()` and prepends
+   * it to the `createdSubtasks` array. It then clears the `subtaskInput` field.
    */
-  safeEditSubtask(id: number): void {
-    this.taskSubtasks[id] = this.editSubtaskInput;
-    this.editSubtaskId = -1;
+  createSubtask(): void {
+    const subtaskJson = this.gedCreatedSubtaskCleanJson();
+    this.createdSubtasks.unshift(subtaskJson);
+    this.subtaskInput = '';
   }
 
 
   /**
-   * Removes the subtask with the given id from the task.
-   * The editSubtaskId is also reset to -1.
-   * @param {number} id The id of the subtask to remove.
+   * Returns a clean JSON object representing a new subtask with the given title
+   * and the default values for id and completed.
+   * @returns {SubtaskInterface} A clean JSON object representing a new subtask.
    */
-  removeSubtask(id: number): void {
-    this.taskSubtasks.splice(id, 1);
-    this.editSubtaskId = -1;
-    console.log(this.taskSubtasks);
+  gedCreatedSubtaskCleanJson(): SubtaskInterface {
+    return {
+      id: null,
+      title: this.subtaskInput,
+      completed: false
+    }
   }
 
 
   /**
-   * Sets the input for the subtask with the given id to edit mode.
-   * The input for the subtask will be set to the given subtask string and the editSubtaskId will be set to the given id.
-   * The user can then edit the subtask and save the changes by clicking the checkmark icon.
-   * @param {string} subtask The string of the subtask to edit.
+   * Sets the editSubtaskInput to the title of the subtask with the given id
+   * and sets the editSubtaskId to the given id.
+   * @param {SubtaskInterface} subtask The subtask to edit.
    * @param {number} id The id of the subtask to edit.
    */
-  editTheSubtask(subtask: string, id: number): void {
-    this.editSubtaskInput = subtask;
+  editTheCreatedSubtask(subtask: SubtaskInterface, id: number): void {
+    this.editSubtaskInput = subtask.title;
     this.editSubtaskId = id;
   }
 
 
   /**
-   * Adds a new subtask to the task based on the input in the subtask input field.
-   * The input is added to the beginning of the taskSubtasks array and the input is reset to an empty string.
+   * Sets the title of the subtask with the given id to the current editSubtaskInput
+   * and resets the editSubtaskId to null.
+   * @param {number} id The id of the subtask to edit.
    */
-  addSubtask(): void {
-    this.taskSubtasks.unshift(this.subtaskInput);
-    this.subtaskInput = '';
+  safeEditSubtask(id: number): void {
+    this.createdSubtasks[id].title = this.editSubtaskInput;
+    this.editSubtaskId = null;
   }
 
+
+  /**
+   * Deletes the subtask with the given id from the list of created subtasks.
+   * @param {number} id The id of the subtask to delete.
+   */
+  deleteCreadedSubtask(id: number): void {
+    this.createdSubtasks.splice(id, 1);
+    this.editSubtaskId = null;
+  }
 
   /**
    * Sets the category of the task based on the given type.
@@ -265,7 +301,7 @@ export class AddTaskFormComponent {
    * The dropdown menu will be hidden after the category is set.
    */
   setCategory(categoryType: string): void {
-    categoryType === 'userStory' ? this.formData.taskCategory = 'User Story' : this.formData.taskCategory = 'Technical Task'
+    categoryType === 'userStory' ? this.addTaskForm.category = 'User Story' : this.addTaskForm.category = 'Technical Task'
     this.showDrowDownCategory = false;
   }
 
@@ -284,19 +320,74 @@ export class AddTaskFormComponent {
    * Sets the priority of the task based on the given type.
    * @param {string} prioType The type of priority, either 'urgent', 'medium', or 'low'.
    */
-  setPrio(prioType: string): void {
+  setTaskPrio(prioType: string): void {
     if (prioType === 'high') {
-      this.urgentBtn = true
-      this.mediumBtn = false
-      this.lowBtn = false
+      this.setPrioHigh();
     } else if (prioType === 'medium') {
-      this.urgentBtn = false
-      this.mediumBtn = true
-      this.lowBtn = false
+      this.setPrioMedium();
     } else if (prioType === 'low') {
-      this.urgentBtn = false
-      this.mediumBtn = false
-      this.lowBtn = true
+      this.setPrioLow();
     }
+  }
+
+
+  /**
+   * Sets the priority of the task to 'high' and updates the state of the buttons to reflect this.
+   */
+  setPrioHigh(): void {
+    this.urgentBtn = true
+    this.mediumBtn = false
+    this.lowBtn = false
+    this.addTaskForm.prio = 'high';
+  }
+
+
+  /**
+   * Sets the priority of the task to 'medium' and updates the state of the buttons to reflect this.
+   */
+  setPrioMedium(): void {
+    this.urgentBtn = false
+    this.mediumBtn = true
+    this.lowBtn = false
+    this.addTaskForm.prio = 'medium';
+  }
+
+
+  /**
+   * Sets the priority of the task to 'low' and updates the state of the buttons to reflect this.
+   */
+  setPrioLow(): void {
+    this.urgentBtn = false
+    this.mediumBtn = false
+    this.lowBtn = true
+    this.addTaskForm.prio = 'low';
+  }
+
+
+  /**
+   * Closes the dialog with an 'add' action.
+   * 
+   * This method is called when the user clicks the cancel button in the dialog.
+   * It will close the dialog and pass the 'add' action to the parent component.
+   */
+  closeDialog(): void {
+    this.closeFormDialog.emit();
+  }
+
+
+  /**
+   * Resets the form fields to their default values.
+   * This method is called whenever the user clicks the "Clear" button.
+   * It resets all the form fields to empty strings, and resets the assigned contacts and subtasks to empty arrays.
+   */
+  resestForm(): void {
+    this.addTaskForm.title = '';
+    this.addTaskForm.description = '';
+    this.addTaskForm.prio = '';
+    this.addTaskForm.date = new Date();
+    this.addTaskForm.category = '';
+    this.subtaskInput = '';
+    this.assingedContacts = [];
+    this.createdSubtasks = [];
   }
 }

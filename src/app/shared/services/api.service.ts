@@ -111,6 +111,7 @@ export class ApiService {
   patchTaskData(data: any): void {
     let request = this.http.patch<any>(`${this.APIURL}task/${data.id}/`, data)
     request.subscribe((response) => {
+      console.log(response);
       this.task = this.task.map((task) => task.id === response.id ? response : task);
     })
   }

@@ -3,7 +3,7 @@ export interface TaskInterface {
     id: number;
     description: string;
     prio: string;
-    date: string;
+    date: string | Date;
     category: string;
     taskCategory: string;
     subtasks: any[];

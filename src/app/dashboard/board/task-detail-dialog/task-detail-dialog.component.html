@@ -49,6 +49,6 @@
             <button (click)="editTask = true"><mat-icon fontIcon="edit"></mat-icon>Edit</button>
         </footer>
     } @else {
-        <app-add-task-form [type]="'editTask'" [ngStyle]="{'width': '100%'}" [task]="task"></app-add-task-form>
+        <app-add-task-form [formType]="'editTask'" [ngStyle]="{'width': '100%'}" [task]="task"></app-add-task-form>
     }
 </section>

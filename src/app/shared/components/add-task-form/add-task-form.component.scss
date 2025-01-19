@@ -387,6 +387,18 @@ footer {
 .edit-task-form {
     @include position-center($fd: column);
     gap: 20px;
+
+    .active-low, .active-medium, .active-urgent {
+        @include font-design($fs: 16px, $fw: 700);
+        color: white;
+        mat-icon {
+            color: white !important;
+        }
+    }
+
+    .form-field-overlaying-div {
+        width: 99%;
+    }
 }
 
 .edit-prio-content {
@@ -411,4 +423,12 @@ footer {
         @include position-center();
         color: white;
     }
+}
+
+.edit-scroll-div {
+    @include position-center($fd: column, $ai: flex-start, $jc: flex-start);
+    gap: 20px;
+    width: 100%;
+    max-height: 70vh;
+    overflow-y: auto;
 }
