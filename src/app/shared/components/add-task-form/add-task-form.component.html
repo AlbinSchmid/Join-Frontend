@@ -205,13 +205,13 @@
             <div class="form-field-overlaying-div">
                 <p>Prio</p>
                 <div class="prio-content edit-prio-content">
-                    <div class="urgent" [ngClass]="{'active-urgent': urgentBtn}" (click)="setTaskPrio('high')">Urgent
+                    <div class="urgent" [ngClass]="{'active-urgent': addTaskForm.prio === 'high'}" (click)="setTaskPrio('high')">Urgent
                         <mat-icon fontIcon="keyboard_double_arrow_up"></mat-icon>
                     </div>
-                    <div class="medium" [ngClass]="{'active-medium': mediumBtn}" (click)="setTaskPrio('medium')">Medium
+                    <div class="medium" [ngClass]="{'active-medium': addTaskForm.prio === 'medium'}" (click)="setTaskPrio('medium')">Medium
                         <mat-icon fontIcon="drag_handle"></mat-icon>
                     </div>
-                    <div class="low" [ngClass]="{'active-low': lowBtn}" (click)="setTaskPrio('low')">Low <mat-icon
+                    <div class="low" [ngClass]="{'active-low': addTaskForm.prio === 'low'}" (click)="setTaskPrio('low')">Low <mat-icon
                             fontIcon="keyboard_double_arrow_down"></mat-icon></div>
                 </div>
             </div>

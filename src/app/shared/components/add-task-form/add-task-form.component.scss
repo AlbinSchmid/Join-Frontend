@@ -135,12 +135,13 @@ label {
         @include position-center($fd: column, $ai: flex-start, $jc: flex-start);
         gap: 2px;
         max-height: 300px;
-        overflow-y: scroll;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
 
     .select-item {
         @include position-center($jc: flex-start);
-        width: calc(100% - 3px);
+        width: 100%;
         border-radius: 8px;
         cursor: pointer;
 

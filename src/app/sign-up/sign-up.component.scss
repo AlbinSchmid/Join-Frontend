@@ -33,3 +33,60 @@ footer {
         }
     };
 }
+
+.logo {
+    position: absolute;
+    left: 40px;
+    top: 40px;
+
+    img {
+        width: 100px;
+        height: 120px;
+    }
+}
+
+.start-animation {
+    @include position-center();
+    z-index: 2;
+    height: 100vh;
+    width: 100vw;
+    animation: background-animation 750ms linear forwards 750ms;
+    background-color: #F6F7F8;
+
+    img {
+        width: 274px;
+        height: 335px;
+        animation: img-animation 750ms linear forwards 750ms;
+    }
+}
+
+
+@keyframes background-animation {
+    0% {
+        height: 100vh;
+        width: 100vw;
+    }
+
+    20% {
+        background-color: transparent;
+    }
+
+    100% {
+        width: 100px;
+        height: 120px;
+        background-color: transparent;
+    }
+}
+
+@keyframes img-animation {
+    0% {
+        width: 274px;
+        height: 335px;
+    }
+
+    100% {
+        width: 100px;
+        height: 120px;
+    }
+
+}

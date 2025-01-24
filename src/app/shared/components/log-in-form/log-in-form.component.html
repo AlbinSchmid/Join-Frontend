@@ -49,7 +49,7 @@
         <label *ngIf="formType === 'signUp'" for="" class="checkbox-label">
             <input type="checkbox" #checkbox="ngModel" required name="checkbox"
                 [(ngModel)]="formData.checkboxPrivacyPolicy">
-            <p>I accept the <a href="privacy-police">Privacy Police</a></p>
+            <p>I accept the<a href="/privacy-police">Privacy Police</a></p>
             @if (showCheckboxError) {
             <span class="span-error" class="checkbox-error">Please accept the privacy policy</span>
             }
@@ -57,7 +57,7 @@
         <div class="btn-div">
             <button *ngIf="formType === 'logIn'" [ngClass]="{'disabled': !form.valid}" [disabled]="form.invalid"
                 type="submit" mat-flat-button class="filled">Log in</button>
-            <button *ngIf="formType === 'logIn'" mat-stroked-button class="outline">Guest Log in</button>
+            <button *ngIf="formType === 'logIn'" mat-stroked-button class="outline" (click)="guestLogIn()">Guest Log in</button>
             <button *ngIf="formType === 'signUp'" [ngClass]="{'disabled': !form.valid}" [disabled]="form.invalid"
                 type="submit" mat-stroked-button class="filled">Sign up</button>
                 @if (showLoginFailedError && formType === 'logIn') {

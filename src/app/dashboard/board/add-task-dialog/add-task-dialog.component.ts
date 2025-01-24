@@ -12,9 +12,13 @@ import { AddTaskFormComponent } from '../../../shared/components/add-task-form/a
   standalone: true
 })
 export class AddTaskDialogComponent {
-dialogRef = inject(MatDialogRef<AddTaskDialogComponent>);
+  dialogRef = inject(MatDialogRef<AddTaskDialogComponent>);
 
-closeDialog(): void {
-  this.dialogRef.close();
-}
+
+  /**
+   * Closes the dialog.
+   */
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
 }

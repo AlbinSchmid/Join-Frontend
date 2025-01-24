@@ -1,7 +1,10 @@
 <section>
+    <div class="logo" [ngClass]="{'start-animation': dashboardService.showStartAnimation}" #animation>
+        <img src="assets/img/join-logo-blue.png" alt="join-logo-blue">
+    </div>
     <header>
         <p>Not a Join user?</p>
-        <a href="/sign-up" mat-flat-button class="filled">Sign up</a>
+        <a (click)="goToSignUp()" mat-flat-button class="filled">Sign up</a>
     </header>
     <app-log-in-form [formType]="'logIn'"></app-log-in-form>
     <footer>

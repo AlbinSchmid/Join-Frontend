@@ -12,18 +12,5 @@ import { DashboardService } from './shared/services/dashboard.service';
   standalone: true
 })
 export class AppComponent {
-  dashboardService = inject(DashboardService)
-  apiService = inject(ApiService)
   title = 'join-front-end';
-
-  ngOnInit(): void {
-    this.getUserFormLocalStorage();
-    this.apiService.getContactData();
-  }
-
-
-  getUserFormLocalStorage():void {
-    const storedUser = JSON.parse(localStorage.getItem('user') ?? '{}');
-    this.apiService.user = storedUser
-  }
 }

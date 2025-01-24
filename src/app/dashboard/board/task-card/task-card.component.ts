@@ -34,7 +34,11 @@ export class TaskCardComponent {
   subtaskValue = 0;
   completeSubtasksValue = 0;
 
-
+  
+  /**
+   * Lifecycle hook that is called after data-bound properties of a directive are initialized.
+   * Initializes the subtask value and calculates the progress if subtasks are present.
+   */
   ngOnInit() {
     if (this.subtasks) {
       this.subtaskValue = this.subtasks.length;
@@ -67,6 +71,13 @@ export class TaskCardComponent {
       },
     }).afterClosed().subscribe(result => {
       this.apiService.getTaskData();
+      this.apiService.getSubtaskData().subscribe((response: any) => {
+        let task = response.find((task: any) => task.id === this.task.id);      
+        this.subtasks = [];
+        this.subtasks = task.subtasks;
+        this.calculateProgress();
+      });
+      this.dashboardService.editTask = false;
     })
   }
 

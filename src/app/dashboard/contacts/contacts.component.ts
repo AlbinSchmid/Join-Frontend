@@ -38,6 +38,10 @@ export class ContactsComponent {
   showContactDetail = false;
 
 
+  /**
+   * Initializes the component.
+   * Resets the contact category letters and sets the contact detail view to false.
+   */
   ngOnInit():void {
     this.dashboardService.contactCategoryLetters = [];
     this.dashboardService.contactDetailView = false;

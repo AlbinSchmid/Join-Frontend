@@ -7,53 +7,54 @@
     <div class="content">
         <div class="task-overview">
             <div class="task-row">
-                <div class="task-info hover-to-do">
+                <div class="task-info hover-to-do" (click)="openBoard()">
                     <mat-icon fontIcon="edit"></mat-icon>
                     <span>
-                        <h6>1</h6>
+                        <h6>{{ todoCount }}</h6>
                         <p>To-do</p>
                     </span>
                 </div>
-                <div class="task-info hover-done">
+                <div class="task-info hover-done"  (click)="openBoard()">
                     <mat-icon fontIcon="check"></mat-icon>
                     <span>
-                        <h6>2</h6>
+                        <h6>{{ doneCount }}</h6>
                         <p>Done</p>
                     </span>
                 </div>
             </div>
-            <div class="task-row">
+            <div class="task-row" (click)="openBoard()">
                 <div class="task-mid hover-urgent">
                     <div class="left-part">
                         <mat-icon fontIcon="keyboard_double_arrow_up"></mat-icon>
                         <span>
-                            <h6>1</h6>
+                            <h6>{{ urgentCount }}</h6>
                             <p>Urgent</p>
                         </span>
                     </div>
                     <div class="line-grey"></div>
                     <div class="right-part">
-                        <p class="date">October 16, 2022</p>
+                        <p class="date" *ngIf="upcomingDeadline !== null">{{ upcomingDeadline }}</p>
+                        <p class="date" *ngIf="upcomingDeadline === null">No Upcoming Deadline</p>
                         <p class="txt-deadline">Upcoming Deadline</p>
                     </div>
                 </div>
             </div>
             <div class="task-row">
-                <div class="task-info hover-board">
+                <div class="task-info hover-board" (click)="openBoard()">
                     <span>
-                        <h6>5</h6>
+                        <h6>{{ allTaskCount }}</h6>
                         <p>Task in Board</p>
                     </span>
                 </div>
-                <div class="task-info hover-progress">
+                <div class="task-info hover-progress" (click)="openBoard()">
                     <span>
-                        <h6>2</h6>
+                        <h6>{{ inProgressCount }}</h6>
                         <p>Task in Progress</p>
                     </span>
                 </div>
-                <div class="task-info hover-feedback">
+                <div class="task-info hover-feedback" (click)="openBoard()">
                     <span>
-                        <h6>3</h6>
+                        <h6>{{ awaitingFeedbackCount }}</h6>
                         <p>Awaiting Feedback</p>
                     </span>
                 </div>
@@ -62,7 +63,7 @@
         <div class="greeting-div">
             <div>
                 <h3>Good morning,</h3>
-                <h2>{{ apiService.user.username }}</h2>
+                <h2>{{ getName() }}</h2>
             </div>
         </div>
     </div>

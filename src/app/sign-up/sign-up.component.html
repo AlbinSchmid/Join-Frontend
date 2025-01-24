@@ -1,4 +1,7 @@
 <section>
+    <div class="logo" [ngClass]="{'start-animation': dashboardService.showStartAnimation}" #animation>
+        <img src="assets/img/join-logo-blue.png" alt="join-logo-blue">
+    </div>
     <app-log-in-form [formType]="'signUp'"></app-log-in-form>
     <footer>
         <a href="">Privacy Policy</a>

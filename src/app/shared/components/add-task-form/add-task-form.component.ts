@@ -9,7 +9,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
-import { log } from 'console';
 import { ApiService } from '../../services/api.service';
 import { DashboardService } from '../../services/dashboard.service';
 import { ContactInterface } from '../../interfaces/contact-interface';
@@ -42,11 +41,9 @@ export class AddTaskFormComponent {
   apiService = inject(ApiService);
   dashboardService = inject(DashboardService);
   datePipe = inject(DatePipe);
-
   @Input() formType: string;
   @Input() task: TaskInterface;
   closeFormDialog = output<void>();
-
   addTaskForm = {
     title: '',
     description: '',
@@ -54,19 +51,13 @@ export class AddTaskFormComponent {
     date: new Date(),
     category: '',
   }
-
   createdSubtasks: SubtaskInterface[] = [];
-
   allContacts: ContactInterface[] = [];
   assingedContacts: ContactInterface[] = [];
-
   editAssingedContact: any[] = [];
-
-
   subtaskInput = '';
   editSubtaskInput = '';
   editSubtaskId: Number | null;
-
   showDrowDownAssign = false;
   showDrowDownCategory = false;
   urgentBtn = false;
@@ -74,6 +65,13 @@ export class AddTaskFormComponent {
   lowBtn = false;
 
 
+  /**
+   * Initializes the component upon creation.
+   * 
+   * Logs the task information to the console. If the form type is 'editTask',
+   * it retrieves the task data for editing. It also fetches all available
+   * contacts for assignment.
+   */
   ngOnInit() {
     if (this.formType == 'editTask') {
       this.getEditTaskData();
@@ -82,6 +80,13 @@ export class AddTaskFormComponent {
   }
 
 
+  /**
+   * Populates the edit task form with the current task's data.
+   * 
+   * This function assigns the task's title, description, priority, date, category,
+   * subtasks, and contacts to the corresponding fields in the form. It is used to
+   * initialize the form with the task's existing data when editing a task.
+   */
   getEditTaskData(): void {
     this.addTaskForm.title = this.task.title;
     this.addTaskForm.description = this.task.description;
@@ -104,6 +109,14 @@ export class AddTaskFormComponent {
   }
 
 
+  /**
+   * Handles the submission of the edit task form.
+   * 
+   * The function is called when the form is submitted and checks if the form is valid.
+   * If the form is valid, it calls the `saveEditTask` function to update the task in the API.
+   * 
+   * @param ngForm The form object containing the user's input.
+   */
   submitEditTaskForm(ngForm: NgForm): void {
     if (ngForm.valid && ngForm.submitted) {
       this.saveEditTask();
@@ -111,12 +124,72 @@ export class AddTaskFormComponent {
   }
 
 
+  /**
+   * Saves the edited task by sending a PATCH request to the API.
+   * 
+   * This function first sets the `editTask` property of the `dashboardService` to false.
+   * Then, it prepares the contact data object for a task edit action by calling
+   * the `getEditDataContact` function. It also prepares the task data object for a
+   * task edit action by calling the `getEditTaskDataWithSubtasks` function.
+   * Then, it sends a PATCH request to the API with the prepared task data object.
+   * After that, it sends another PATCH request to the API with the prepared contact
+   * data object after a 10ms delay. Finally, it emits the `closeFormDialog` event
+   * to close the task detail dialog.
+   */
   saveEditTask(): void {
-    
-    let data = this.getCreatedTaskData(this.editAssingedContact);
-    console.log(data);
-    this.apiService.patchTaskData(data);
-    
+    this.dashboardService.editTask = false;
+    let dataContacts = this.getEditDataContact();
+    let dataWithSubtasks = this.getEditTaskDataWithSubtasks();
+    this.apiService.patchTaskData(dataWithSubtasks);
+    setTimeout(() => {
+      this.apiService.patchTaskDataContacts(dataContacts);
+    }, 10);
+    this.closeFormDialog.emit();
+  }
+
+
+  /**
+   * Prepares the contact data object for a task edit action.
+   * 
+   * This function takes the current task ID and the contact IDs from the
+   * `editAssingedContact` array and returns an object in the format
+   * expected by the API for a task edit action with contacts.
+   * 
+   * @returns {Object} An object with the task ID and an array of contact IDs.
+   */
+  getEditDataContact(): Object {
+    let formattdDate = this.datePipe.transform(this.addTaskForm.date, 'yyyy-MM-dd');
+    let contactIds = this.editAssingedContact.map((contact) => contact.id);
+    return {
+      id: this.task.id,
+      contact_ids: contactIds,
+    }
+  }
+
+
+  /**
+   * Constructs an object containing the edited task data, including subtasks.
+   * 
+   * This function prepares and returns an object with task details such as title,
+   * description, date, priority, category, task category, subtasks, and the user ID.
+   * It formats the date using the 'yyyy-MM-dd' format and uses the user ID from the 
+   * API service. Note that contact IDs are prepared but commented out in the return object.
+   * 
+   * @returns {Object} An object containing the edited task details with subtasks.
+   */
+  getEditTaskDataWithSubtasks(): Object {
+    let formattdDate = this.datePipe.transform(this.addTaskForm.date, 'yyyy-MM-dd');
+    return {
+      id: this.task.id,
+      title: this.addTaskForm.title,
+      description: this.addTaskForm.description,
+      date: formattdDate,
+      prio: this.addTaskForm.prio,
+      category: this.addTaskForm.category,
+      taskCategory: this.task.taskCategory,
+      subtasks: this.createdSubtasks,
+      user_id: this.apiService.user.userId
+    }
   }
 
 
@@ -144,7 +217,7 @@ export class AddTaskFormComponent {
    * the console.
    */
   createTask(): void {
-    let data = this.getCreatedTaskData(this.assingedContacts);
+    let data = this.getCreatedTaskData();
     this.apiService.postRequest(data, 'task').subscribe((response) => {
       this.dashboardService.todo.push(response);
       this.resestForm();
@@ -161,30 +234,46 @@ export class AddTaskFormComponent {
    * 
    * @returns The formatted data object.
    */
-  getCreatedTaskData(contactJson: ContactInterface[]): Object {
+  getCreatedTaskData(): Object {
     let formattdDate = this.datePipe.transform(this.addTaskForm.date, 'yyyy-MM-dd');
-    let contactIds = contactJson.map((contact) => contact.id);
+    let contactIds = this.assingedContacts.map((contact) => contact.id);
     return {
-      id: this.task.id,
+      id: null,
       title: this.addTaskForm.title,
       description: this.addTaskForm.description,
       date: formattdDate,
       prio: this.addTaskForm.prio,
       category: this.addTaskForm.category,
       taskCategory: 'to-do',
-      // subtasks: this.createdSubtasks,
+      subtasks: this.createdSubtasks,
       contact_ids: contactIds,
       user_id: this.apiService.user.userId
     }
   }
 
 
+  /**
+   * Searches for a contact in the contacts list.
+   * 
+   * @param searchTerm - The input field to search in.
+   */
   searchContact(searchTerm: any): void {
     this.showDrowDownAssign = true;
     this.allContacts = this.apiService.contacts.filter((contact) => contact.name.toLowerCase().startsWith(searchTerm.value.toLowerCase()));
   }
 
 
+  /**
+   * Sets the assigned contacts for the task, either for adding or editing.
+   * 
+   * If the type is 'add', it checks if the contact is already in the array of assigned contacts.
+   * If it is, it removes it, otherwise it adds it. If the type is 'edit', it checks if the
+   * contact is already in the array of assigned contacts to edit. If it is, it removes it,
+   * otherwise it adds it.
+   * 
+   * @param contact - The contact object to assign.
+   * @param type - The type of assignment, either 'add' or 'edit'.
+   */
   setAssignContact(contact: any, type: string): void {
     if (type == 'add') {
       this.assingedContacts.includes(contact) ? this.assingedContacts.splice(this.assingedContacts.indexOf(contact), 1) : this.assingedContacts.push(contact);
@@ -194,44 +283,19 @@ export class AddTaskFormComponent {
       } else {
         this.editAssingedContact.push(contact);
       }
-    } 
+    }
   }
 
 
+  /**
+   * Checks if a contact is included in the array of assigned contacts.
+   * @param contact - The contact object to check.
+   * @returns true if the contact is included, false otherwise.
+   */
   checkIfIncluded(contact: any): boolean {
     const exists = this.editAssingedContact.some(contactObj => contactObj.id === contact.id);
     return exists;
   }
-
-
-
-
-
-  // safeEditSubtaskInEditTask(id: number): void {
-  //   this.editTaskSubtasks[id].title = this.editSubtaskInput;
-  //   this.editSubtaskId = -1;
-  // }
-
-
-  // removeSubtaskInEditTask(id: number): void {
-  //   this.editTaskSubtasks.splice(id, 1);
-  //   this.editSubtaskId = -1;
-  // }
-
-
-  // addSubtaskInEditTask() {
-  //   console.log(this.subtaskInput)
-  //   this.editTaskSubtasks.unshift(this.subtaskInput);
-  //   this.subtaskInput = '';
-  //   console.log(this.editTaskSubtasks)
-  // }
-
-
-
-  // editTheSubtaskInEditTask(subtaskTitle: string, id: number): void {
-  //   this.editSubtaskInput = subtaskTitle;
-  //   this.editSubtaskId = id;
-  // }
 
 
   /**
@@ -293,6 +357,7 @@ export class AddTaskFormComponent {
     this.createdSubtasks.splice(id, 1);
     this.editSubtaskId = null;
   }
+
 
   /**
    * Sets the category of the task based on the given type.

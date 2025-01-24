@@ -42,7 +42,6 @@ export class TaskDetailDialogComponent {
   editTask = false;
 
 
-
   /**
    * Sets the subtask to completed or uncompleted and sends a request to the API to update the subtask.
    * The subtask is updated with the opposite of the current completed status. If the subtask is currently completed, it will be set to uncompleted and vice versa.
@@ -55,7 +54,6 @@ export class TaskDetailDialogComponent {
       completed: trueOrFalse
     }
     this.apiService.patchSubtaskData(data).subscribe((response) => {
-
     });
   }
   
@@ -89,7 +87,7 @@ export class TaskDetailDialogComponent {
    * @description This function closes the task detail dialog.
    */
   closeTaskDetailDialog():void {
-    this.dialogRef.close();
+    this.dialogRef.close(this.subtasks);
   }
 
 }

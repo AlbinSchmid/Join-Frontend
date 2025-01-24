@@ -25,9 +25,19 @@ export class ApiService {
   contacts: ContactInterface[] = [];
   task: any[] = [];
 
+  getUserFormLocalStorage():void {
+    const storedUser = JSON.parse(localStorage.getItem('user') ?? '{}');
+    this.user = storedUser
+  }
+
 
   postLogInData(data: any) {
     return this.http.post<any>(`${this.APIURL}logIn/`, data)
+  }
+
+
+  postGuestLogInData(data: any) {
+    return this.http.post<any>(`${this.APIURL}guest-login/`, data)
   }
 
 
@@ -100,18 +110,36 @@ export class ApiService {
   }
 
 
+  getSubtaskData(): any {
+    return this.http.get<any>(`${this.APIURL}user-profile/${this.user.userId}/task/`)
+  }
+
+
   filterTaskWithTaskCategory(): void {
-    this.dashboardService.todo = this.task.filter((task) => task.taskCategory === 'to-do');
-    this.dashboardService.done = this.task.filter((task) => task.taskCategory === 'done');
-    this.dashboardService.inProgress = this.task.filter((task) => task.taskCategory === 'in-progress');
-    this.dashboardService.awaitFeedback = this.task.filter((task) => task.taskCategory === 'await-feedback');
+    this.dashboardService.todoAllTasks = this.task.filter((task) => task.taskCategory === 'to-do');
+    this.dashboardService.doneAllTasks = this.task.filter((task) => task.taskCategory === 'done');
+    this.dashboardService.inProgressAllTasks = this.task.filter((task) => task.taskCategory === 'in-progress');
+    this.dashboardService.awaitFeedbackAllTasks = this.task.filter((task) => task.taskCategory === 'await-feedback');
+    let searchTerm = this.dashboardService.searchTaskInput;
+    this.dashboardService.todo = this.dashboardService.todoAllTasks;
+    this.dashboardService.done = this.dashboardService.doneAllTasks;
+    this.dashboardService.inProgress = this.dashboardService.inProgressAllTasks;
+    this.dashboardService.awaitFeedback = this.dashboardService.awaitFeedbackAllTasks;
   }
 
 
   patchTaskData(data: any): void {
     let request = this.http.patch<any>(`${this.APIURL}task/${data.id}/`, data)
     request.subscribe((response) => {
-      console.log(response);
+      this.task = this.task.map((task) => task.id === response.id ? response : task);
+      this.getTaskData();
+    })
+  }
+
+
+  patchTaskDataContacts(data: any): void {
+    let request = this.http.patch<any>(`${this.APIURL}edit-contact/task/${data.id}/`, data)
+    request.subscribe((response) => {
       this.task = this.task.map((task) => task.id === response.id ? response : task);
     })
   }

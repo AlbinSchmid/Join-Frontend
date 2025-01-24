@@ -68,4 +68,9 @@ form {
             text-decoration: underline;
         }
     }
+
+    p {
+        display: flex;
+        gap: 4px;
+    }
 }

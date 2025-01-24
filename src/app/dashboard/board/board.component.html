@@ -3,7 +3,7 @@
         <h1>Board</h1>
         <div class="right-part">
             <label>
-                <input placeholder="Find Task">
+                <input placeholder="Find Task" (input)="searchTask()" [(ngModel)]="dashboardService.searchTaskInput" name="searchTask">
                 <div class="line-grey"></div>
                 <mat-icon fontIcon="search"></mat-icon>
             </label>
@@ -21,7 +21,7 @@
             <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="dashboardService.todo"
                 [cdkDropListConnectedTo]="[doneList, progressList, awaitFeedbackList]" class="drop-list"
                 (cdkDropListDropped)="drop($event, 'to-do')">
-                @for (task of dashboardService.todo; track task) {
+                @for (task of dashboardService.todo; track task.id) {
                 <app-task-card cdkDrag [task]="task" [contacts]="task.contacts"
                     [subtasks]="task.subtasks"></app-task-card>
                 }
@@ -37,7 +37,7 @@
             <div cdkDropList #progressList="cdkDropList" [cdkDropListData]="dashboardService.inProgress"
                 [cdkDropListConnectedTo]="[todoList, doneList, awaitFeedbackList]" class="drop-list"
                 (cdkDropListDropped)="drop($event, 'in-progress')">
-                @for (task of dashboardService.inProgress; track task) {
+                @for (task of dashboardService.inProgress; track task.id) {
                 <app-task-card cdkDrag [task]="task" [contacts]="task.contacts"
                     [subtasks]="task.subtasks"></app-task-card>
                 }
@@ -53,7 +53,7 @@
             <div cdkDropList #awaitFeedbackList="cdkDropList" [cdkDropListData]="dashboardService.awaitFeedback"
                 [cdkDropListConnectedTo]="[todoList, doneList, progressList]" class="drop-list"
                 (cdkDropListDropped)="drop($event, 'await-feedback')">
-                @for (task of dashboardService.awaitFeedback; track task) {
+                @for (task of dashboardService.awaitFeedback; track task.id) {
                 <app-task-card cdkDrag [task]="task" [contacts]="task.contacts"
                     [subtasks]="task.subtasks"></app-task-card>
                 }
@@ -69,7 +69,7 @@
             <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="dashboardService.done"
                 [cdkDropListConnectedTo]="[todoList, progressList, awaitFeedbackList]" class="drop-list"
                 (cdkDropListDropped)="drop($event, 'done')">
-                @for (task of dashboardService.done; track task) {
+                @for (task of dashboardService.done; track task.id) {
                 <app-task-card cdkDrag [task]="task" [contacts]="task.contacts"
                     [subtasks]="task.subtasks"></app-task-card>
                 }

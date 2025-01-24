@@ -12,8 +12,4 @@ import { DashboardService } from '../../shared/services/dashboard.service';
 export class AddTaskComponent {
 apiService = inject(ApiService);
 dashboardService = inject(DashboardService);
-
-ngOnInit():void {
-  this.apiService.getContactData();
-}
 }

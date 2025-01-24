@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DashboardService } from '../../shared/services/dashboard.service';
 import { TaskInterface } from '../../shared/interfaces/task-interface';
 import { AddTaskDialogComponent } from './add-task-dialog/add-task-dialog.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-board',
@@ -21,6 +22,7 @@ import { AddTaskDialogComponent } from './add-task-dialog/add-task-dialog.compon
     CdkDropList,
     CdkDrag,
     TaskCardComponent,
+    FormsModule
   ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss'
@@ -30,8 +32,26 @@ export class BoardComponent {
   dashboardService = inject(DashboardService);
   dialog = inject(MatDialog);
 
+
+  /**
+   * Initializes the component.
+   * Fetches the task data.
+   */
   ngOnInit() {
     this.apiService.getTaskData();
+  }
+
+
+  /**
+   * Filters the tasks in the task categories based on the search term.
+   */
+  searchTask(): void {
+    let searchTerm = this.dashboardService.searchTaskInput;
+    this.dashboardService.todo = this.dashboardService.todoAllTasks.filter((task) => task.title.toLowerCase().startsWith(searchTerm.toLowerCase()));
+    this.dashboardService.inProgress = this.dashboardService.inProgressAllTasks.filter((task) => task.title.toLowerCase().startsWith(searchTerm.toLowerCase()));
+    this.dashboardService.awaitFeedback = this.dashboardService.awaitFeedbackAllTasks.filter((task) => task.title.toLowerCase().startsWith(searchTerm.toLowerCase()));
+    this.dashboardService.done = this.dashboardService.doneAllTasks.filter((task) => task.title.toLowerCase().startsWith(searchTerm.toLowerCase()));
+
   }
 
 
