@@ -1,0 +1,35 @@
+@import './../../../styles.scss';
+
+
+section {
+    overflow: scroll;
+    gap: 24px !important;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+a {
+    display: block;
+    padding: 0;
+    color: $light-blue;
+    font-weight: 400 !important;
+}
+
+.contact-info {
+    p {
+        display: flex;
+        gap: 4px;
+    }
+}
+
+div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+p, li, a {
+    @include font-design($fs: 16px, $fw: 400);
+}
