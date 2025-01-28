@@ -75,6 +75,7 @@ export class TaskCardComponent {
         let task = response.find((task: any) => task.id === this.task.id);      
         this.subtasks = [];
         this.subtasks = task.subtasks;
+        this.subtaskValue = this.subtasks.length;
         this.calculateProgress();
       });
       this.dashboardService.editTask = false;

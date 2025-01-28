@@ -3,7 +3,8 @@
         <h1>Board</h1>
         <div class="right-part">
             <label>
-                <input placeholder="Find Task" (input)="searchTask()" [(ngModel)]="dashboardService.searchTaskInput" name="searchTask">
+                <input placeholder="Find Task" (input)="searchTask()" [(ngModel)]="dashboardService.searchTaskInput"
+                    name="searchTask">
                 <div class="line-grey"></div>
                 <mat-icon fontIcon="search"></mat-icon>
             </label>
@@ -21,9 +22,17 @@
             <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="dashboardService.todo"
                 [cdkDropListConnectedTo]="[doneList, progressList, awaitFeedbackList]" class="drop-list"
                 (cdkDropListDropped)="drop($event, 'to-do')">
+                @if (dashboardService.todo.length > 0) {
                 @for (task of dashboardService.todo; track task.id) {
                 <app-task-card cdkDrag [task]="task" [contacts]="task.contacts"
                     [subtasks]="task.subtasks"></app-task-card>
+                }
+                } @else {
+                <div class="no-task-div">
+                    <div>
+                        <p>No tasks To do</p>
+                    </div>
+                </div>
                 }
             </div>
         </div>
@@ -37,10 +46,19 @@
             <div cdkDropList #progressList="cdkDropList" [cdkDropListData]="dashboardService.inProgress"
                 [cdkDropListConnectedTo]="[todoList, doneList, awaitFeedbackList]" class="drop-list"
                 (cdkDropListDropped)="drop($event, 'in-progress')">
+                @if (dashboardService.inProgress.length > 0) {
                 @for (task of dashboardService.inProgress; track task.id) {
                 <app-task-card cdkDrag [task]="task" [contacts]="task.contacts"
                     [subtasks]="task.subtasks"></app-task-card>
                 }
+                } @else {
+                <div class="no-task-div">
+                    <div>
+                        <p>No tasks In progress</p>
+                    </div>
+                </div>
+                }
+
             </div>
         </div>
         <div class="drag-and-drop-list">
@@ -53,9 +71,17 @@
             <div cdkDropList #awaitFeedbackList="cdkDropList" [cdkDropListData]="dashboardService.awaitFeedback"
                 [cdkDropListConnectedTo]="[todoList, doneList, progressList]" class="drop-list"
                 (cdkDropListDropped)="drop($event, 'await-feedback')">
+                @if (dashboardService.awaitFeedback.length > 0) {
                 @for (task of dashboardService.awaitFeedback; track task.id) {
                 <app-task-card cdkDrag [task]="task" [contacts]="task.contacts"
                     [subtasks]="task.subtasks"></app-task-card>
+                }
+                } @else {
+                <div class="no-task-div">
+                    <div>
+                        <p>No tasks Await feedback</p>
+                    </div>
+                </div>
                 }
             </div>
         </div>
@@ -69,10 +95,19 @@
             <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="dashboardService.done"
                 [cdkDropListConnectedTo]="[todoList, progressList, awaitFeedbackList]" class="drop-list"
                 (cdkDropListDropped)="drop($event, 'done')">
+                @if (dashboardService.done.length > 0) {
                 @for (task of dashboardService.done; track task.id) {
                 <app-task-card cdkDrag [task]="task" [contacts]="task.contacts"
                     [subtasks]="task.subtasks"></app-task-card>
                 }
+                } @else {
+                <div class="no-task-div">
+                    <div>
+                        <p>No tasks Done</p>
+                    </div>
+                </div>
+                }
+
             </div>
         </div>
     </div>

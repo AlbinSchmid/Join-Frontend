@@ -7,7 +7,7 @@
                 <p>{{ dashboardService.getInitials(this.apiService.user.username) }}</p>
             </div>
             <mat-menu #menu="matMenu" class="profile-menu">
-                <a mat-menu-item class="menu-item">
+                <a mat-menu-item class="menu-item" href="/help">
                     Help
                 </a>
                 <a mat-menu-item class="menu-item">
@@ -52,14 +52,21 @@
             </button>
         </div>
         <footer>
-            <a href="">Privacy Policy</a>
-            <a href="">Legal Notice</a>
+            <button (click)="switchContent('privacyPolicy')" [ngClass]="{'active-button': dashboardService.showPrivacyPolicy}">
+                <p>Privacy Policy</p>
+            </button>
+            <button (click)="switchContent('legalNotice')" [ngClass]="{'active-button': dashboardService.showLegalNotice}">
+                <p>Legal Notice</p>
+            </button>
         </footer>
     </nav>
     <div class="content">
-        <app-summary *ngIf="dashboardService.showSummary"></app-summary>
+        <app-summary id="test" *ngIf="dashboardService.showSummary"></app-summary>
         <app-add-task *ngIf="dashboardService.showAddTask"></app-add-task>
         <app-contacts *ngIf="dashboardService.showContacts"></app-contacts>
         <app-board *ngIf="dashboardService.showBoard"></app-board>
+        <app-privacy-policy *ngIf="dashboardService.showPrivacyPolicy"></app-privacy-policy>
+        <app-legal-notice *ngIf="dashboardService.showLegalNotice"></app-legal-notice>
+        <app-help-page *ngIf="dashboardService.showHelpPage"></app-help-page>
     </div>
 </section>

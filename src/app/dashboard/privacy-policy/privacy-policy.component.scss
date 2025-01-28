@@ -1,0 +1,34 @@
+@import './../../../styles.scss';
+
+section {
+    overflow: scroll;
+    gap: 24px !important;
+}
+
+.index {
+    li {
+        cursor: pointer;
+        &:hover {
+            color: $light-blue;
+        }
+    }
+}
+
+a {
+    display: block;
+    padding: 0;
+    color: $light-blue;
+}
+
+ul {
+    list-style-position: inside; /* Punkte innerhalb der Textbox */
+}
+
+.email {
+    display: flex;
+    gap: 4px;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}

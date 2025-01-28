@@ -10,6 +10,9 @@ export class DashboardService {
   showAddTask = false;
   showBoard = false;
   showContacts = false;
+  showPrivacyPolicy = false;
+  showLegalNotice = false;
+  showHelpPage = false;
   editTask = false;
 
   showStartAnimation = true;
@@ -37,6 +40,8 @@ export class DashboardService {
   awaitFeedback: any[] = [];
 
   searchTaskInput: string;
+
+
 
   getInitials(name: string): string {
     let splitedWord = name.split(' ')

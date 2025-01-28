@@ -47,7 +47,7 @@ export class AddTaskFormComponent {
   addTaskForm = {
     title: '',
     description: '',
-    prio: '',
+    prio: 'medium',
     date: new Date(),
     category: '',
   }

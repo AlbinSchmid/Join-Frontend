@@ -7,7 +7,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-summary',
-  providers: [DatePipe], 
+  providers: [DatePipe],
   imports: [MatIconModule, CommonModule],
   templateUrl: './summary.component.html',
   styleUrl: './summary.component.scss'
@@ -24,6 +24,7 @@ export class SummaryComponent {
   urgentCount: number;
   upcomingDeadline: string | null;
   allDates: Date[] = [];
+
 
   /**
    * Initializes the component upon creation.
@@ -56,7 +57,7 @@ export class SummaryComponent {
     return this.apiService.user.username.charAt(0).toUpperCase() + this.apiService.user.username.slice(1);
   }
 
-  
+
   /**
    * Gets the total count of tasks with priority 'high' from the service.
    * 
@@ -75,7 +76,7 @@ export class SummaryComponent {
    * 
    * @returns The closest deadline as a string in the format 'MMMM d,yyyy' or null if no tasks have a deadline.
    */
-  getUpcomingDeadline(): string | null{
+  getUpcomingDeadline(): string | null {
     let jsonArrays: TaskInterface[][] = [
       this.dashbaordService.awaitFeedbackAllTasks,
       this.dashbaordService.doneAllTasks,
@@ -83,11 +84,11 @@ export class SummaryComponent {
       this.dashbaordService.todoAllTasks
     ];
     this.getDates(jsonArrays);
-    if (this.allDates.length === 0) {  
-      return null;  
-    }  
-    const closestDate = this.allDates.reduce((a, b) => (a < b ? a : b));  
-    let formattedDate = this.datePipe.transform(closestDate, 'MMMM d,yyyy') as string;  
+    if (this.allDates.length === 0) {
+      return null;
+    }
+    const closestDate = this.allDates.reduce((a, b) => (a < b ? a : b));
+    let formattedDate = this.datePipe.transform(closestDate, 'MMMM d,yyyy') as string;
     return formattedDate; // Gibt das Datum als String zurück  
   }
 
@@ -100,7 +101,7 @@ export class SummaryComponent {
     this.dashbaordService.showSummary = false;
   }
 
-  
+
   /**
    * Iterates over each array in the given 2D array of TaskInterfaces, and pushes
    * the task dates to the allDates array if the task has a date set.
@@ -115,5 +116,30 @@ export class SummaryComponent {
         }
       });
     });
+  }
+
+  
+  /**
+   * Returns a greeting message based on the current time of day.
+   *
+   * The greeting is determined by the following time ranges:
+   * - 06:00 to 11:59: "Good Morning"
+   * - 12:00 to 17:59: "Good Afternoon"
+   * - 18:00 to 21:59: "Good Evening"
+   * - 22:00 to 05:59: "Good Night"
+   *
+   * @returns {string} A greeting message corresponding to the current time of day.
+   */
+  getGreetingText(): string {
+    let time = new Date().getHours();
+    if (time >= 6 && time < 12) {
+      return 'Good Morning';
+    } else if (time >= 12 && time < 18) {
+      return 'Good Afternoon';
+    } else if (time >= 18 && time < 22) {
+      return 'Good Evening';
+    } else {
+      return 'Good Night';
+    }
   }
 }

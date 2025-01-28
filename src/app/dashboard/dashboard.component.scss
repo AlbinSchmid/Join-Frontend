@@ -91,10 +91,6 @@ nav {
     width: 100%;
     gap: 20px;
 
-    .active-button {
-        background-color: $dark-blue;
-    }
-
     .mt-80 {
         margin-top: -80px;
     }
@@ -126,10 +122,20 @@ nav {
     }
 }
 
+.active-button {
+    background-color: $dark-blue !important;
+}
+
 footer {
     @include position-center($fd: column);
+    width: 100%;
 
-    a {
+    button {
+        background-color: transparent;
+        border-radius: 0;
+        border: none;
+        outline: none;
+        width: 100%;
         color: rgba($color: white, $alpha: 0.2);
 
         &:hover {
