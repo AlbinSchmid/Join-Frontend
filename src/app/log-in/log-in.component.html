@@ -1,15 +1,15 @@
 <section>
-    <div class="logo" [ngClass]="{'start-animation': dashboardService.showStartAnimation}" #animation>
-        <img src="assets/img/join-logo-blue.png" alt="join-logo-blue">
+    <div class="logo-background" [ngClass]="{'start-animation': dashboardService.showStartAnimation}" #animation>
+        <img src="assets/img/join-logo-blue.png" alt="join-logo-blue" class="logo">
     </div>
+    <app-log-in-form [formType]="'logIn'"></app-log-in-form>
     <header>
         <p>Not a Join user?</p>
         <a (click)="goToSignUp()" mat-flat-button class="filled">Sign up</a>
     </header>
-    <app-log-in-form [formType]="'logIn'"></app-log-in-form>
     <footer>
-        <a href="">Privacy Policy</a>
-        <a href="">Legal Notice</a>
+        <a (click)="goToPricacyPolicyOrLegalNotice('privacyPolicy')">Privacy Policy</a>
+        <a (click)="goToPricacyPolicyOrLegalNotice('legalNotice')">Legal Notice</a>
     </footer>
 </section>
 

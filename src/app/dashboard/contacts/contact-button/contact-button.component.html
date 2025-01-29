@@ -2,7 +2,7 @@
     <p>{{ categoryLetter }}</p>
     <div class="line-grey"></div>
 </div>
-<button class="contact-btn" (click)="openContactDetailView()">
+<button class="contact-btn" (click)="openContactDetailView()" [ngClass]="{'active-contact': dashboardService.currentContact.id === contact.id}">
     <div class="contact-profile" [ngStyle]="{'background-color': contact.color, 'border-width.px': 2}">
         {{ dashboardService.getInitials(contact.name) }}
     </div>

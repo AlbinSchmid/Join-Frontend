@@ -30,6 +30,7 @@ export class LogInFormComponent {
   }
   showCheckboxError = false;
   showLoginFailedError = false;
+  showMessage = false;
 
 
   /**
@@ -124,7 +125,6 @@ export class LogInFormComponent {
       "repeated_password": this.formData.confirmPasswordValue
     }
     this.apiService.postSingUpData(data).subscribe((response) => {
-      console.log(response)
     }, (error) => {
       console.log(error)
     })
@@ -150,8 +150,12 @@ export class LogInFormComponent {
         this.sendLogInRequest();
       } else if (this.formType === 'signUp') {
         this.sendSingUpRequest();
+        this.showMessage = true;
+        setTimeout(() => {
+          this.showMessage = false;
+          this.router.navigate(['/']);
+        }, 2000);
       }
-      console.log(ngForm);
     } else {
       this.formData.checkboxPrivacyPolicy === false ? this.showCheckboxError = true : this.showCheckboxError = false
     }

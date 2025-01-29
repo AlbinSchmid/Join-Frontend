@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { HelpPageComponent } from './help-page/help-page.component';
+import { response } from 'express';
 
 @Component({
   selector: 'app-dashboard',
@@ -41,10 +42,12 @@ export class DashboardComponent {
    * Retrieves user data from local storage and fetches contact data.
    */
   ngOnInit(): void {
-    this.apiService.getUserFormLocalStorage();
-    setTimeout(() => {
-      this.apiService.getContactData();
-    }, 10);
+    if (this.apiService.userLogedIn) {
+      this.apiService.getUserFormLocalStorage();
+      setTimeout(() => {
+        this.apiService.getContactData();
+      }, 10);
+    }
   }
 
 
@@ -72,7 +75,14 @@ export class DashboardComponent {
   }
 
 
-  goToHelp() {
+  goToLogIn(): void {
+    this.router.navigate(['/']);
+    this.closeAllContentPages();
+    this.closeAllInfoPages();
+  }
+
+
+  goToHelp(): void {
     this.closeAllContentPages();
     this.dashboardService.showPrivacyPolicy = false;
     this.dashboardService.showLegalNotice = false;
@@ -90,7 +100,7 @@ export class DashboardComponent {
    * - Sets the `showLegalNotice` flag to `false`.
    * - Sets the `showHelpPage` flag to `false`.
    */
-  goToPrivacyPolicy() {
+  goToPrivacyPolicy(): void {
     this.closeAllContentPages();
     this.dashboardService.showPrivacyPolicy = true;
     this.dashboardService.showLegalNotice = false;
@@ -103,7 +113,7 @@ export class DashboardComponent {
    * updating the dashboard service to show the Legal Notice while hiding 
    * the Privacy Policy and Help Page.
    */
-  goToLegalNotice() {
+  goToLegalNotice(): void {
     this.closeAllContentPages();
     this.dashboardService.showPrivacyPolicy = false;
     this.dashboardService.showLegalNotice = true;
@@ -156,6 +166,13 @@ export class DashboardComponent {
     this.dashboardService.showAddTask = false;
     this.dashboardService.showBoard = false;
     this.dashboardService.showContacts = true;
+    this.dashboardService.currentContact = {
+      id: 0,
+      name: '',
+      email: '',
+      phone: '',
+      color: ''
+    };
     this.closeAllInfoPages();
   }
 
@@ -185,6 +202,10 @@ export class DashboardComponent {
     this.dashboardService.showAddTask = false;
     this.dashboardService.showBoard = false;
     this.dashboardService.showContacts = false;
+    if (this.apiService.user.username === 'guest') {
+      this.apiService.deleteUsers(this.apiService.user.userId).subscribe(() => {
+      });
+    }
     this.resetUser();
     this.router.navigate(['/']);
   }

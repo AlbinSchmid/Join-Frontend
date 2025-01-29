@@ -56,3 +56,9 @@ p {
 .category-letter {
     margin-top: 12px;
 }
+
+.active-contact {
+    background-color: $dark-blue;
+    color: white;
+    pointer-events: none;
+}

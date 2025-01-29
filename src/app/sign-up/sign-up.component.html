@@ -1,10 +1,13 @@
 <section>
-    <div class="logo" [ngClass]="{'start-animation': dashboardService.showStartAnimation}" #animation>
+    <div class="placeholder">
+
+    </div>
+    <div class="logo-background" [ngClass]="{'start-animation': dashboardService.showStartAnimation}" #animation>
         <img src="assets/img/join-logo-blue.png" alt="join-logo-blue">
     </div>
     <app-log-in-form [formType]="'signUp'"></app-log-in-form>
     <footer>
-        <a href="">Privacy Policy</a>
-        <a href="">Legal Notice</a>
+        <a (click)="goToPricacyPolicyOrLegalNotice('privacyPolicy')">Privacy Policy</a>
+        <a (click)="goToPricacyPolicyOrLegalNotice('legalNotice')">Legal Notice</a>
     </footer>
 </section>

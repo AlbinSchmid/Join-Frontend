@@ -1,10 +1,20 @@
 @import './../../styles.scss';
 
+$logo-width: clamp(60px, 2.5735rem + 5.8824vw, 100px);
+$logo-height: clamp(80px, 3.8235rem + 5.8824vw, 120px);
+$logo-with-animation: clamp(6.25rem, 1.1324rem + 25.5882vw, 17.125rem);
+$logo-height-animation: clamp(7.5rem, 1.1765rem + 31.6176vw, 20.9375rem);
+
+app-log-in-form {
+    width: 100%;
+    max-width: 600px;
+}
+
 section {
     height: 100vh;
     width: 100vw;
     position: relative;
-    padding: 40px;
+    padding: clamp(0.5rem, -0.4412rem + 4.7059vw, 2.5rem);
     @include position-center();
 }
 
@@ -20,28 +30,33 @@ header {
 
 footer {
     position: absolute;
-    bottom: 40px;
+    bottom: clamp(0.5rem, -0.4412rem + 4.7059vw, 2.5rem);
     display: flex;
-    gap: 40px;
+    gap: clamp(0rem, -1.1765rem + 5.8824vw, 2.5rem);
 
     a {
         color: rgba(0, 0, 0, 0.2);
-        
+
         &:hover {
             transform: scale(1.05);
-            color: #29ABE2 ;
+            color: #29ABE2;
         }
-    };
+    }
 }
 
-.logo {
+.placeholder {
+    width: $logo-width;
+    height: calc($logo-height + 10px);
+}
+
+.logo-background {
     position: absolute;
-    left: 40px;
-    top: 40px;
+    top: clamp(0.5rem, -0.4412rem + 4.7059vw, 2.5rem);
+    left: clamp(0.5rem, -0.4412rem + 4.7059vw, 2.5rem);
 
     img {
-        width: 100px;
-        height: 120px;
+        width: $logo-width;
+        height: $logo-height;
     }
 }
 
@@ -54,12 +69,11 @@ footer {
     background-color: #F6F7F8;
 
     img {
-        width: 274px;
-        height: 335px;
+        width: $logo-with-animation;
+        height: $logo-height-animation;
         animation: img-animation 750ms linear forwards 750ms;
     }
 }
-
 
 @keyframes background-animation {
     0% {
@@ -69,24 +83,45 @@ footer {
 
     20% {
         background-color: transparent;
+        top: clamp(0.5rem, -0.4412rem + 4.7059vw, 2.5rem);
+        left: clamp(0.5rem, -0.4412rem + 4.7059vw, 2.5rem);
     }
 
     100% {
-        width: 100px;
-        height: 120px;
+        width: $logo-width;
+        height: $logo-height;
         background-color: transparent;
+        top: clamp(0.5rem, -0.4412rem + 4.7059vw, 2.5rem);
+        left: clamp(0.5rem, -0.4412rem + 4.7059vw, 2.5rem);
     }
 }
 
 @keyframes img-animation {
     0% {
-        width: 274px;
-        height: 335px;
+        width: $logo-with-animation;
+        height: $logo-height-animation;
     }
 
     100% {
-        width: 100px;
-        height: 120px;
+        width: $logo-width;
+        height: $logo-height;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    section {
+        flex-direction: column;
     }
 
+    header {
+        @include position-center();
+        padding: 0;
+        position: relative;
+    }
+}
+
+@media screen and (max-height: 690px) {
+    section {
+        justify-content: flex-start;
+    }
 }

@@ -36,4 +36,9 @@ export class LogInComponent {
             this.router.navigate(['/sign-up']);
         }, 50);
     }
+
+    goToPricacyPolicyOrLegalNotice(place: string): void {
+        place === 'privacyPolicy' ? this.dashboardService.showPrivacyPolicy = true : this.dashboardService.showLegalNotice = true;
+        this.router.navigate(['/dashboard'])
+    }
 }

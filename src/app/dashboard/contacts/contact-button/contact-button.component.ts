@@ -50,6 +50,6 @@ export class ContactButtonComponent {
    */
   openContactDetailView(): void {
     this.dashboardService.contactDetailView = true;
-    this.dashboardService.currentContact = this.contact
+    this.dashboardService.currentContact = this.contact;
   }
 }

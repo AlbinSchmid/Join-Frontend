@@ -64,6 +64,11 @@ $prio-low-color: #7AE229;
     box-sizing: border-box;
 }
 
+body {
+    max-height: 100vh;
+    overflow: hidden;
+}
+
 mat-icon {
     font-family: 'Material Icons' !important;
 }
@@ -78,8 +83,8 @@ button, a {
     border-radius: 10px;
     padding: 15px 16px;
     cursor: pointer;
-    transition: 125ms ease;
     text-decoration: none;
+    transition: 125ms ease-in-out;
 
     &.filled {
         @include position-center($fd: row-reverse);
@@ -127,10 +132,10 @@ button, a {
 
 label {
     @include position-center($jc: space-between);
-    width: 300px;
+    width: clamp(15.625rem, 14.1544rem + 7.3529vw, 18.75rem);
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 12px;
-    padding: 12px;
+    padding: clamp(0.5rem, 0.3824rem + 0.5882vw, 0.75rem);
 
     input, textarea, select {
         @include font-design($fs: 16px);

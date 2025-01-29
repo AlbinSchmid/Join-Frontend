@@ -25,6 +25,16 @@ export class ApiService {
   contacts: ContactInterface[] = [];
   task: any[] = [];
 
+
+  getAllUser() {
+    return this.http.get<any>(`${this.APIURL}user-profile/`)
+  }
+
+  deleteUsers(id: number) {
+    return this.http.delete<any>(`${this.APIURL}user-profile/${id}/`);
+  }
+
+
   getUserFormLocalStorage():void {
     const storedUser = JSON.parse(localStorage.getItem('user') ?? '{}');
     this.user = storedUser

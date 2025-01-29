@@ -40,8 +40,8 @@ header {
 
 .drag-and-drop {
     @include position-center($ai: flex-start, $jc: space-between);
-    // gap: 40px;
     width: 100%;
+    max-width: 2000px;
     height: 100%;
     overflow: hidden;
 
@@ -49,6 +49,7 @@ header {
         @include position-center($jc: space-between, $fd: column);
         height: 100%;
         width: 100%;
+        max-width: 25%;
         gap: 20px;
 
         header {

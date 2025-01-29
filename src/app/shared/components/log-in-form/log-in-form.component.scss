@@ -3,20 +3,18 @@
 .background {
     background-color: white;
     @include position-center($fd: column);
-    padding: 50px;
+    padding: clamp(1.25rem, 0.3676rem + 4.4118vw, 3.125rem);
     border-radius: 30px;
     gap: 50px;
-    min-width: 600px;
 
     h1 {
-        @include font-design($fs: 61px, $fw: 
-        700);
+        @include font-design($fs: clamp(2.375rem, 1.6985rem + 3.3824vw, 3.8125rem), $fw: 700);
         text-decoration: underline;
         text-decoration-thickness: 4px;
         text-underline-offset: 20px;
         text-decoration-color: #29ABE2;
     }
-} 
+}
 
 header {
     @include position-center();
@@ -72,5 +70,37 @@ form {
     p {
         display: flex;
         gap: 4px;
+    }
+}
+
+.signed-up-message {
+    @include position-center();
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba($color: #000000, $alpha: 0.1);
+
+    div {
+        animation: bottom-mid 500ms ease forwards;
+        background-color: $dark-blue;
+        color: white;
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    p {
+        @include position-center();
+    }
+}
+
+@keyframes bottom-mid {
+    from {
+        transform: translateY(150vh);
+    }
+
+    to {
+        transform: translateY(0);
     }
 }

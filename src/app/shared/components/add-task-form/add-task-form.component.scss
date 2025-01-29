@@ -58,7 +58,8 @@ mark {
     background-color: transparent;
 }
 
-.left-part, .right-part {
+.left-part,
+.right-part {
     @include position-center($fd: column, $ai: flex-start);
     gap: 30px;
     width: 40%;
@@ -77,14 +78,15 @@ mat-form-field {
 
 .label-textarea {
     height: 120px;
+
     ::-webkit-scrollbar {
         width: 3px;
     }
-    
+
     ::-webkit-scrollbar-track {
         background-color: white;
     }
-    
+
     ::-webkit-scrollbar-thumb {
         background-color: $light-blue;
         border-radius: 30px;
@@ -218,12 +220,12 @@ label {
         background-color: white;
         border-radius: 8px;
         padding: 14px 20px;
-        box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.1);
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
         transition: 125ms ease;
         cursor: pointer;
 
         &:hover {
-            box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.1);
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
         }
     }
 
@@ -233,9 +235,12 @@ label {
         }
     }
 
-    .active-low, .active-medium, .active-urgent {
+    .active-low,
+    .active-medium,
+    .active-urgent {
         @include font-design($fs: 20px, $fw: 700);
         color: white;
+
         mat-icon {
             color: white !important;
         }
@@ -321,8 +326,12 @@ footer {
 
 .subtask-list {
     width: 100%;
+    max-height: 100px;
+    overflow-y: auto;
+
     ul {
         width: 100%;
+
         li {
             @include position-center($jc: space-between);
             padding: 6px 8px;
@@ -341,7 +350,7 @@ footer {
                 height: 100%;
                 padding: 2px 6px;
                 width: 100%;
-                
+
                 &::placeholder {
                     color: black;
                 }
@@ -379,6 +388,7 @@ footer {
     max-width: 100%;
     overflow-x: auto;
     padding: 4px 0;
+
     .contact-profile {
         min-height: 38px;
         min-width: 38px;
@@ -393,9 +403,12 @@ footer {
     @include position-center($fd: column);
     gap: 20px;
 
-    .active-low, .active-medium, .active-urgent {
+    .active-low,
+    .active-medium,
+    .active-urgent {
         @include font-design($fs: 16px, $fw: 700);
         color: white;
+
         mat-icon {
             color: white !important;
         }
@@ -412,7 +425,7 @@ footer {
         @include font-design($fs: 16px, $fw: 400);
         padding: 6px 14px;
     }
-    
+
     mat-icon {
         @include font-design($fs: 24px, $fw: 400);
         width: 24px;
@@ -436,4 +449,39 @@ footer {
     width: 100%;
     max-height: 70vh;
     overflow-y: auto;
+}
+
+.added-message {
+    @include position-center();
+    position: absolute;
+    background-color: $blue;
+    border-radius: 12px;
+    top: 50%;
+    left: 50%;
+    animation: bottom-mid 500ms ease forwards;
+    z-index: 10;
+
+    
+    p {
+        @include position-center();
+        padding: 20px;
+        color: white;
+        gap: 12px;
+
+        mat-icon {
+            width: 28px;
+            height: 28px;
+            @include font-design($fs: 28px)
+        }
+    }
+}
+
+@keyframes bottom-mid {
+    from {
+        transform: translateY(150vh);
+    }
+    to {
+        transform: translateY(0);
+    }
+
 }

@@ -2,8 +2,8 @@
     <header>
         <h6>Kanban Project Management Tool</h6>
         <div class="help-profile-container">
-            <a (click)="switchContent('help')"><mat-icon fontIcon="help_outlined"></mat-icon></a>
-            <div class="profile" mat-icon-button [matMenuTriggerFor]="menu">
+            <a (click)="switchContent('help')" *ngIf="apiService.userLogedIn"><mat-icon fontIcon="help_outlined"></mat-icon></a>
+            <div class="profile" mat-icon-button [matMenuTriggerFor]="menu" *ngIf="apiService.userLogedIn">
                 <p>{{ dashboardService.getInitials(this.apiService.user.username) }}</p>
             </div>
             <mat-menu #menu="matMenu" class="profile-menu">
@@ -26,25 +26,31 @@
     <nav>
         <img src="assets/img/join-logo-white.png" alt="join-logo-white">
         <div class="div-links">
-            <button class="mt-80" (click)="switchContent('summary')" [ngClass]="{'active-button': dashboardService.showSummary}">
+            <button *ngIf="!apiService.userLogedIn" class="mt-80" (click)="goToLogIn()">
+                <div>
+                    <mat-icon fontIcon="logout"></mat-icon>
+                    <p>Log In</p>
+                </div>
+            </button>
+            <button *ngIf="apiService.userLogedIn" class="mt-80" (click)="switchContent('summary')" [ngClass]="{'active-button': dashboardService.showSummary}">
                 <div>
                     <mat-icon fontIcon="dashboard_2"></mat-icon>
                     <p>Summary</p>
                 </div>
             </button>
-            <button (click)="switchContent('addTask')" [ngClass]="{'active-button': dashboardService.showAddTask}">
+            <button *ngIf="apiService.userLogedIn" (click)="switchContent('addTask')" [ngClass]="{'active-button': dashboardService.showAddTask}">
                 <div>
                     <mat-icon fontIcon="task"></mat-icon>
                     <p>Add Task</p>
                 </div>
             </button>
-            <button (click)="switchContent('board')" [ngClass]="{'active-button': dashboardService.showBoard}">
+            <button *ngIf="apiService.userLogedIn" (click)="switchContent('board')" [ngClass]="{'active-button': dashboardService.showBoard}">
                 <div>
                     <mat-icon fontIcon="view_column_outlined"></mat-icon>
                     <p>Board</p>
                 </div>
             </button>
-            <button (click)="switchContent('contacts')" [ngClass]="{'active-button': dashboardService.showContacts}">
+            <button *ngIf="apiService.userLogedIn" (click)="switchContent('contacts')" [ngClass]="{'active-button': dashboardService.showContacts}">
                 <div>
                     <mat-icon fontIcon="contacts"></mat-icon>
                     <p>Contacts</p>

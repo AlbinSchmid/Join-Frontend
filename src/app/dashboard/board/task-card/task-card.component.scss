@@ -40,6 +40,7 @@ section {
     border-radius: 24px;
     padding: 16px;
     box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
+    transition: 200ms ease;
 
     &:hover {
         cursor: grab;
@@ -75,7 +76,7 @@ section {
             max-height: 40px;
             overflow: hidden;
             text-wrap-mode: nowrap;
-            
+
         }
     }
 }
@@ -94,15 +95,26 @@ section {
 footer {
     @include position-center($jc: space-between);
     width: 100%;
+    max-width: 100%;
+
     .contacts-assigned {
         @include position-center($jc: flex-start);
+        max-width: 90%;
+        border-radius: 0 70px 70px 0;
+        overflow-x: auto;
 
         .contact-profile {
             @include font-design($fs: 12px, $fw: 400);
             width: 32px;
             height: 32px;
+            min-width: 32px;
+            min-height: 32px;
             border: 1px solid white;
         }
+    }
+
+    ::-webkit-scrollbar {
+        height: 5px;
     }
 }
 

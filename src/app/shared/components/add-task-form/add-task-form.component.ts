@@ -63,6 +63,8 @@ export class AddTaskFormComponent {
   urgentBtn = false;
   mediumBtn = true;
   lowBtn = false;
+  showAddedMessage = false;
+  minDate: Date = new Date();
 
 
   /**
@@ -204,6 +206,10 @@ export class AddTaskFormComponent {
   submitForm(ngForm: NgForm): void {
     if (ngForm.valid && ngForm.submitted) {
       this.createTask();
+      this.showAddedMessage = true;
+      setTimeout(() => {
+        this.showAddedMessage = false;
+      }, 2000);
     }
   }
 

@@ -12,9 +12,6 @@
                     <label>
                         <input type="title" placeholder="Enter a title" required name="title" #taskTitle="ngModel"
                             maxlength="50" [(ngModel)]="addTaskForm.title">
-                        @if (!taskTitle.valid && taskTitle.touched) {
-                        <span class="span-error">Please enter a title!</span>
-                        }
                     </label>
                 </div>
                 <div class="form-field-overlaying-div">
@@ -70,7 +67,7 @@
                     <p>Due date<mark> *</mark></p>
                     <label>
                         <input matInput [matDatepicker]="picker" required name="taskDueDate" placeholder="mm/dd/yyyy"
-                            #taskDueDate="ngModel" [(ngModel)]="addTaskForm.date">
+                            #taskDueDate="ngModel" [(ngModel)]="addTaskForm.date" [min]="minDate">
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         @if (taskDueDate.invalid && taskDueDate.touched) {
@@ -184,9 +181,6 @@
                 <label>
                     <input type="title" placeholder="Enter a title" required name="taskTitle" #taskTitle="ngModel"
                         maxlength="50" [(ngModel)]="addTaskForm.title">
-                    @if (!taskTitle.valid && taskTitle.touched) {
-                    <span class="span-error">Please enter a title!</span>
-                    }
                 </label>
             </div>
             <div class="form-field-overlaying-div">
@@ -300,3 +294,6 @@
     </form>
     }
 </section>
+<div class="added-message" *ngIf="showAddedMessage">
+    <p>Task added to Board <mat-icon fontIcon="view_column_outlined"></mat-icon></p>
+</div>

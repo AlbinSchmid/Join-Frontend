@@ -2,12 +2,14 @@ import { Component, inject } from '@angular/core';
 import { LogInFormComponent } from '../shared/components/log-in-form/log-in-form.component';
 import { DashboardService } from '../shared/services/dashboard.service';
 import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
     selector: 'app-sign-up',
     imports: [
         LogInFormComponent,
         CommonModule,
+        RouterModule
     ],
     templateUrl: './sign-up.component.html',
     styleUrl: './sign-up.component.scss',
@@ -15,4 +17,10 @@ import { CommonModule } from '@angular/common';
 })
 export class SignUpComponent {
     dashboardService = inject(DashboardService);
+    router = inject(Router);
+
+    goToPricacyPolicyOrLegalNotice(place: string): void {
+        place === 'privacyPolicy' ? this.dashboardService.showPrivacyPolicy = true : this.dashboardService.showLegalNotice = true;
+        this.router.navigate(['/dashboard'])
+    }
 }
