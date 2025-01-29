@@ -1,0 +1,55 @@
+@import './../../../styles.scss';
+
+section {
+    overflow: scroll;
+    gap: 24px !important;
+}
+
+p, li, a {
+    @include font-design($fs: 16px, $fw: 400);
+}
+
+a {
+    display: inline;
+    padding: 0;
+    color: $light-blue;
+    font-weight: 400 !important;
+}
+
+ol {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    list-style: none;
+    counter-reset: list-counter;
+    padding-left: 0;
+}
+
+li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: flex-start;
+    gap: 10px;
+    counter-increment: list-counter;
+
+    div {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+li::before {
+    content: counter(list-counter) ".";
+    margin-top: 2px;
+    font-weight: bold;
+}
+
+mark {
+    background-color: transparent;
+    color: $light-blue;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}

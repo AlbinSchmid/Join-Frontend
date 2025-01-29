@@ -66,7 +66,17 @@ export class DashboardComponent {
       this.goToPrivacyPolicy();
     } else if (content === 'legalNotice') {
       this.goToLegalNotice();
+    } else if (content === 'help') {
+      this.goToHelp();
     }
+  }
+
+
+  goToHelp() {
+    this.closeAllContentPages();
+    this.dashboardService.showPrivacyPolicy = false;
+    this.dashboardService.showLegalNotice = false;
+    this.dashboardService.showHelpPage = true;
   }
 
   

@@ -2,19 +2,19 @@
     <header>
         <h6>Kanban Project Management Tool</h6>
         <div class="help-profile-container">
-            <a href=""><mat-icon fontIcon="help_outlined"></mat-icon></a>
+            <a (click)="switchContent('help')"><mat-icon fontIcon="help_outlined"></mat-icon></a>
             <div class="profile" mat-icon-button [matMenuTriggerFor]="menu">
                 <p>{{ dashboardService.getInitials(this.apiService.user.username) }}</p>
             </div>
             <mat-menu #menu="matMenu" class="profile-menu">
-                <a mat-menu-item class="menu-item" href="/help">
+                <a mat-menu-item class="menu-item" (click)="switchContent('help')">
                     Help
                 </a>
-                <a mat-menu-item class="menu-item">
+                <a mat-menu-item class="menu-item" (click)="switchContent('legalNotice')">
                     Legal Notice
                 </a>
-                <a mat-menu-item class="menu-item">
-                    Privacy Policean
+                <a mat-menu-item class="menu-item" (click)="switchContent('privacyPolicy')">
+                    Privacy Policy
                 </a>
                 <button mat-menu-item class="menu-item" (click)="logout()">
                    Log out
