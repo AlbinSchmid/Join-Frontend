@@ -27,8 +27,9 @@ header {
 }
 
 .content {
-    @include position-center();
+    @include position-center($jc: flex-start);
     width: 100%;
+    gap: clamp(3.75rem, -7.1875rem + 17.5vw, 12.5rem);
 
     .task-overview {
         @include position-center($fd: column, $ai: normal);
@@ -183,18 +184,46 @@ span {
 
 .greeting-div {
     @include position-center($fd: column);
-    width: 100%;
 
     div {
         @include position-center($fd: column, $ai: flex-start);
         h3 {
-            @include font-design($fs: 47px, $fw: 500);
+            @include font-design($fs: clamp(2.125rem, 1.1094rem + 1.625vw, 2.9375rem), $fw: 500);
         }
     
         h2 {
-            @include font-design($fs: 62px, $fw: 700);
+            @include font-design($fs: clamp(2.75rem, 1.3438rem + 2.25vw, 3.875rem), $fw: 700);
             color: $light-blue;
         }
     }
+}
 
+@media screen and (max-width: 1800px) {
+    mat-icon {
+        font-size: clamp(1.25rem, 0.625rem + 1vw, 1.75rem);
+        width: clamp(3.125rem, 2.3438rem + 1.25vw, 3.75rem);
+        height: clamp(3.125rem, 2.3438rem + 1.25vw, 3.75rem);
+    }
+
+    .left-part {
+        mat-icon {
+            font-size: clamp(1.75rem, 1.4375rem + 0.5vw, 2rem);
+        }
+    }
+
+    .right-part {
+        .date {
+            font-size: clamp(1.125rem, 0.8906rem + 0.375vw, 1.3125rem) !important;
+        }
+    }
+
+    span {
+        h6 {
+            font-size: clamp(1.875rem, 1.0938rem + 1.25vw, 2.5rem);
+        }
+    }
+
+    .task-info, .task-mid {
+        height: clamp(7.5rem, 5.9375rem + 2.5vw, 8.75rem) !important;
+    }
 }

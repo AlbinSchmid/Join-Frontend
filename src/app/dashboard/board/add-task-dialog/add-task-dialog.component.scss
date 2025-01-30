@@ -6,6 +6,7 @@
 
 section {
     padding: 40px;
-    width: 1200px;
+    width: clamp(60rem, 22.5rem + 60vw, 75rem);
     height: 750px;
 }
+

@@ -11,8 +11,8 @@
     <div class="content-dashboard">
         <header>
             <h1>Contacts</h1>
-            <div class="line-blue"></div>
-            <h4>Better with a team</h4>
+            <div *ngIf="windowWidth > 1360" class="line-blue"></div>
+            <h4 *ngIf="windowWidth > 1360">Better with a team</h4>
         </header>
         <app-contact-detail *ngIf="dashboardService.contactDetailView"></app-contact-detail>
     </div>

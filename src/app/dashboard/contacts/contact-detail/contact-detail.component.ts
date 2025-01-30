@@ -23,6 +23,7 @@ export class ContactDetailComponent {
   apiService = inject(ApiService)
   dashboardService = inject(DashboardService)
   detailViewClose = output<void>();
+  windowWidth: number = window.innerWidth;
 
 
   /**

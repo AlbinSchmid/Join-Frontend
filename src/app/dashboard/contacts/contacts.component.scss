@@ -15,7 +15,7 @@ section {
     background-color: white;
     height: 100%;
     width: 450px;
-    padding: 20px 40px;
+    padding: 20px clamp(0.75rem, -3.625rem + 7vw, 2.5rem);
     box-shadow: 4px 0px 4px 0px rgba(0,0,0,0.1);
 
     .add-contact-btn {
@@ -79,3 +79,4 @@ app-contact-detail {
         transform: translateX(0);
     }
 }
+

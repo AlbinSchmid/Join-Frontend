@@ -126,3 +126,25 @@ header {
 app-task-card {
     padding: 10px;
 }
+
+@media screen and (max-width: 1400px) {
+    .drag-and-drop {
+        @include position-center($fd: column, $jc: normal);
+        overflow-y: auto;
+
+        .drag-and-drop-list {
+            width: 100%;
+            max-width: none;
+            gap: 0;
+
+            .drop-list {
+                flex-direction: row !important;
+            }
+        }
+    }
+
+    app-task-card {
+        max-width: 270px;
+        min-width: 270px;
+    }
+}

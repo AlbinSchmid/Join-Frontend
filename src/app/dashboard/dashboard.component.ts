@@ -42,8 +42,8 @@ export class DashboardComponent {
    * Retrieves user data from local storage and fetches contact data.
    */
   ngOnInit(): void {
+    this.apiService.getUserFormLocalStorage();
     if (this.apiService.userLogedIn) {
-      this.apiService.getUserFormLocalStorage();
       setTimeout(() => {
         this.apiService.getContactData();
       }, 10);

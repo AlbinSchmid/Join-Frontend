@@ -7,12 +7,14 @@ section {
 
 .profile-name-div {
     @include position-center();
-    gap: 54px;
+    gap:clamp(0.875rem, -5.375rem + 10vw, 3.375rem);
 
     .profile-detail {
-        @include font-design($fs: 47px, $fw: 500);
-        width: 120px;
-        height: 120px;
+        @include font-design($fs: clamp(2.25rem, 0.5313rem + 2.75vw, 2.9375rem), $fw: 500);
+        width: clamp(6.25rem, 3.125rem + 5vw, 7.5rem);
+        height: clamp(6.25rem, 3.125rem + 5vw, 7.5rem);
+        min-width: clamp(6.25rem, 3.125rem + 5vw, 7.5rem);
+        min-height: clamp(6.25rem, 3.125rem + 5vw, 7.5rem);
         background-color: blue;
     }
 

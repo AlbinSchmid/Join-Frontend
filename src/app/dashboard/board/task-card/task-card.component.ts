@@ -30,6 +30,8 @@ export class TaskCardComponent {
   @Input() contacts: any[] = [];
   @Input() subtasks: any[] = [];
 
+  windowWidth: number = window.innerWidth;
+
   progressbarValue = 0;
   subtaskValue = 0;
   completeSubtasksValue = 0;

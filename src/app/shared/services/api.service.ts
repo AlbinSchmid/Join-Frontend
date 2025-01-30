@@ -38,6 +38,9 @@ export class ApiService {
   getUserFormLocalStorage():void {
     const storedUser = JSON.parse(localStorage.getItem('user') ?? '{}');
     this.user = storedUser
+    if (this.user) {
+      this.userLogedIn = true;
+    }
   }
 
 

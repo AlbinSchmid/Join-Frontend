@@ -1,21 +1,36 @@
 <section (click)="openTaskDetailDialog(task)">
-    <h2 [ngStyle]="{'background-color': task.category === 'Technical Task' ? '#1FD7C1' : 'blue'}">{{ task.category }}</h2>
-    <div class="title-description">
+    <div class="help-div-mobile-task" *ngIf="windowWidth < 1400">
+        <h2 [ngStyle]="{'background-color': task.category === 'Technical Task' ? '#1FD7C1' : 'blue'}">{{ task.category
+            }}</h2>
+        <div class="title-description">
+            <h1>{{ task.title }}</h1>
+            <p>{{ task.description }}</p>
+        </div>
+        <div class="progress-bar" *ngIf="subtaskValue">
+            <mat-progress-bar mode="determinate" [value]="progressbarValue"></mat-progress-bar>
+            <p>{{ completeSubtasksValue }}/{{ subtasks.length }} Subtasks</p>
+        </div>
+    </div>
+    <h2 *ngIf="windowWidth > 1400" [ngStyle]="{'background-color': task.category === 'Technical Task' ? '#1FD7C1' : 'blue'}">{{ task.category
+        }}</h2>
+    <div *ngIf="windowWidth > 1400" class="title-description">
         <h1>{{ task.title }}</h1>
         <p>{{ task.description }}</p>
     </div>
-    <div class="progress-bar" *ngIf="subtaskValue">
+    <div class="progress-bar" *ngIf="subtaskValue && windowWidth > 1400">
         <mat-progress-bar mode="determinate" [value]="progressbarValue"></mat-progress-bar>
         <p>{{ completeSubtasksValue }}/{{ subtasks.length }} Subtasks</p>
     </div>
     <footer>
         <div class="contacts-assigned">
             @for (contact of contacts; track $index) {
-                <div class="contact-profile" [ngStyle]="{'margin-left.px': $index > 0 ? -10 : 0, 'background-color': contact.color}">
-                    {{ dashboardService.getInitials(contact.name) }}
-                </div>
+            <div class="contact-profile"
+                [ngStyle]="{'margin-left.px': $index > 0 ? -10 : 0, 'background-color': contact.color}">
+                {{ dashboardService.getInitials(contact.name) }}
+            </div>
             }
         </div>
-        <mat-icon fontIcon="{{ dashboardService.controllPrio(task) }}" [ngClass]="{'high-prio': task.prio == 'high', 'medium-prio': task.prio == 'medium', 'low-prio': task.prio == 'low'}"></mat-icon>
+        <mat-icon fontIcon="{{ dashboardService.controllPrio(task) }}"
+            [ngClass]="{'high-prio': task.prio == 'high', 'medium-prio': task.prio == 'medium', 'low-prio': task.prio == 'low'}"></mat-icon>
     </footer>
 </section>

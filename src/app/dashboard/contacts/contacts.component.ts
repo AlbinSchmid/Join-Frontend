@@ -36,6 +36,7 @@ export class ContactsComponent {
   };
   categoryLetters: string[] = []
   showContactDetail = false;
+  windowWidth: number = window.innerWidth;
 
 
   /**
