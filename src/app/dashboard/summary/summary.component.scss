@@ -22,7 +22,7 @@ header {
     }
 
     h4 {
-        @include font-design($fs: 27px, $fw: 400);
+        @include font-design($fs: clamp(1.25rem, 1.0441rem + 1.0294vw, 1.6875rem), $fw: 400);
     }
 }
 
@@ -75,6 +75,7 @@ header {
         width: 100%;
         border-radius: 25px;
         height: 140px;
+        gap: 12px;
         cursor: pointer;
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
         transition: 125ms ease;
@@ -108,7 +109,7 @@ header {
     
         .line-grey {
             width: 2px;
-            height: 100%;
+            height: 65px;
             background-color: rgba($color: #000000, $alpha: 0.1);
             border-radius: 30px;
         }
@@ -207,7 +208,7 @@ span {
 
     .left-part {
         mat-icon {
-            font-size: clamp(1.75rem, 1.4375rem + 0.5vw, 2rem);
+            font-size: clamp(1.75rem, 1.4375rem + 0.5vw, 2rem) !important;
         }
     }
 
@@ -225,5 +226,50 @@ span {
 
     .task-info, .task-mid {
         height: clamp(7.5rem, 5.9375rem + 2.5vw, 8.75rem) !important;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    header {
+        @include position-center($fd: column, $ai: flex-start);
+        gap: 6px;
+
+        .line-blue {
+            margin-top: 6px;
+            height: 3px;
+            width: 100px;
+        }
+    }
+
+    .task-row, .task-overview {
+        gap: clamp(0.625rem, -0.9135rem + 7.6923vw, 1.875rem) !important;
+    }
+
+    .task-info, .task-mid {
+        height: clamp(6.25rem, 4.7115rem + 7.6923vw, 7.5rem) !important;
+    }
+
+    .task-mid {
+        padding: 0px clamp(1rem, -1.6154rem + 13.0769vw, 3.125rem) !important;
+
+        .txt-deadline {
+            font-size: clamp(0.875rem, 0.7212rem + 0.7692vw, 1rem) !important;
+        }
+        
+        .date {
+            font-size: clamp(0.875rem, 0.5673rem + 1.5385vw, 1.125rem) !important;
+        }
+    }
+
+    mat-icon {
+        font-size: clamp(1rem, 0.6923rem + 1.5385vw, 1.25rem);
+        width: clamp(2.625rem, 2.0096rem + 3.0769vw, 3.125rem);
+        height: clamp(2.625rem, 2.0096rem + 3.0769vw, 3.125rem);
+    }
+
+    .left-part {
+        mat-icon {
+            font-size: clamp(1.5rem, 1.1923rem + 1.5385vw, 1.75rem) !important;
+        }
     }
 }

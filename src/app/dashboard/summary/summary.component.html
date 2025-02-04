@@ -1,8 +1,9 @@
 <section class="content-dashboard">
     <header>
         <h1>Join 360</h1>
-        <div class="line-blue"></div>
+        <div *ngIf="windowWidth > 580" class="line-blue"></div>
         <h4>Key Metrics at a Glance</h4>
+        <div *ngIf="windowWidth <= 579" class="line-blue"></div>
     </header>
     <div class="content">
         <div class="task-overview">
@@ -60,7 +61,7 @@
                 </div>
             </div>
         </div>
-        <div class="greeting-div">
+        <div *ngIf="windowWidth > 1000" class="greeting-div">
             <div>
                 <h3>{{ getGreetingText() }},</h3>
                 <h2>{{ getName() }}</h2>

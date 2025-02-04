@@ -65,6 +65,7 @@ export class AddTaskFormComponent {
   lowBtn = false;
   showAddedMessage = false;
   minDate: Date = new Date();
+  windowWidth = window.innerWidth;
 
 
   /**

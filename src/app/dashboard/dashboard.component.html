@@ -1,8 +1,9 @@
 <section>
     <header>
-        <h6>Kanban Project Management Tool</h6>
+        <h6 *ngIf="windowWidth > 1000">Kanban Project Management Tool</h6>
+        <img *ngIf="windowWidth <= 999" src="assets/img/join-logo-blue.png" alt="join-logo-white">
         <div class="help-profile-container">
-            <a (click)="switchContent('help')" *ngIf="apiService.userLogedIn"><mat-icon fontIcon="help_outlined"></mat-icon></a>
+            <a (click)="switchContent('help')" *ngIf="apiService.userLogedIn && windowWidth > 1000"><mat-icon fontIcon="help_outlined"></mat-icon></a>
             <div class="profile" mat-icon-button [matMenuTriggerFor]="menu" *ngIf="apiService.userLogedIn">
                 <p>{{ dashboardService.getInitials(this.apiService.user.username) }}</p>
             </div>
@@ -24,7 +25,7 @@
 
     </header>
     <nav>
-        <img src="assets/img/join-logo-white.png" alt="join-logo-white">
+        <img *ngIf="windowWidth > 1000" src="assets/img/join-logo-white.png" alt="join-logo-white">
         <div class="div-links">
             <button *ngIf="!apiService.userLogedIn" class="mt-80" (click)="goToLogIn()">
                 <div>
@@ -57,7 +58,7 @@
                 </div>
             </button>
         </div>
-        <footer>
+        <footer *ngIf="windowWidth > 1000">
             <button (click)="switchContent('privacyPolicy')" [ngClass]="{'active-button': dashboardService.showPrivacyPolicy}">
                 <p>Privacy Policy</p>
             </button>

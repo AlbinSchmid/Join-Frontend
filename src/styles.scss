@@ -74,7 +74,7 @@ mat-icon {
 }
 
 h1 {
-    @include font-design($fs: 61px, $fw: 700);
+    @include font-design($fs: clamp(2.9375rem, 2.5257rem + 2.0588vw, 3.8125rem), $fw: 700);
 }
 
 button, a {
@@ -216,6 +216,17 @@ input[type=number]::-webkit-outer-spin-button {
 input[type=number] {
   appearance: textfield;
 }
+
+@media screen and (max-width: 1000px) {
+    .content-dashboard {
+        height: calc(100% - 80px);
+        padding: 0 0.75rem 0.75rem 0.75rem;
+        justify-content: center;
+        gap: 30px !important;
+    }
+}
+
+
 
 @font-face {
     font-display: swap;

@@ -148,3 +148,25 @@ app-task-card {
         min-width: 270px;
     }
 }
+
+@media screen and (max-width: 1000px) {
+    header {
+        padding: 0 0.75rem;
+    }
+
+    section {
+        padding: 0 !important;
+    }
+
+    .drag-and-drop-list {
+        header {
+            padding: 0 0.75rem !important;
+        }
+
+        .drop-list {
+            app-task-card {
+                padding: 10px 0.75rem !important;
+            }
+        }
+    }
+}

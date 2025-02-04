@@ -24,6 +24,7 @@ export class SummaryComponent {
   urgentCount: number;
   upcomingDeadline: string | null;
   allDates: Date[] = [];
+  windowWidth = window.innerWidth;
 
 
   /**

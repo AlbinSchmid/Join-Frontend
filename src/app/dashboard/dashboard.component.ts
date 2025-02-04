@@ -36,6 +36,8 @@ export class DashboardComponent {
   apiService = inject(ApiService)
   router = inject(Router)
 
+  windowWidth = window.innerWidth;
+
 
   /**
    * Initializes the component.
