@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddTaskDialogComponent } from './add-task-dialog.component';
+import { MatDialogRef } from '@angular/material/dialog';
 
 describe('AddTaskDialogComponent', () => {
   let component: AddTaskDialogComponent;
@@ -8,7 +9,7 @@ describe('AddTaskDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddTaskDialogComponent]
+      imports: [AddTaskDialogComponent, MatDialogRef]
     })
     .compileComponents();
 

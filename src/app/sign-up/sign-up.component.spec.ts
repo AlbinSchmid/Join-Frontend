@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SignUpComponent } from './sign-up.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('SignUpComponent', () => {
   let component: SignUpComponent;
@@ -8,9 +9,12 @@ describe('SignUpComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SignUpComponent]
+      imports: [SignUpComponent],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi())
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;

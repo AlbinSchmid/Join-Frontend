@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LogInFormComponent } from './log-in-form.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('LogInFormComponent', () => {
   let component: LogInFormComponent;
@@ -8,9 +9,12 @@ describe('LogInFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LogInFormComponent]
+      imports: [LogInFormComponent],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi())
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(LogInFormComponent);
     component = fixture.componentInstance;

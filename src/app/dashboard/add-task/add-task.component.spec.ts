@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddTaskComponent } from './add-task.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AddTaskComponent', () => {
   let component: AddTaskComponent;
@@ -8,9 +9,12 @@ describe('AddTaskComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddTaskComponent]
+      imports: [AddTaskComponent],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi())
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AddTaskComponent);
     component = fixture.componentInstance;

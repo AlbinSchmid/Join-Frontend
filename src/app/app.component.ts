@@ -12,5 +12,4 @@ import { DashboardService } from './shared/services/dashboard.service';
   standalone: true
 })
 export class AppComponent {
-  title = 'join-front-end';
 }

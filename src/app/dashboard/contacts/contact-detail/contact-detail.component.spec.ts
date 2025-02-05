@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ContactDetailComponent } from './contact-detail.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ContactDetailComponent', () => {
   let component: ContactDetailComponent;
@@ -8,9 +9,12 @@ describe('ContactDetailComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ContactDetailComponent]
+      imports: [ContactDetailComponent],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi())
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ContactDetailComponent);
     component = fixture.componentInstance;

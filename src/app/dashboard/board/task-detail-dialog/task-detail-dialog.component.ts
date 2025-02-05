@@ -41,6 +41,10 @@ export class TaskDetailDialogComponent {
   substaksCompleteValue = 0;
   editTask = false;
 
+  constructor() {
+    this.data = this.data || {contacts: []};
+  }
+
 
   /**
    * Sets the subtask to completed or uncompleted and sends a request to the API to update the subtask.

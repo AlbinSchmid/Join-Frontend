@@ -1,16 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ContactFormComponent } from './contact-form.component';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-describe('AddContactComponent', () => {
+describe('ContactFormComponent', () => {
   let component: ContactFormComponent;
   let fixture: ComponentFixture<ContactFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ContactFormComponent]
+      imports: [ContactFormComponent],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi())
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ContactFormComponent);
     component = fixture.componentInstance;

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddTaskFormComponent } from './add-task-form.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AddTaskFormComponent', () => {
   let component: AddTaskFormComponent;
@@ -8,9 +9,12 @@ describe('AddTaskFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddTaskFormComponent]
+      imports: [AddTaskFormComponent],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi())
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AddTaskFormComponent);
     component = fixture.componentInstance;
