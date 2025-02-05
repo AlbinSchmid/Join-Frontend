@@ -1,6 +1,9 @@
 <section>
     <div class="blue-part">
-        <img src="./../../../../../assets/img/join-logo-white.png" alt="join-logo-white">
+        <header *ngIf="windowWidth <= 1000">
+            <mat-icon fontIcon="close" (click)="closeDialog()"></mat-icon>
+        </header>
+        <img *ngIf="windowWidth > 1000" src="./../../../../../assets/img/join-logo-white.png" alt="join-logo-white">
         <div class="text-div">
             <h1 *ngIf="data[0].form == 'edit'">Edit contact</h1>
             <h1 *ngIf="data[0].form == 'add'">Add contact</h1>
@@ -8,12 +11,15 @@
             <div class="line-blue"></div>
         </div>
     </div>
+    <div class="profile" *ngIf="windowWidth <= 1000">
+        <mat-icon fontIcon="person_outlined"></mat-icon>
+    </div>
     <div class="white-part">
-        <header>
+        <header *ngIf="windowWidth > 1000">
             <mat-icon fontIcon="close" (click)="closeDialog()"></mat-icon>
         </header>
         <div class="add-part">
-            <div class="profile">
+            <div class="profile" *ngIf="windowWidth > 1000">
                 <mat-icon fontIcon="person_outlined"></mat-icon>
             </div>
             <form #contactForm="ngForm" (ngSubmit)="submitForm(contactForm)">
@@ -42,7 +48,7 @@
                     <mat-icon fontIcon="phone_outlined"></mat-icon>
                 </label>
                 <div class="btn-div">
-                    <button *ngIf="data[0].form == 'add'" mat-button class="outline" (click)="closeDialog()">Cancel
+                    <button *ngIf="data[0].form == 'add' && windowWidth > 1000" mat-button class="outline" (click)="closeDialog()">Cancel
                         <mat-icon fontIcon="close"></mat-icon></button>
                     <button *ngIf="data[0].form == 'add'" mat-button [ngClass]="{'disabled': !contactForm.valid}"
                         [disabled]="contactForm.invalid" type="submit" class="filled">Create contact <mat-icon

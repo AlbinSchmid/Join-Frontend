@@ -16,7 +16,7 @@ section {
     height: 100%;
     width: 450px;
     padding: 20px clamp(0.75rem, -3.625rem + 7vw, 2.5rem);
-    box-shadow: 4px 0px 4px 0px rgba(0,0,0,0.1);
+    box-shadow: 4px 0px 4px 0px rgba(0, 0, 0, 0.1);
 
     .add-contact-btn {
         @include font-design($fs: 21px, $fw: 700);
@@ -27,11 +27,11 @@ section {
     ::-webkit-scrollbar {
         width: 3px !important;
     }
-    
+
     ::-webkit-scrollbar-track {
         background-color: white !important;
     }
-    
+
     ::-webkit-scrollbar-thumb {
         background-color: $light-blue;
         border-radius: 30px;
@@ -46,20 +46,42 @@ section {
 
 .content-dashboard {
     overflow: hidden;
+
     header {
-        @include position-center($jc: flex-start);
-        gap: 40px;
+        @include position-center($jc: space-between);
+        width: 100%;
 
-        .line-blue {
-            height: 60px;
-            width: 3px;
-            border-radius: 25px;
-            background-color: $light-blue;
+        .text-header {
+            @include position-center($jc: flex-start);
+            gap: 40px;
+
+            .line-blue {
+                height: 60px;
+                width: 3px;
+                border-radius: 25px;
+                background-color: $light-blue;
+            }
+
+            h4 {
+                @include font-design($fs: 27px, $fw: 400);
+            }
         }
 
-        h4 {
-            @include font-design($fs: 27px, $fw: 400);
+        mat-icon {
+            @include position-center();
+            color: $light-blue;
+            font-size: 36px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            border-radius: 100%;
+            transition: 125ms ease;
+
+            &:hover {
+                background-color: rgba($color: #000000, $alpha: 0.1);
+            }
         }
+
     }
 }
 
@@ -75,8 +97,34 @@ app-contact-detail {
     from {
         transform: translateX(200%);
     }
+
     to {
         transform: translateX(0);
     }
 }
 
+@media screen and (max-width: 1000px) {
+    .contacts-view {
+        width: 100%;
+        padding-bottom: 80px;
+    }
+
+    .content-dashboard {
+        width: 100%;
+        justify-content: flex-start;
+
+        header {
+            .text-header {
+                @include position-center($fd: column !important, $jc: flex-start, $ai: flex-start);
+                gap: 8px;
+
+                .line-blue {
+                    height: 3px;
+                    width: 100px;
+                }
+            }
+
+        }
+    }
+
+}

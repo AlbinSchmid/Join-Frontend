@@ -1,5 +1,5 @@
 <section>
-    <div class="contacts-view">
+    <div class="contacts-view" *ngIf="checkWindowWidth()">
         <button class="filled add-contact-btn" (click)="openDialog('add')">Add new contact <mat-icon
                 fontIcon="person_add"></mat-icon></button>
         <div class="contacts" *ngIf="dashboardService.showContactsList">
@@ -8,11 +8,15 @@
             }
         </div>
     </div>
-    <div class="content-dashboard">
+    <div class="content-dashboard" *ngIf="windowWidth > 1000 || dashboardService.contactDetailView">
         <header>
-            <h1>Contacts</h1>
-            <div *ngIf="windowWidth > 1360" class="line-blue"></div>
-            <h4 *ngIf="windowWidth > 1360">Better with a team</h4>
+            <div class="text-header">
+                <h1>Contacts</h1>
+                <div *ngIf="windowWidth > 1360" class="line-blue"></div>
+                <h4 *ngIf="windowWidth > 1360 || windowWidth <= 1000">Better with a team</h4>
+                <div *ngIf="windowWidth <= 1000" class="line-blue"></div>
+            </div>
+            <mat-icon *ngIf="windowWidth <= 1000" fontIcon="arrow_back" (click)="closeContactDetail()"></mat-icon>
         </header>
         <app-contact-detail *ngIf="dashboardService.contactDetailView"></app-contact-detail>
     </div>

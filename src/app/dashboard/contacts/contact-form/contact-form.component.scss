@@ -29,8 +29,16 @@ section {
     height: 100%;
     background-color: $blue;
     color: white;
-    padding: 66px 48px;
+    position: relative;
+    padding: clamp(2.75rem, 2.1029rem + 3.2353vw, 4.125rem) clamp(0.75rem, -0.3088rem + 5.2941vw, 3rem);
     gap: 12px;
+
+    header {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+
+    }
 
     img {
         width: 55px;
@@ -43,11 +51,11 @@ section {
         gap: 8px;
 
         h1 {
-            @include font-design($fs: 52px, $fw: 700);
+            @include font-design($fs: clamp(2.375rem, 1.9632rem + 2.0588vw, 3.25rem), $fw: 700);
         }
 
         h6 {
-            @include font-design($fs: 24px, $fw: 300);
+            @include font-design($fs: clamp(1.125rem, 0.9485rem + 0.8824vw, 1.5rem), $fw: 300);
         }
     }
 
@@ -74,23 +82,24 @@ section {
 .add-part {
     @include position-center($jc: space-between);
     gap: 40px;
+}
 
-    .profile {
-        @include position-center();
-        width: 120px;
-        height: 120px;
-        background-color: #D1D1D1;
-        border-radius: 100%;
-        border: 4px solid white;
-        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
-        color: white;
-        margin-top: -75px;
-    
-        mat-icon {
-            font-size: 50px;
-            width: 50px;
-            height: 50px;
-        }
+.profile {
+    @include position-center();
+    width: 120px;
+    height: 120px;
+    background-color: #D1D1D1;
+    border-radius: 100%;
+    border: 4px solid white;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+    color: white;
+    margin-top: -75px;
+    z-index: 2;
+
+    mat-icon {
+        font-size: 50px;
+        width: 50px;
+        height: 50px;
     }
 }
 
@@ -107,15 +116,6 @@ form {
         }
     }
 
-    // .outline {
-    //     &:hover ~ mat-icon {
-    //         color: $light-blue !important;
-    //     }
-
-    //     mat-icon {
-    //         color: $dark-blue;
-    //     }
-    // }
 
     .filled {
         mat-icon {
@@ -133,4 +133,30 @@ form {
 
 button {
     padding: 25px;
+}
+
+@media screen and (max-width: 1100px) {
+    section {
+        width: auto;
+    }
+
+    .add-part {
+        gap: 20px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    section {
+        @include position-center($fd: column);
+        height: auto;
+    }
+
+    .blue-part {
+        width: 100%;
+        padding-bottom: calc(clamp(2.75rem, 2.1029rem + 3.2353vw, 4.125rem) + 40px);
+    }
+
+    .white-part {
+        padding: clamp(1.25rem, 0.6618rem + 2.9412vw, 2.5rem) 0;
+    }
 }

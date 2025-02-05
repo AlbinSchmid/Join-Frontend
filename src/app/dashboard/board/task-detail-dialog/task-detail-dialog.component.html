@@ -1,7 +1,9 @@
+@if (!dashboardService.editTask) {
 <section>
-    @if (!dashboardService.editTask) {
+    <div class="scroll-div">
         <header>
-            <h2 [ngStyle]="{'background-color': task.category === 'Technical Task' ? '#1FD7C1' : 'blue'}">{{ task.category }}</h2>
+            <h2 [ngStyle]="{'background-color': task.category === 'Technical Task' ? '#1FD7C1' : 'blue'}">{{
+                task.category }}</h2>
             <mat-icon fontIcon="close" (click)="closeTaskDetailDialog()"></mat-icon>
         </header>
         <h1>{{ task.title }}</h1>
@@ -48,7 +50,9 @@
             <div class="line-grey"></div>
             <button (click)="dashboardService.editTask= true"><mat-icon fontIcon="edit"></mat-icon>Edit</button>
         </footer>
-    } @else {
-        <app-add-task-form [formType]="'editTask'" [ngStyle]="{'width': '100%'}" [task]="task" (closeFormDialog)="closeTaskDetailDialog()"></app-add-task-form>
-    }
+    </div>
 </section>
+} @else {
+<app-add-task-form [formType]="'editTask'" [ngStyle]="{'width': '100%'}" [task]="task"
+    (closeFormDialog)="closeTaskDetailDialog()"></app-add-task-form>
+}

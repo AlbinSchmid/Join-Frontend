@@ -5,8 +5,16 @@
 }
 
 section {
-    padding: 40px;
+    padding: clamp(1rem, 0.2941rem + 3.5294vw, 2.5rem);
     width: clamp(60rem, 22.5rem + 60vw, 75rem);
     height: 750px;
+}
+
+@media screen and (max-width: 1000px) {
+    section {
+        width: 100%;
+        max-height: calc(100vh - 30px);
+    }
+    
 }
 

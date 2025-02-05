@@ -16,7 +16,7 @@ export class ContactButtonComponent {
   dashboardService = inject(DashboardService);
   apiService = inject(ApiService);
   @Input() contact: ContactInterface = {
-    id: 0,
+    id: null,
     name: '',
     email: '',
     phone: '',

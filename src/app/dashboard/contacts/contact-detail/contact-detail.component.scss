@@ -22,7 +22,7 @@ section {
         @include position-center($fd: column, $ai: flex-start);
         gap: 12px;
         h2 {
-            @include font-design($fs: 47px, $fw: 500);
+            @include font-design($fs: clamp(2rem, 1.5588rem + 2.2059vw, 2.9375rem), $fw: 500);
         }
 
         .edit-delete-div {
@@ -50,8 +50,8 @@ section {
 
 .contact-info-detail {
     @include position-center($ai: flex-start, $fd: column);
-    gap: 40px;
-    margin-top: 50px;
+    gap: clamp(1.25rem, 0.6618rem + 2.9412vw, 2.5rem);
+    margin-top: clamp(0.9375rem, -0.0919rem + 5.1471vw, 3.125rem);
     
     .contact-information-p {
         @include font-design($fs: 20px, $fw: 400);
@@ -64,5 +64,14 @@ section {
         p {
             @include font-design($fs: 16px, $fw: 700);
         }
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .profile-detail {
+        width: clamp(5.3125rem, 4.8713rem + 2.2059vw, 6.25rem) !important;
+        height: clamp(5.3125rem, 4.8713rem + 2.2059vw, 6.25rem) !important;
+        min-width: clamp(5.3125rem, 4.8713rem + 2.2059vw, 6.25rem) !important;
+        min-height: clamp(5.3125rem, 4.8713rem + 2.2059vw, 6.25rem) !important;
     }
 }

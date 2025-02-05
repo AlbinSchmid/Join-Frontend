@@ -1,168 +1,166 @@
-<section [ngClass]="{'gap-dialog': formType === 'dialog'}">
-    @if (formType !== 'editTask') {
+@if (formType !== 'editTask') {
+<section [ngClass]="{'add-task-dialog': formType === 'dialog'}" class="add-task-section">
     <header>
         <h1>Add Task</h1>
         <mat-icon *ngIf="formType === 'dialog'" fontIcon="close" (click)="closeDialog()"></mat-icon>
     </header>
-    <main>
-        <form action="" (ngSubmit)="submitForm(form)" #form="ngForm">
-            <div class="form-fields-div">
-                <div class="left-part">
-                    <div class="form-field-overlaying-div">
-                        <p>Title<mark> *</mark></p>
-                        <label>
-                            <input type="title" placeholder="Enter a title" required name="title" #taskTitle="ngModel"
-                                maxlength="50" [(ngModel)]="addTaskForm.title">
-                        </label>
-                    </div>
-                    <div class="form-field-overlaying-div">
-                        <p>Desciption</p>
-                        <label class="label-textarea">
-                            <textarea type="Desciption" placeholder="Enter a Desciption" name="title" maxlength="200"
-                                #taskDescription="ngModel" [(ngModel)]="addTaskForm.description"></textarea>
-                        </label>
-                    </div>
-                    <div class="form-field-overlaying-div">
-                        <p>Assigned to</p>
-                        <div class="label-frame">
-                            <label for="" class="dropdown-label" (click)="openDrowDown('assign')">
-                                <input type="" placeholder="Select contacts to assign"
-                                    (input)="searchContact($event.target)">
-                                <mat-icon fontIcon="arrow_drop_down"
-                                    [ngClass]="{'rotate-icon': showDrowDownAssign}"></mat-icon>
-                            </label>
-                            <div class="dropdown-menu" *ngIf="showDrowDownAssign">
-                                <div class="select-item-container"
-                                    [ngStyle]="{'max-height.px': formType === 'dialog' ? 150 : 300}">
-                                    @if (allContacts.length > 0) {
-                                    @for (contact of allContacts; track $index) {
-                                    <mat-checkbox class="select-item" [checked]="assingedContacts.includes(contact)"
-                                        (click)="setAssignContact(contact, 'add')"
-                                        [ngClass]="{'assigned-contact': assingedContacts.includes(contact)}">
-                                        <div class="contact-profile" [ngStyle]="{'background-color': contact.color}">
-                                            {{ dashboardService.getInitials(contact.name) }}
-                                        </div>
-                                        <p>{{ contact.name }}</p>
-                                    </mat-checkbox>
-                                    }
-                                    } @else {
-                                    <div class="add-contact-div">
-                                        <p>Add some contacts to assign one</p>
-                                    </div>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                        <div class="assigned-contact-list">
-                            @for (contact of assingedContacts; track $index) {
-                            <div class="contact-profile"
-                                [ngStyle]="{'background-color': contact.color, 'margin-left.px': $index > 0 ? -10 : 0}">
-                                {{
-                                dashboardService.getInitials(contact.name) }}</div>
-                            }
-                        </div>
-                    </div>
+    <form action="" (ngSubmit)="submitForm(form)" #form="ngForm">
+        <div class="form-fields-div">
+            <div class="left-part">
+                <div class="form-field-overlaying-div">
+                    <p>Title<mark> *</mark></p>
+                    <label>
+                        <input type="title" placeholder="Enter a title" required name="title" #taskTitle="ngModel"
+                            maxlength="50" [(ngModel)]="addTaskForm.title">
+                    </label>
                 </div>
-                <div *ngIf="windowWidth > 800" class="line-grey"></div>
-                <div class="right-part">
-                    <div class="form-field-overlaying-div">
-                        <p>Due date<mark> *</mark></p>
-                        <label>
-                            <input matInput [matDatepicker]="picker" required name="taskDueDate"
-                                placeholder="mm/dd/yyyy" #taskDueDate="ngModel" [(ngModel)]="addTaskForm.date"
-                                [min]="minDate">
-                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                            @if (taskDueDate.invalid && taskDueDate.touched) {
-                            <span class="span-error">Ops, seems like the date is missing!</span>
-                            }
+                <div class="form-field-overlaying-div">
+                    <p>Desciption</p>
+                    <label class="label-textarea">
+                        <textarea type="Desciption" placeholder="Enter a Desciption" name="title" maxlength="200"
+                            #taskDescription="ngModel" [(ngModel)]="addTaskForm.description"></textarea>
+                    </label>
+                </div>
+                <div class="form-field-overlaying-div">
+                    <p>Assigned to</p>
+                    <div class="label-frame">
+                        <label for="" class="dropdown-label" (click)="openDrowDown('assign')">
+                            <input type="" placeholder="Select contacts to assign"
+                                (input)="searchContact($event.target)">
+                            <mat-icon fontIcon="arrow_drop_down"
+                                [ngClass]="{'rotate-icon': showDrowDownAssign}"></mat-icon>
                         </label>
-                    </div>
-                    <div class="form-field-overlaying-div">
-                        <p>Prio</p>
-                        <div class="prio-content">
-                            <div class="urgent" [ngClass]="{'active-urgent': urgentBtn}" (click)="setTaskPrio('high')">
-                                Urgent
-                                <mat-icon fontIcon="keyboard_double_arrow_up"></mat-icon>
-                            </div>
-                            <div class="medium" [ngClass]="{'active-medium': mediumBtn}"
-                                (click)="setTaskPrio('medium')">
-                                Medium
-                                <mat-icon fontIcon="drag_handle"></mat-icon>
-                            </div>
-                            <div class="low" [ngClass]="{'active-low': lowBtn}" (click)="setTaskPrio('low')">Low
-                                <mat-icon fontIcon="keyboard_double_arrow_down"></mat-icon></div>
-                        </div>
-                    </div>
-                    <div class="form-field-overlaying-div">
-                        <p>Category <mark>*</mark></p>
-                        <div class="label-frame">
-                            <label for="" class="dropdown-label" (click)="openDrowDown('category')">
-                                <input class="category-input" placeholder="Select task Category" #taskCategory="ngModel"
-                                    name="taskCategory" [(ngModel)]="addTaskForm.category" readonly required>
-                                <mat-icon fontIcon="arrow_drop_down"
-                                    [ngClass]="{'rotate-icon': showDrowDownCategory}"></mat-icon>
-                            </label>
-                            <div class="dropdown-menu" *ngIf="showDrowDownCategory">
-                                <div class="select-item" (click)="setCategory('technicalTask')"
-                                    [ngStyle]="{'padding.px': 6}">
-                                    <p>Technical Task</p>
-                                </div>
-                                <div class="select-item" (click)="setCategory('userStory')"
-                                    [ngStyle]="{'padding.px': 6}">
-                                    <p>User Story</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-field-overlaying-div">
-                        <p>Subtasks</p>
-                        <label>
-                            <input type="title" placeholder="Add new subtask" maxlength="30" name="subtaskTitle"
-                                #subtaskTitle="ngModel" [(ngModel)]="subtaskInput">
-                            <div class="subtask-input-btns" *ngIf="subtaskInput.length > 0">
-                                <mat-icon fontIcon="close" (click)="subtaskInput = ''"></mat-icon>
-                                <div class="line-grey"></div>
-                                <mat-icon fontIcon="check" (click)="createSubtask()"></mat-icon>
-                            </div>
-                        </label>
-                        <div class="subtask-list">
-                            <ul>
-                                @for (subtask of createdSubtasks; track $index) {
-                                <li [ngClass]="{'li-backgroundcolor-active' : editSubtaskId === $index}">
-                                    <p *ngIf="editSubtaskId !== $index">{{ subtask.title }}</p>
-                                    <input *ngIf="editSubtaskId === $index" maxlength="30" name="editSubtask"
-                                        [ngClass]="{'active-input': editSubtaskId === $index}" #subtaskTitle="ngModel"
-                                        [(ngModel)]="editSubtaskInput">
-                                    <div class="subtask-input-btns">
-                                        <mat-icon *ngIf="editSubtaskId !== $index" fontIcon="edit"
-                                            (click)="editTheCreatedSubtask(subtask, $index)"></mat-icon>
-                                        <mat-icon *ngIf="editSubtaskId === $index" fontIcon="check"
-                                            (click)="safeEditSubtask($index)"></mat-icon>
-                                        <div class="line-grey"></div>
-                                        <mat-icon fontIcon="delete" (click)="deleteCreadedSubtask($index)"></mat-icon>
+                        <div class="dropdown-menu" *ngIf="showDrowDownAssign">
+                            <div class="select-item-container"
+                                [ngStyle]="{'max-height.px': formType === 'dialog' ? 150 : 300}">
+                                @if (allContacts.length > 0) {
+                                @for (contact of allContacts; track $index) {
+                                <mat-checkbox class="select-item" [checked]="assingedContacts.includes(contact)"
+                                    (click)="setAssignContact(contact, 'add')"
+                                    [ngClass]="{'assigned-contact': assingedContacts.includes(contact)}">
+                                    <div class="contact-profile" [ngStyle]="{'background-color': contact.color}">
+                                        {{ dashboardService.getInitials(contact.name) }}
                                     </div>
-                                </li>
+                                    <p>{{ contact.name }}</p>
+                                </mat-checkbox>
                                 }
-                            </ul>
+                                } @else {
+                                <div class="add-contact-div">
+                                    <p>Add some contacts to assign one</p>
+                                </div>
+                                }
+                            </div>
                         </div>
+                    </div>
+                    <div class="assigned-contact-list">
+                        @for (contact of assingedContacts; track $index) {
+                        <div class="contact-profile"
+                            [ngStyle]="{'background-color': contact.color, 'margin-left.px': $index > 0 ? -10 : 0}">
+                            {{
+                            dashboardService.getInitials(contact.name) }}</div>
+                        }
                     </div>
                 </div>
             </div>
-            <footer>
-                <p><mark>*</mark> This field is required</p>
-                <div>
-                    <button class="outline" mat-button (click)="this.resestForm()">Clear <mat-icon
-                            fontIcon="close"></mat-icon></button>
-                    <button class="filled" type="submit" [ngClass]="{'disabled': form.invalid}"
-                        [disabled]="form.invalid" mat-button>Create Task <mat-icon fontIcon="check"></mat-icon></button>
+            <div *ngIf="windowWidth > 1000" class="line-grey"></div>
+            <div class="right-part">
+                <div class="form-field-overlaying-div">
+                    <p>Due date<mark> *</mark></p>
+                    <label>
+                        <input matInput [matDatepicker]="picker" required name="taskDueDate" placeholder="mm/dd/yyyy"
+                            #taskDueDate="ngModel" [(ngModel)]="addTaskForm.date" [min]="minDate">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        @if (taskDueDate.invalid && taskDueDate.touched) {
+                        <span class="span-error">Ops, seems like the date is missing!</span>
+                        }
+                    </label>
                 </div>
-            </footer>
-        </form>
-    </main>
-    } @else {
-    <form action="" (ngSubmit)="submitEditTaskForm(form)" #form="ngForm" class="edit-task-form">
-        <div class="edit-scroll-div">
+                <div class="form-field-overlaying-div">
+                    <p>Prio</p>
+                    <div class="prio-content">
+                        <div class="urgent" [ngClass]="{'active-urgent': urgentBtn}" (click)="setTaskPrio('high')">
+                            Urgent
+                            <mat-icon fontIcon="keyboard_double_arrow_up"></mat-icon>
+                        </div>
+                        <div class="medium" [ngClass]="{'active-medium': mediumBtn}" (click)="setTaskPrio('medium')">
+                            Medium
+                            <mat-icon fontIcon="drag_handle"></mat-icon>
+                        </div>
+                        <div class="low" [ngClass]="{'active-low': lowBtn}" (click)="setTaskPrio('low')">Low
+                            <mat-icon fontIcon="keyboard_double_arrow_down"></mat-icon>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-field-overlaying-div">
+                    <p>Category <mark>*</mark></p>
+                    <div class="label-frame">
+                        <label for="" class="dropdown-label" (click)="openDrowDown('category')">
+                            <input class="category-input" placeholder="Select task Category" #taskCategory="ngModel"
+                                name="taskCategory" [(ngModel)]="addTaskForm.category" readonly required>
+                            <mat-icon fontIcon="arrow_drop_down"
+                                [ngClass]="{'rotate-icon': showDrowDownCategory}"></mat-icon>
+                        </label>
+                        <div class="dropdown-menu" *ngIf="showDrowDownCategory">
+                            <div class="select-item" (click)="setCategory('technicalTask')"
+                                [ngStyle]="{'padding.px': 6}">
+                                <p>Technical Task</p>
+                            </div>
+                            <div class="select-item" (click)="setCategory('userStory')" [ngStyle]="{'padding.px': 6}">
+                                <p>User Story</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-field-overlaying-div">
+                    <p>Subtasks</p>
+                    <label>
+                        <input type="title" placeholder="Add new subtask" maxlength="30" name="subtaskTitle"
+                            #subtaskTitle="ngModel" [(ngModel)]="subtaskInput">
+                        <div class="subtask-input-btns" *ngIf="subtaskInput.length > 0">
+                            <mat-icon fontIcon="close" (click)="subtaskInput = ''"></mat-icon>
+                            <div class="line-grey"></div>
+                            <mat-icon fontIcon="check" (click)="createSubtask()"></mat-icon>
+                        </div>
+                    </label>
+                    <div class="subtask-list">
+                        <ul>
+                            @for (subtask of createdSubtasks; track $index) {
+                            <li [ngClass]="{'li-backgroundcolor-active' : editSubtaskId === $index}">
+                                <p *ngIf="editSubtaskId !== $index">{{ subtask.title }}</p>
+                                <input *ngIf="editSubtaskId === $index" maxlength="30" name="editSubtask"
+                                    [ngClass]="{'active-input': editSubtaskId === $index}" #subtaskTitle="ngModel"
+                                    [(ngModel)]="editSubtaskInput">
+                                <div class="subtask-input-btns">
+                                    <mat-icon *ngIf="editSubtaskId !== $index" fontIcon="edit"
+                                        (click)="editTheCreatedSubtask(subtask, $index)"></mat-icon>
+                                    <mat-icon *ngIf="editSubtaskId === $index" fontIcon="check"
+                                        (click)="safeEditSubtask($index)"></mat-icon>
+                                    <div class="line-grey"></div>
+                                    <mat-icon fontIcon="delete" (click)="deleteCreadedSubtask($index)"></mat-icon>
+                                </div>
+                            </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <p><mark>*</mark> This field is required</p>
+            <div>
+                <button class="outline" mat-button (click)="this.resestForm()">Clear <mat-icon
+                        fontIcon="close"></mat-icon></button>
+                <button class="filled" type="submit" [ngClass]="{'disabled': form.invalid}" [disabled]="form.invalid"
+                    mat-button>Create Task <mat-icon fontIcon="check"></mat-icon></button>
+            </div>
+        </footer>
+    </form>
+</section>
+} @else {
+<section class="edit-section">
+    <div class="edit-scroll-div">
+        <form action="" (ngSubmit)="submitEditTaskForm(form)" #form="ngForm" class="edit-task-form">
             <div class="form-field-overlaying-div">
                 <p>Category <mark>*</mark></p>
                 <div class="label-frame">
@@ -220,7 +218,8 @@
                         <mat-icon fontIcon="drag_handle"></mat-icon>
                     </div>
                     <div class="low" [ngClass]="{'active-low': addTaskForm.prio === 'low'}"
-                        (click)="setTaskPrio('low')">Low <mat-icon fontIcon="keyboard_double_arrow_down"></mat-icon>
+                        (click)="setTaskPrio('low')">Low
+                        <mat-icon fontIcon="keyboard_double_arrow_down"></mat-icon>
                     </div>
                 </div>
             </div>
@@ -292,14 +291,16 @@
                     </ul>
                 </div>
             </div>
-        </div>
-        <footer class="edit-task-footer">
-            <button class="filled" type="submit" mat-stroked-button>Ok <mat-icon fontIcon="check"></mat-icon> </button>
-        </footer>
-
-    </form>
-    }
+            <footer class="edit-task-footer">
+                <button class="filled" type="submit" mat-stroked-button>Ok <mat-icon fontIcon="check"></mat-icon>
+                </button>
+            </footer>
+        </form>
+    </div>
 </section>
-<div class="added-message" *ngIf="showAddedMessage">
-    <p>Task added to Board <mat-icon fontIcon="view_column_outlined"></mat-icon></p>
+}
+<div class="added-message-background" *ngIf="showAddedMessage">
+    <div class="added-message">
+        <p>Task added to Board <mat-icon fontIcon="view_column_outlined"></mat-icon></p>
+    </div>
 </div>

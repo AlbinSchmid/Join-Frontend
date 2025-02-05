@@ -197,6 +197,7 @@ form {
     @include position-center($fd: column, $ai: flex-start, $jc: flex-start);
     gap: 80px;
     padding: 64px clamp(0.75rem, -3.3125rem + 6.5vw, 4rem);
+    overflow-y: auto !important;
 }
 
 .contact-profile {

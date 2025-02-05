@@ -14,6 +14,7 @@ import { DashboardService } from '../../shared/services/dashboard.service';
 import { TaskInterface } from '../../shared/interfaces/task-interface';
 import { AddTaskDialogComponent } from './add-task-dialog/add-task-dialog.component';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-board',
@@ -22,7 +23,8 @@ import { FormsModule } from '@angular/forms';
     CdkDropList,
     CdkDrag,
     TaskCardComponent,
-    FormsModule
+    FormsModule,
+    CommonModule
   ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss'
@@ -31,6 +33,7 @@ export class BoardComponent {
   apiService = inject(ApiService);
   dashboardService = inject(DashboardService);
   dialog = inject(MatDialog);
+  windowWidth = window.innerWidth;
 
 
   /**
@@ -59,7 +62,12 @@ export class BoardComponent {
    * Opens the add task dialog.
    */
   openAddTaskDialog(): void {
-    this.dialog.open(AddTaskDialogComponent);
+    if (this.windowWidth > 1000) {
+      this.dialog.open(AddTaskDialogComponent);
+    } else {
+      this.dashboardService.showBoard = false;
+      this.dashboardService.showAddTask = true;
+    }
   }
 
 

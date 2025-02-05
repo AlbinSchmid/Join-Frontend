@@ -27,7 +27,7 @@ export class ContactsComponent {
   apiService = inject(ApiService);
   dialog = inject(MatDialog);
 
-  contactData = {
+  contactData: ContactInterface = {
     id: 0,
     name: '',
     email: '',
@@ -43,8 +43,49 @@ export class ContactsComponent {
    * Initializes the component.
    * Resets the contact category letters and sets the contact detail view to false.
    */
-  ngOnInit():void {
+  ngOnInit(): void {
     this.dashboardService.contactCategoryLetters = [];
+    this.dashboardService.contactDetailView = false;
+  }
+
+
+  /**
+   * Checks the current window width and determines whether the contact detail view should be displayed.
+   *
+   * @returns {boolean} - Returns `true` if the window width is greater than 1000 or if the contact detail view is not active; otherwise, returns `false`.
+   */
+  checkWindowWidth(): boolean {
+    if (this.windowWidth > 1000) {
+      return true;
+    } else {
+      if (this.dashboardService.contactDetailView) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+
+
+  
+  /**
+   * Closes the contact detail view and resets the current contact information.
+   * 
+   * This method sets the `currentContact` property of the `dashboardService` to an empty contact object
+   * with default values. It also sets the `contactDetailView` property of the `dashboardService` to `false`,
+   * effectively closing the contact detail view.
+   * 
+   * @returns {void}
+   */
+  closeContactDetail(): void {
+    this.dashboardService.currentContact = {
+      id: null,
+      name: '',
+      email: '',
+      phone: '',
+      color: ''
+    };
+    console.log(this.dashboardService.currentContact);
     this.dashboardService.contactDetailView = false;
   }
 

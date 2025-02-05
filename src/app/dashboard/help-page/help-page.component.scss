@@ -1,6 +1,7 @@
 @import './../../../styles.scss';
 
 section {
+    justify-content: flex-start !important;
     overflow: scroll;
     gap: 24px !important;
 }

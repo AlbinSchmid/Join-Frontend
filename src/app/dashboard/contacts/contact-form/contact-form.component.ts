@@ -31,6 +31,7 @@ export class ContactFormComponent {
     emailContact: '',
     phoneContact: '',
   }
+  windowWidth = window.innerWidth;
 
 
   /**
