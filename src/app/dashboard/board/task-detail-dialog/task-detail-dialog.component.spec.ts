@@ -14,7 +14,7 @@ describe('TaskDetailDialogComponent', () => {
       providers: [
         provideHttpClient(withInterceptorsFromDi()),
         { provide: MatDialogRef, useValue: {} },
-        { provide: MAT_DIALOG_DATA, useValue: { contacts: [] } }
+        { provide: MAT_DIALOG_DATA, useValue: { task: { contacts: [], subtasks: [] } } }
       ]
     })
     .compileComponents();

@@ -23,7 +23,7 @@ export class LogInComponent {
     dashboardService = inject(DashboardService);
     router = inject(Router);
 
-    
+
     /**
      * Navigates the user to the sign-up page.
      * 
@@ -35,10 +35,5 @@ export class LogInComponent {
         setTimeout(() => {
             this.router.navigate(['/sign-up']);
         }, 50);
-    }
-
-    goToPricacyPolicyOrLegalNotice(place: string): void {
-        place === 'privacyPolicy' ? this.dashboardService.showPrivacyPolicy = true : this.dashboardService.showLegalNotice = true;
-        this.router.navigate(['/dashboard'])
     }
 }

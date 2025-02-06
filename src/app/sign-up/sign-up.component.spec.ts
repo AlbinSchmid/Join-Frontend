@@ -1,5 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed, tick } from '@angular/core/testing';
 import { SignUpComponent } from './sign-up.component';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
@@ -11,11 +10,11 @@ describe('SignUpComponent', () => {
     await TestBed.configureTestingModule({
       imports: [SignUpComponent],
       providers: [
-        provideHttpClient(withInterceptorsFromDi())
+        provideHttpClient(withInterceptorsFromDi()),
       ]
     })
       .compileComponents();
-
+      
     fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

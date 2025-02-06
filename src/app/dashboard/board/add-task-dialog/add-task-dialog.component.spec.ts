@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddTaskDialogComponent } from './add-task-dialog.component';
 import { MatDialogRef } from '@angular/material/dialog';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AddTaskDialogComponent', () => {
   let component: AddTaskDialogComponent;
@@ -9,7 +10,11 @@ describe('AddTaskDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddTaskDialogComponent, MatDialogRef]
+      imports: [AddTaskDialogComponent],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        { provide: MatDialogRef, useValue: {} }
+      ]
     })
     .compileComponents();
 

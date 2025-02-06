@@ -1,5 +1,5 @@
 
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { TaskInterface } from '../../../shared/interfaces/task-interface';
@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { AddTaskFormComponent } from '../../../shared/components/add-task-form/add-task-form.component';
+import { SubtaskInterface } from '../../../shared/interfaces/subtask-interface';
 
 @Component({
   selector: 'app-task-detail-dialog',
@@ -28,21 +29,30 @@ import { AddTaskFormComponent } from '../../../shared/components/add-task-form/a
   templateUrl: './task-detail-dialog.component.html',
   styleUrl: './task-detail-dialog.component.scss'
 })
-export class TaskDetailDialogComponent {
+export class TaskDetailDialogComponent implements OnInit {
   apiService = inject(ApiService);
   data = inject(MAT_DIALOG_DATA);
   dialogRef = inject(MatDialogRef<TaskDetailDialogComponent>);
   dashboardService = inject(DashboardService);
   
   task: TaskInterface = this.data.task;
-  contacts: any[] = this.task.contacts;
-  subtasks: any[] = this.task.subtasks;
+  contacts: ContactInterface[] = this.task.contacts;
+  subtasks: SubtaskInterface[] = this.task.subtasks;
   
   substaksCompleteValue = 0;
   editTask = false;
 
-  constructor() {
-    this.data = this.data || {contacts: []};
+
+
+  /**
+   * Angular lifecycle hook that is called after the component's view has been fully initialized.
+   * Initializes the task, contacts, and subtasks properties based on the provided data.
+   * If no data is provided, it initializes with default empty arrays.
+   */
+  ngOnInit(): void {
+    this.task = this.data?.task || { contacts: [], subtasks: [] };
+    this.contacts = this.task.contacts || [];
+    this.subtasks = this.task.subtasks || [];
   }
 
 
@@ -82,6 +92,7 @@ export class TaskDetailDialogComponent {
    * @returns {string} The string with the first letter uppercased.
    */
   firstLetterBig(prio: string):string {
+    if (!prio) return '';
     return prio.charAt(0).toUpperCase() + prio.slice(1);
   }
 

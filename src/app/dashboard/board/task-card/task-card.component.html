@@ -1,4 +1,4 @@
-<section (click)="openTaskDetailDialog(task)">
+<section (click)="openTaskDetailDialog(task)" *ngIf="task">
     <div class="help-div-mobile-task" *ngIf="windowWidth < 1400">
         <h2 [ngStyle]="{'background-color': task.category === 'Technical Task' ? '#1FD7C1' : 'blue'}">{{ task.category
             }}</h2>

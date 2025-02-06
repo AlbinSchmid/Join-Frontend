@@ -55,6 +55,7 @@ export class SummaryComponent {
    * @returns {string} The formatted username with the first letter capitalized.
    */
   getName(): string {
+    if (!this.apiService.user.username) return '';
     return this.apiService.user.username.charAt(0).toUpperCase() + this.apiService.user.username.slice(1);
   }
 

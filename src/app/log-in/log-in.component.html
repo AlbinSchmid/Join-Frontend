@@ -8,8 +8,8 @@
         <a (click)="goToSignUp()" mat-flat-button class="filled">Sign up</a>
     </header>
     <footer>
-        <a (click)="goToPricacyPolicyOrLegalNotice('privacyPolicy')">Privacy Policy</a>
-        <a (click)="goToPricacyPolicyOrLegalNotice('legalNotice')">Legal Notice</a>
+        <a (click)="dashboardService.goToPrivacyPolicyOrLegalNotice('privacyPolicy')">Privacy Policy</a>
+        <a (click)="dashboardService.goToPrivacyPolicyOrLegalNotice('legalNotice')">Legal Notice</a>
     </footer>
 </section>
 
