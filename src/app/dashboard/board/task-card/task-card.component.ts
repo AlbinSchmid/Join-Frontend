@@ -76,7 +76,7 @@ export class TaskCardComponent {
       this.apiService.getSubtaskData().subscribe((response: any) => {
         let task = response.find((task: any) => task.id === this.task.id);      
         this.subtasks = [];
-        this.subtasks = task.subtasks;
+        this.subtasks = task?.subtasks || [];
         this.subtaskValue = this.subtasks.length;
         this.calculateProgress();
       });

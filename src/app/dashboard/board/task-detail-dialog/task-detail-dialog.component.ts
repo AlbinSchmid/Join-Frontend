@@ -50,9 +50,9 @@ export class TaskDetailDialogComponent implements OnInit {
    * If no data is provided, it initializes with default empty arrays.
    */
   ngOnInit(): void {
-    this.task = this.data?.task || { contacts: [], subtasks: [] };
-    this.contacts = this.task.contacts || [];
-    this.subtasks = this.task.subtasks || [];
+    this.task = this.data?.task;
+    this.contacts = this.task.contacts;
+    this.subtasks = this.task.subtasks;
   }
 
 
