@@ -82,7 +82,6 @@ export class AddTaskFormComponent {
     this.getAllContacts();
   }
 
-
   /**
    * Populates the edit task form with the current task's data.
    * 
@@ -100,7 +99,6 @@ export class AddTaskFormComponent {
     this.editAssingedContact = JSON.parse(JSON.stringify(this.task.contacts));
   }
 
-
   /**
    * Gets all contacts from the API and stores them in the `allContacts` array.
    * 
@@ -110,7 +108,6 @@ export class AddTaskFormComponent {
   getAllContacts(): void {
     this.apiService.contacts.forEach((contact) => this.allContacts.push(contact));
   }
-
 
   /**
    * Handles the submission of the edit task form.
@@ -125,7 +122,6 @@ export class AddTaskFormComponent {
       this.saveEditTask();
     }
   }
-
 
   /**
    * Saves the edited task by sending a PATCH request to the API.
@@ -150,7 +146,6 @@ export class AddTaskFormComponent {
     this.closeFormDialog.emit();
   }
 
-
   /**
    * Prepares the contact data object for a task edit action.
    * 
@@ -168,7 +163,6 @@ export class AddTaskFormComponent {
       contact_ids: contactIds,
     }
   }
-
 
   /**
    * Constructs an object containing the edited task data, including subtasks.
@@ -195,7 +189,6 @@ export class AddTaskFormComponent {
     }
   }
 
-
   /**
    * Handles the form submission for creating a new task.
    * 
@@ -213,7 +206,6 @@ export class AddTaskFormComponent {
       }, 2000);
     }
   }
-
 
   /**
    * Creates a new task by sending a POST request to the API with the task data.
@@ -233,7 +225,6 @@ export class AddTaskFormComponent {
       console.error(error);
     });
   }
-
 
   /**
    * Takes the form data and formats it into an object that can be posted to the
@@ -258,7 +249,6 @@ export class AddTaskFormComponent {
     }
   }
 
-
   /**
    * Searches for a contact in the contacts list.
    * 
@@ -268,7 +258,6 @@ export class AddTaskFormComponent {
     this.showDrowDownAssign = true;
     this.allContacts = this.apiService.contacts.filter((contact) => contact.name.toLowerCase().startsWith(searchTerm.value.toLowerCase()));
   }
-
 
   /**
    * Sets the assigned contacts for the task, either for adding or editing.
@@ -293,7 +282,6 @@ export class AddTaskFormComponent {
     }
   }
 
-
   /**
    * Checks if a contact is included in the array of assigned contacts.
    * @param contact - The contact object to check.
@@ -303,7 +291,6 @@ export class AddTaskFormComponent {
     const exists = this.editAssingedContact.some(contactObj => contactObj.id === contact.id);
     return exists;
   }
-
 
   /**
    * Creates a new subtask and adds it to the list of created subtasks.
@@ -318,7 +305,6 @@ export class AddTaskFormComponent {
     this.subtaskInput = '';
   }
 
-
   /**
    * Returns a clean JSON object representing a new subtask with the given title
    * and the default values for id and completed.
@@ -332,7 +318,6 @@ export class AddTaskFormComponent {
     }
   }
 
-
   /**
    * Sets the editSubtaskInput to the title of the subtask with the given id
    * and sets the editSubtaskId to the given id.
@@ -344,7 +329,6 @@ export class AddTaskFormComponent {
     this.editSubtaskId = id;
   }
 
-
   /**
    * Sets the title of the subtask with the given id to the current editSubtaskInput
    * and resets the editSubtaskId to null.
@@ -355,7 +339,6 @@ export class AddTaskFormComponent {
     this.editSubtaskId = null;
   }
 
-
   /**
    * Deletes the subtask with the given id from the list of created subtasks.
    * @param {number} id The id of the subtask to delete.
@@ -364,7 +347,6 @@ export class AddTaskFormComponent {
     this.createdSubtasks.splice(id, 1);
     this.editSubtaskId = null;
   }
-
 
   /**
    * Sets the category of the task based on the given type.
@@ -377,7 +359,6 @@ export class AddTaskFormComponent {
     this.showDrowDownCategory = false;
   }
 
-
   /**
    * Toggles the visibility of the dropdown menu for the given type.
    * @param {string} dropDownType The type of dropdown menu to toggle, either 'category' or 'assign'.
@@ -386,7 +367,6 @@ export class AddTaskFormComponent {
     dropDownType === 'category' ? this.showDrowDownCategory = !this.showDrowDownCategory : this.showDrowDownCategory = false
     dropDownType === 'assign' ? this.showDrowDownAssign = !this.showDrowDownAssign : this.showDrowDownAssign = false
   }
-
 
   /**
    * Sets the priority of the task based on the given type.
@@ -402,7 +382,6 @@ export class AddTaskFormComponent {
     }
   }
 
-
   /**
    * Sets the priority of the task to 'high' and updates the state of the buttons to reflect this.
    */
@@ -412,7 +391,6 @@ export class AddTaskFormComponent {
     this.lowBtn = false
     this.addTaskForm.prio = 'high';
   }
-
 
   /**
    * Sets the priority of the task to 'medium' and updates the state of the buttons to reflect this.
@@ -424,7 +402,6 @@ export class AddTaskFormComponent {
     this.addTaskForm.prio = 'medium';
   }
 
-
   /**
    * Sets the priority of the task to 'low' and updates the state of the buttons to reflect this.
    */
@@ -435,7 +412,6 @@ export class AddTaskFormComponent {
     this.addTaskForm.prio = 'low';
   }
 
-
   /**
    * Closes the dialog with an 'add' action.
    * 
@@ -445,7 +421,6 @@ export class AddTaskFormComponent {
   closeDialog(): void {
     this.closeFormDialog.emit();
   }
-
 
   /**
    * Resets the form fields to their default values.

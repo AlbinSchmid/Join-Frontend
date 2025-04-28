@@ -38,7 +38,6 @@ export class DashboardComponent {
 
   windowWidth = window.innerWidth;
 
-
   /**
    * Initializes the component.
    * Retrieves user data from local storage and fetches contact data.
@@ -51,7 +50,6 @@ export class DashboardComponent {
       }, 10);
     }
   }
-
 
   /**
    * Switches the content displayed on the dashboard based on the provided content string.
@@ -76,21 +74,36 @@ export class DashboardComponent {
     }
   }
 
-
+  /**
+   * Navigates to the login page and closes all content and information pages.
+   * 
+   * This method performs the following actions:
+   * - Navigates to the root route ('/').
+   * - Closes all currently open content pages.
+   * - Closes all currently open information pages.
+   */
   goToLogIn(): void {
     this.router.navigate(['/']);
     this.closeAllContentPages();
     this.closeAllInfoPages();
   }
 
-
+  /**
+   * Navigates to the Help page by closing all other content pages
+   * and setting the visibility flags accordingly.
+   * 
+   * This method performs the following actions:
+   * - Closes all currently open content pages.
+   * - Sets the `showHelpPage` flag to `true`.
+   * - Sets the `showPrivacyPolicy` flag to `false`.
+   * - Sets the `showLegalNotice` flag to `false`.
+   */
   goToHelp(): void {
     this.closeAllContentPages();
     this.dashboardService.showPrivacyPolicy = false;
     this.dashboardService.showLegalNotice = false;
     this.dashboardService.showHelpPage = true;
   }
-
   
   /**
    * Navigates to the Privacy Policy page by closing all other content pages
@@ -109,7 +122,6 @@ export class DashboardComponent {
     this.dashboardService.showHelpPage = false;
   }
 
-
   /**
    * Navigates to the Legal Notice page by closing all content pages and 
    * updating the dashboard service to show the Legal Notice while hiding 
@@ -122,9 +134,9 @@ export class DashboardComponent {
     this.dashboardService.showHelpPage = false;
   }
 
-
   /**
    * Displays the summary section of the dashboard.
+   * Hides other sections and closes all information pages.
    */
   goToSummary(): void {
     this.dashboardService.showSummary = true;
@@ -134,9 +146,9 @@ export class DashboardComponent {
     this.closeAllInfoPages();
   }
 
-
   /**
    * Displays the add task section of the dashboard.
+   * Hides other sections and closes all information pages.
    */
   goToAddTask(): void {
     this.dashboardService.showSummary = false;
@@ -146,9 +158,9 @@ export class DashboardComponent {
     this.closeAllInfoPages();
   }
 
-
   /**
    * Displays the board section of the dashboard.
+   * Resets the search input and hides other sections.
    */
   goToBoard(): void {
     this.dashboardService.searchTaskInput = '';
@@ -159,9 +171,9 @@ export class DashboardComponent {
     this.closeAllInfoPages();
   }
 
-
   /**
    * Displays the contacts section of the dashboard.
+   * Resets the current contact to a default state.
    */
   goToContacts(): void {
     this.dashboardService.showSummary = false;
@@ -178,14 +190,20 @@ export class DashboardComponent {
     this.closeAllInfoPages();
   }
 
-
+  /**
+   * Closes all information pages by setting the corresponding flags in the dashboard service to false.
+   * This method is used to reset the state of the dashboard when navigating between different sections.
+   */
   closeAllInfoPages() {
     this.dashboardService.showPrivacyPolicy = false;
     this.dashboardService.showLegalNotice = false;
     this.dashboardService.showHelpPage = false;
   }
 
-
+  /**
+   * Closes all content pages by setting the corresponding flags in the dashboard service to false.
+   * This method is used to reset the state of the dashboard when navigating between different sections.
+   */
   closeAllContentPages() {
     this.dashboardService.showSummary = false;
     this.dashboardService.showAddTask = false;
@@ -193,9 +211,9 @@ export class DashboardComponent {
     this.dashboardService.showContacts = false;
   }
 
-
   /**
-   * Logs out the user, clears local storage, and resets the dashboard state.
+   * Logs out the user by clearing local storage, resetting user data, and navigating to the login page.
+   * If the user is a guest, it deletes the guest user from the API.
    */
   logout() {
     localStorage.clear();
@@ -212,9 +230,9 @@ export class DashboardComponent {
     this.router.navigate(['/']);
   }
 
-
   /**
-   * Resets the user information in the API service.
+   * Resets the user data in the API service to default values.
+   * This method sets the username, email, token, and userId to empty strings or zero.
    */
   resetUser(): void {
     this.apiService.user = {

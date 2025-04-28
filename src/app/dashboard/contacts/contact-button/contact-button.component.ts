@@ -43,7 +43,6 @@ export class ContactButtonComponent {
     }
   }
 
-
   /**
    * Opens the contact detail view and sets the current contact to the contact
    * associated with this button.

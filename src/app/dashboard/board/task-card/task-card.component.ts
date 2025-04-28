@@ -36,7 +36,7 @@ export class TaskCardComponent {
   subtaskValue = 0;
   completeSubtasksValue = 0;
 
-  
+
   /**
    * Lifecycle hook that is called after data-bound properties of a directive are initialized.
    * Initializes the subtask value and calculates the progress if subtasks are present.
@@ -47,7 +47,6 @@ export class TaskCardComponent {
       this.calculateProgress();
     }
   }
-
 
   /**
    * Calculates the progress of a task by summing up the number of completed
@@ -60,11 +59,10 @@ export class TaskCardComponent {
     this.progressbarValue = value * this.completeSubtasksValue;
   }
 
-
   /**
-   * Opens a dialog window with the task details.
-   *
-   * @param task The task whose details are to be displayed.
+   * Opens the task detail dialog when a task is clicked.
+   * It passes the task data to the dialog and handles the response.
+   * @param task The task data to be passed to the dialog.
    */
   openTaskDetailDialog(task: TaskInterface,): void {
     this.dialog.open(TaskDetailDialogComponent, {
@@ -72,16 +70,24 @@ export class TaskCardComponent {
         task
       },
     }).afterClosed().subscribe(result => {
-      this.apiService.getTaskData();
-      this.apiService.getSubtaskData().subscribe((response: any) => {
-        let task = response.find((task: any) => task.id === this.task.id);      
-        this.subtasks = [];
-        this.subtasks = task?.subtasks || [];
-        this.subtaskValue = this.subtasks.length;
-        this.calculateProgress();
-      });
-      this.dashboardService.editTask = false;
+      this.handleResponse(result);
     })
   }
 
+  /**
+   * Handles the response from the task detail dialog.
+   * It fetches the task and subtask data again to update the subtasks and progress.
+   * @param response The response from the task detail dialog.
+   */
+  handleResponse(response: any): void {
+    this.apiService.getTaskData();
+    this.apiService.getSubtaskData().subscribe((response: any) => {
+      let task = response.find((task: any) => task.id === this.task.id);
+      this.subtasks = [];
+      this.subtasks = task?.subtasks || [];
+      this.subtaskValue = this.subtasks.length;
+      this.calculateProgress();
+    });
+    this.dashboardService.editTask = false;
+  }
 }

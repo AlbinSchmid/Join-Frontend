@@ -45,7 +45,19 @@ export class DashboardService {
   searchTaskInput: string;
 
 
-
+  /**
+   * Extracts the initials from a given name.
+   * 
+   * @param name - The full name as a string. If the name is empty or undefined, an empty string is returned.
+   * @returns A string containing the uppercase initials of the words in the name.
+   * 
+   * @example
+   * ```typescript
+   * getInitials("John Doe"); // Returns "JD"
+   * getInitials("Alice Bob Charlie"); // Returns "ABC"
+   * getInitials(""); // Returns ""
+   * ```
+   */
   getInitials(name: string): string {
     if (!name) return '';
     let splitedWord = name.split(' ')
@@ -53,7 +65,16 @@ export class DashboardService {
     return initials
   }
 
-
+  
+  /**
+   * Determines the appropriate icon name based on the priority of a task.
+   *
+   * @param task - The task object implementing the `TaskInterface` which contains a `prio` property.
+   * @returns A string representing the icon name:
+   * - `'keyboard_double_arrow_up'` for high priority.
+   * - `'drag_handle'` for medium priority.
+   * - `'keyboard_double_arrow_down'` for low priority or other cases.
+   */
   controllPrio(task: TaskInterface): string {
     if (task.prio === 'high') {
       return 'keyboard_double_arrow_up';

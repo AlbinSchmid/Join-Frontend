@@ -43,7 +43,6 @@ export class TaskDetailDialogComponent implements OnInit {
   editTask = false;
 
 
-
   /**
    * Angular lifecycle hook that is called after the component's view has been fully initialized.
    * Initializes the task, contacts, and subtasks properties based on the provided data.
@@ -54,7 +53,6 @@ export class TaskDetailDialogComponent implements OnInit {
     this.contacts = this.task.contacts;
     this.subtasks = this.task.subtasks;
   }
-
 
   /**
    * Sets the subtask to completed or uncompleted and sends a request to the API to update the subtask.
@@ -70,7 +68,6 @@ export class TaskDetailDialogComponent implements OnInit {
     this.apiService.patchSubtaskData(data).subscribe((response) => {
     });
   }
-  
 
   /**
    * Deletes the task in the database and closes the dialog.
@@ -85,7 +82,6 @@ export class TaskDetailDialogComponent implements OnInit {
     this.closeTaskDetailDialog();
   }
   
-
   /**
    * Convert the first letter of the given string to uppercase and return the result.
    * @param {string} prio The string to convert.
@@ -96,7 +92,6 @@ export class TaskDetailDialogComponent implements OnInit {
     return prio.charAt(0).toUpperCase() + prio.slice(1);
   }
 
-
   /**
    * Close the task detail dialog.
    * @description This function closes the task detail dialog.
@@ -104,5 +99,4 @@ export class TaskDetailDialogComponent implements OnInit {
   closeTaskDetailDialog():void {
     this.dialogRef.close(this.subtasks);
   }
-
 }

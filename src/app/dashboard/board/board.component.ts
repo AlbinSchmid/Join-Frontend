@@ -44,7 +44,6 @@ export class BoardComponent {
     this.apiService.getTaskData();
   }
 
-
   /**
    * Filters the tasks in the task categories based on the search term.
    */
@@ -57,7 +56,6 @@ export class BoardComponent {
 
   }
 
-
   /**
    * Opens the add task dialog.
    */
@@ -69,7 +67,6 @@ export class BoardComponent {
       this.dashboardService.showAddTask = true;
     }
   }
-
 
   /**
    * Handles the drop event of the drag and drop operation.
@@ -90,7 +87,6 @@ export class BoardComponent {
     }
   }
 
-
   /**
    * Updates the taskCategory of the tasks in the given event container to the category that matches the event container's id.
    * @param event The event of the drag and drop operation.
@@ -106,7 +102,6 @@ export class BoardComponent {
       this.setDataAndUpdateInBackend(event, taskCategory);
     }
   }
-
 
   /**
    * Updates the taskCategory of the tasks in the given event container to the given taskCategory.

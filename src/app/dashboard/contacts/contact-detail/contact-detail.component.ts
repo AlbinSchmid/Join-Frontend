@@ -38,7 +38,6 @@ export class ContactDetailComponent {
     this.apiService.deleteContactData(data);
   }
 
-
   /**
    * Opens a dialog window with the specified form type.
    * 
@@ -59,7 +58,6 @@ export class ContactDetailComponent {
       }
     });
   }
-
 
   /**
    * Gets the contact with the same ID as the current contact in the service and updates the service's current contact.

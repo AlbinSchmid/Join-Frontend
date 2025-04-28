@@ -48,7 +48,6 @@ export class SummaryComponent {
     }, 100);
   }
 
-
   /**
    * Retrieves the username from the `apiService` and formats it by capitalizing the first letter.
    *
@@ -58,7 +57,6 @@ export class SummaryComponent {
     if (!this.apiService.user.username) return '';
     return this.apiService.user.username.charAt(0).toUpperCase() + this.apiService.user.username.slice(1);
   }
-
 
   /**
    * Gets the total count of tasks with priority 'high' from the service.
@@ -71,7 +69,6 @@ export class SummaryComponent {
       this.dashbaordService.doneAllTasks.filter((task) => task.prio === 'high').length +
       this.dashbaordService.awaitFeedback.filter((task) => task.prio === 'high').length;
   }
-
 
   /**
    * Finds the closest deadline from all tasks in all categories.
@@ -86,14 +83,11 @@ export class SummaryComponent {
       this.dashbaordService.todoAllTasks
     ];
     this.getDates(jsonArrays);
-    if (this.allDates.length === 0) {
-      return null;
-    }
+    if (this.allDates.length === 0) return null;
     const closestDate = this.allDates.reduce((a, b) => (a < b ? a : b));
     let formattedDate = this.datePipe.transform(closestDate, 'MMMM d,yyyy') as string;
-    return formattedDate; // Gibt das Datum als String zurück  
+    return formattedDate;
   }
-
 
   /**
    * Opens the board and hides the summary.
@@ -102,7 +96,6 @@ export class SummaryComponent {
     this.dashbaordService.showBoard = true;
     this.dashbaordService.showSummary = false;
   }
-
 
   /**
    * Iterates over each array in the given 2D array of TaskInterfaces, and pushes
@@ -119,7 +112,6 @@ export class SummaryComponent {
       });
     });
   }
-
   
   /**
    * Returns a greeting message based on the current time of day.

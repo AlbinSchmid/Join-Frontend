@@ -48,7 +48,6 @@ export class ContactsComponent {
     this.dashboardService.contactDetailView = false;
   }
 
-
   /**
    * Checks the current window width and determines whether the contact detail view should be displayed.
    *
@@ -65,8 +64,6 @@ export class ContactsComponent {
       }
     }
   }
-
-
   
   /**
    * Closes the contact detail view and resets the current contact information.
@@ -89,7 +86,6 @@ export class ContactsComponent {
     this.dashboardService.contactDetailView = false;
   }
 
-
   /**
    * Checks if a category letter is needed for the given contact and returns the letter if it is needed.
    * If the letter is already in the categoryLetters array, it simply returns without doing anything.
@@ -106,7 +102,6 @@ export class ContactsComponent {
     }
   }
 
-
   /**
    * Displays the details of a specific contact by setting the contact data
    * and toggling the visibility of the contact detail view.
@@ -117,7 +112,6 @@ export class ContactsComponent {
     this.contactData = contact;
     this.showContactDetail = true;
   }
-
 
   /**
    * Opens a dialog window with the specified form type.

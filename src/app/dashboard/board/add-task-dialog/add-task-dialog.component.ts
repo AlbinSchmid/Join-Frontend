@@ -14,7 +14,6 @@ import { AddTaskFormComponent } from '../../../shared/components/add-task-form/a
 export class AddTaskDialogComponent {
   dialogRef = inject(MatDialogRef<AddTaskDialogComponent>);
 
-
   /**
    * Closes the dialog.
    */

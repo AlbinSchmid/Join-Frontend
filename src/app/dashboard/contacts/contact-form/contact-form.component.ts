@@ -49,7 +49,6 @@ export class ContactFormComponent {
     }
   }
 
-
   /**
    * Closes the dialog with an 'add' action.
    * 
@@ -59,7 +58,6 @@ export class ContactFormComponent {
   closeDialog(): void {
     this.dialogRef.close('add');
   }
-
 
   /**
    * Deletes the current contact.
@@ -74,7 +72,6 @@ export class ContactFormComponent {
     this.apiService.contacts = this.apiService.contacts.filter((contact) => contact.id !== this.data[1].id);
     this.dialogRef.close('delete');
   }
-
 
   /**
    * Creates a random color.
@@ -95,18 +92,13 @@ export class ContactFormComponent {
     return color;
   }
 
-
   /**
-   * Creates a new contact and adds it to the contacts list.
+   * Creates a new contact.
    * 
-   * @summary Creates a new contact.
-   * 
-   * This function creates a new contact based on the input data in the form.
-   * It first prepares a data object with the contact's name, email, phone number,
-   * the user's ID, and a random color. Then, it sends a post request to the
-   * server to create the contact. If the request is successful, it adds the
-   * contact to the contacts list, reloads the contacts, sorts them, and closes
-   * the dialog. If the request fails, it logs the error to the console.
+   * This function prepares the contact data, including the user's ID and a random color,
+   * and sends a post request to create a new contact in the database. If the phone number
+   * is null, it defaults to an empty string. After successfully sending the post request,
+   * the response is handled by calling the handleResponse function.
    */
   createContact(): void {
     const data = {
@@ -117,15 +109,26 @@ export class ContactFormComponent {
       "color": this.createRandomColor()
     }
     this.apiService.postRequest(data, 'contact').subscribe((response) => {
-      this.apiService.contacts.push(response);
-      this.apiService.relaodContact(),
-      this.apiService.sortContacts();
-      this.closeDialog();
+      this.handleResponse(response);
     }, (error) => {
       console.error(error);
     })
   }
 
+  /**
+   * Handles the response from the API after creating a new contact.
+   * 
+   * This function pushes the new contact to the local contacts array,
+   * reloads the contacts, sorts them, and closes the dialog.
+   * 
+   * @param response - The response from the API after creating a new contact.
+   */
+  handleResponse(response: any): void {
+    this.apiService.contacts.push(response);
+    this.apiService.relaodContact(),
+      this.apiService.sortContacts();
+    this.closeDialog();
+  }
 
   /**
    * Updates the contact information.
@@ -147,7 +150,6 @@ export class ContactFormComponent {
     this.apiService.patchContactData(data);
     this.dialogRef.close('edit');
   }
-
 
   /**
    * Handles the form submission for adding a new contact.

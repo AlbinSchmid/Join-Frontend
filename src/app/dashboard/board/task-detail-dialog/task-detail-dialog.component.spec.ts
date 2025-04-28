@@ -1,77 +1,88 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { TaskDetailDialogComponent } from './task-detail-dialog.component';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { ApiService } from '../../../shared/services/api.service';
+import { DashboardService } from '../../../shared/services/dashboard.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
-import { ApiService } from '../../../shared/services/api.service';
-
-const mockApiService = {
-  patchSubtaskData: jasmine.createSpy('patchSubtaskData').and.returnValue(of({ success: true }))
-};
+import { DatePipe } from '@angular/common';
 
 describe('TaskDetailDialogComponent', () => {
   let component: TaskDetailDialogComponent;
   let fixture: ComponentFixture<TaskDetailDialogComponent>;
+  let apiSpy: jasmine.SpyObj<ApiService>;
+  let dialogRefSpy: jasmine.SpyObj<MatDialogRef<TaskDetailDialogComponent>>;
+  let data: any;
 
-  const mockDataWithTask = {
-    task: {
-      title: 'Test Task',
-      id: 1,
-      description: 'Test description',
-      prio: 'high',
-      status: 'open',
-      user: 'John Doe',
-      date: '2024-01-01',
-      category: 'Work',
-      taskCategory: 'Development',
-      contacts: [
-        { id: 1, name: 'Alice', email: 'alice@example.com', phone: '123-456-7890', color: 'blue' },
-        { id: 2, name: 'Bob', email: 'bob@example.com', phone: '987-654-3210', color: 'green' }
-      ],
-      subtasks: [
-        { id: 1, title: 'Subtask 1', completed: false }, // ✅ Alle erforderlichen Felder
-        { id: 2, title: 'Subtask 2', completed: true }
-      ]
-    }
-  };
-
-
+  const mockTask = {
+    id: 10,
+    contacts: [{ id: 1, name: 'C1', email: '', phone: '', color: '' }],
+    subtasks: [{ id: 2, title: 'S1', completed: false }]
+  } as any;
 
   beforeEach(async () => {
+    apiSpy = jasmine.createSpyObj('ApiService', ['patchSubtaskData', 'deleteTaskData']);
+    apiSpy.patchSubtaskData.and.returnValue(of({}));
+
+    dialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['close']);
+    data = { task: mockTask };
+
     await TestBed.configureTestingModule({
       imports: [TaskDetailDialogComponent],
       providers: [
-        provideHttpClient(withInterceptorsFromDi()),
-        { provide: MatDialogRef, useValue: {} },
-        { provide: MAT_DIALOG_DATA, useValue: { task: { contacts: [], subtasks: [] } } },
-        { provide: ApiService, useValue: mockApiService }
+        DatePipe,
+        DashboardService,
+        { provide: ApiService, useValue: apiSpy },
+        { provide: MAT_DIALOG_DATA, useValue: data },
+        { provide: MatDialogRef, useValue: dialogRefSpy }
       ]
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TaskDetailDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create the component and initialize task data', () => {
     expect(component).toBeTruthy();
+    expect(component.task).toEqual(mockTask);
+    expect(component.contacts).toEqual(mockTask.contacts);
+    expect(component.subtasks).toEqual(mockTask.subtasks);
   });
 
-  it('should initialize task', () => {
-    component.data = mockDataWithTask;
+  it('ngOnInit updates properties from data', () => {
+    component.task = {} as any;
+    component.contacts = [];
+    component.subtasks = [];
     component.ngOnInit();
+    expect(component.task).toEqual(mockTask);
+    expect(component.contacts).toEqual(mockTask.contacts);
+    expect(component.subtasks).toEqual(mockTask.subtasks);
+  });
 
-    expect(component.task).toEqual(mockDataWithTask.task);
-    expect(component.contacts).toEqual(mockDataWithTask.task.contacts);
-    expect(component.subtasks).toEqual(mockDataWithTask.task.subtasks);
-  })
+  it('setSubtaskToCompleted toggles and calls patchSubtaskData', fakeAsync(() => {
+    const sub = { id: 2, completed: false } as any;
+    component.setSubtaskToCompleted(sub);
+    tick();
+    expect(apiSpy.patchSubtaskData).toHaveBeenCalledWith({ id: 2, completed: true });
+  }));
 
-  it('should set subtask to completed', () => {
-    const subtask = { id: 1, completed: false };
-    component.setSubtaskToCompleted(subtask);
+  it('deleteTask calls deleteTaskData and closes dialog', () => {
+    component.deleteTask();
+    expect(apiSpy.deleteTaskData).toHaveBeenCalledWith({ id: 10 });
+    expect(dialogRefSpy.close).toHaveBeenCalledWith(component.subtasks);
+  });
 
-    expect(mockApiService.patchSubtaskData).toHaveBeenCalledWith({ id: 1, completed: true });
+  describe('firstLetterBig', () => {
+    it('returns empty string on falsy input', () => {
+      expect(component.firstLetterBig('')).toBe('');
+    });
+    it('capitalizes first letter', () => {
+      expect(component.firstLetterBig('high')).toBe('High');
+    });
+  });
+
+  it('closeTaskDetailDialog closes with subtasks', () => {
+    component.closeTaskDetailDialog();
+    expect(dialogRefSpy.close).toHaveBeenCalledWith(component.subtasks);
   });
 });

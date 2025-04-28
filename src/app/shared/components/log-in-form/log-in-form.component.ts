@@ -46,7 +46,6 @@ export class LogInFormComponent {
     })
   }
 
-
   /**
    * Resets the form fields to their default values.
    */
@@ -61,7 +60,6 @@ export class LogInFormComponent {
     this.showCheckboxError = false
   }
 
-  
   /**
    * Sends the sign-up request to the API.
    * 
@@ -77,7 +75,6 @@ export class LogInFormComponent {
     this.resetForm()
   }
 
-
   /**
    * Navigates to the previous page.
    */
@@ -90,7 +87,6 @@ export class LogInFormComponent {
     }
     localStorage.setItem('user', JSON.stringify(userData));
   }
-
 
   /**
    * Submits the form.
@@ -113,7 +109,6 @@ export class LogInFormComponent {
     })
   }
 
-
   /**
    * Sends the sign-up request to the API.
    */
@@ -130,7 +125,6 @@ export class LogInFormComponent {
     })
   }
 
-
   /**
    * Navigates to the previous page.
    */
@@ -138,7 +132,6 @@ export class LogInFormComponent {
     this.dashboardService.showStartAnimation = false;
     history.back();
   }
-
 
   /**
    * Submits the form.
@@ -150,14 +143,22 @@ export class LogInFormComponent {
         this.sendLogInRequest();
       } else if (this.formType === 'signUp') {
         this.sendSingUpRequest();
-        this.showMessage = true;
-        setTimeout(() => {
-          this.showMessage = false;
-          this.router.navigate(['/']);
-        }, 2000);
+        this.showErrorAndNavigateToLoginPage();
+
       }
     } else {
       this.formData.checkboxPrivacyPolicy === false ? this.showCheckboxError = true : this.showCheckboxError = false
     }
+  }
+
+  /**
+   * Shows an error message and navigates to the login page after a delay.
+   */
+  showErrorAndNavigateToLoginPage():void {
+    this.showMessage = true;
+    setTimeout(() => {
+      this.showMessage = false;
+      this.router.navigate(['/']);
+    }, 2000);
   }
 }

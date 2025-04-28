@@ -23,7 +23,6 @@ export class LogInComponent {
     dashboardService = inject(DashboardService);
     router = inject(Router);
 
-
     /**
      * Navigates the user to the sign-up page.
      * 
