@@ -18,6 +18,24 @@ jobs:
         npm i
         npm run build
 
+    - name: 🔍 Debug Token
+      run: |
+        echo "SENTRY_AUTH_TOKEN is ${SENTRY_AUTH_TOKEN:0:10}..."
+      env:
+        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
+    - name: Sentry sourcemap upload
+      run: npx sentry-cli --log-level=debug sourcemaps upload \
+            --include=dist/join-front-end/browser \
+            --url-prefix='~/' \
+            --rewrite \
+            --validate
+      env:
+        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        SENTRY_ORG: smartweb-kw
+        SENTRY_PROJECT: join-angular
+
+
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.1
       with:
