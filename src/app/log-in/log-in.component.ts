@@ -23,10 +23,7 @@ export class LogInComponent {
     dashboardService = inject(DashboardService);
     router = inject(Router);
 
-    public throwTestError(): void {
-        throw new Error("Das ist ein Testfehler!");
-    }
-
+    
     /**
      * Navigates the user to the sign-up page.
      * 
