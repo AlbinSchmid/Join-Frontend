@@ -24,4 +24,4 @@ jobs:
         server: join.albin-schmid.com
         username: ${{ secrets.FTP_USER }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: dist/join-front-end/browser
+        local-dir: dist/join-front-end/browser/
