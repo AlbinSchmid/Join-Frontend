@@ -25,7 +25,7 @@ jobs:
           --org smartweb-kw \
           --project join-angular \
           --include ./dist/join-front-end/browser \
-          --url-prefix '~/join-front-end/browser' \
+          --url-prefix '~/' \
           --rewrite \
         --validate
       env:
