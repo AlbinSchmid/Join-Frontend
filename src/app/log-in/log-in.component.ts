@@ -24,7 +24,7 @@ export class LogInComponent {
     router = inject(Router);
 
     public throwTestError(): void {
-        throw new Error("Sentry Test Error");
+        throw new Error("Das ist ein Testfehler!");
     }
 
     /**
