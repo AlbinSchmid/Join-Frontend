@@ -19,9 +19,11 @@ jobs:
         npm run build
 
     - name: Sentry sourcemap upload
-      run: npm run sentry:sourcemaps
+      run: npx sentry-cli sourcemaps upload --include=./dist --url-prefix='~/'
       env:
         SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        SENTRY_ORG: smartweb-kw
+        SENTRY_PROJECT: javascript-angular
 
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.1

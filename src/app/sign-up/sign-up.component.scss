@@ -1,4 +1,4 @@
-@import './../../styles.scss';
+@use './../../styles.scss' as *;
 
 $logo-width: clamp(60px, 2.5735rem + 5.8824vw, 100px);
 $logo-height: clamp(80px, 3.8235rem + 5.8824vw, 120px);
