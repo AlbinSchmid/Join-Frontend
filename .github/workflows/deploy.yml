@@ -18,6 +18,11 @@ jobs:
         npm i
         npm run build
 
+    - name: Sentry sourcemap upload
+      run: npm run sentry:sourcemaps
+      env:
+        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.1
       with:

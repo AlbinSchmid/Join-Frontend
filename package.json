@@ -4,10 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && npm run sentry:sourcemaps",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:join-front-end": "node dist/join-front-end/server/server.mjs"
+    "serve:ssr:join-front-end": "node dist/join-front-end/server/server.mjs",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org smartweb-kw --project javascript-angular ./dist && sentry-cli sourcemaps upload --org smartweb-kw --project javascript-angular ./dist"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +24,8 @@
     "@angular/platform-server": "^19.0.5",
     "@angular/router": "^19.0.5",
     "@angular/ssr": "^19.0.6",
+    "@sentry/angular": "^9.15.0",
+    "@sentry/cli": "^2.43.1",
     "express": "^4.18.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

@@ -23,6 +23,10 @@ export class LogInComponent {
     dashboardService = inject(DashboardService);
     router = inject(Router);
 
+    public throwTestError(): void {
+        throw new Error("Sentry Test Error");
+    }
+
     /**
      * Navigates the user to the sign-up page.
      * 
