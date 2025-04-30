@@ -19,11 +19,11 @@ jobs:
         npm run build
 
     - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@4.3.1
+      uses: SamKirkland/FTP-Deploy-Action@v4.4.0
       with:
         server: albin-schmid.com
         username: ${{ secrets.FTP_USER }}
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: dist/join-front-end/browser/
-        server-dir: /join.albin-schmid.com/
+        server-dir: /join/
         protocol: ftp
