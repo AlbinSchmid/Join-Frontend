@@ -1,4 +1,4 @@
-@import './../../styles.scss';
+@use './../../styles.scss' as *;
 $nav-width: 232px;
 $header-height: 96px;
 

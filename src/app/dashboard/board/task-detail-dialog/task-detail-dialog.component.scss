@@ -1,5 +1,5 @@
-@use "./../../../shared/components/add-task-form/add-task-form.component.scss";
-@import "./../:./../../../../styles.scss";
+@use "./../../../shared/components/add-task-form/add-task-form.component.scss" as *;
+@use "./../:./../../../../styles.scss" as *;
 
 section {
     @include position-center($ai: flex-start, $fd: column, $jc: flex-start);

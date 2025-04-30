@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 export class ApiService {
   dashboardService = inject(DashboardService)
   http = inject(HttpClient);
-  API_URL = "http://127.0.0.1:8000/api/";
+  API_URL = "https://api.join.albin-schmid.com/api/";
   userLogedIn = false;
   user = {
     username: '',

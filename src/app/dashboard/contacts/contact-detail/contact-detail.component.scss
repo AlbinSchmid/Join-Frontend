@@ -1,5 +1,5 @@
-@import "./../../../../styles.scss";
-@import "./../contacts.component.scss";
+@use "./../../../../styles.scss" as *;
+@use "./../contacts.component.scss" as *;
 
 section {
     @include position-center($fd: column, $ai: flex-start);

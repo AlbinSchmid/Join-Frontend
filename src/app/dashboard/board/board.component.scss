@@ -1,4 +1,4 @@
-@import "./../../../styles.scss";
+@use "./../../../styles.scss" as *;
 
 header {
     @include position-center($jc: space-between);

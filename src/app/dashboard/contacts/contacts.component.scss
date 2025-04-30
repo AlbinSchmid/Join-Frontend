@@ -1,4 +1,4 @@
-@import "./../../../styles.scss";
+@use "./../../../styles.scss" as *;
 
 a {
     @include font-design($fs: 16px, $fw: 400);

@@ -1,0 +1,27 @@
+on: push
+name: 🚀 Deploy website on push
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v2
+    
+    - name: Node 20.11.1
+      uses: actions/setup-node@v1
+      with:
+        node-version: 20.11.1
+
+    - name: Install and build
+      run: |
+        npm i
+        npm run build
+
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@4.3.1
+      with:
+        server: join.albin-schmid.com
+        username: ${{ secrets.FTP_USER }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: dist/join-front-end/browser
