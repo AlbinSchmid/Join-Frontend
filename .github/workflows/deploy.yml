@@ -19,7 +19,15 @@ jobs:
         npm run build
 
     - name: 🛰️ Upload source maps to Sentry
-      run: npm run sentry:sourcemaps
+      run: |
+        npx sentry-cli sourcemaps inject --org smartweb-kw --project join-angular ./dist
+        npx sentry-cli sourcemaps upload \
+          --org smartweb-kw \
+          --project join-angular \
+          --include ./dist/join-front-end/browser \
+          --url-prefix '~/join-front-end/browser' \
+          --rewrite \
+        --validate
       env:
         SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         SENTRY_ORG: smartweb-kw

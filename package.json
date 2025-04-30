@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:join-front-end": "node dist/join-front-end/server/server.mjs",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org smartweb-kw --project javascript-angular ./dist && sentry-cli sourcemaps upload --org smartweb-kw --project javascript-angular ./dist"
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org smartweb-kw --project join-angular ./dist && sentry-cli sourcemaps upload --org smartweb-kw --project join-angular ./dist"
   },
   "private": true,
   "dependencies": {
