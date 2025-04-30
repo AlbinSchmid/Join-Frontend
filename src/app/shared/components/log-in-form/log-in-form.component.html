@@ -2,7 +2,7 @@
     <header>
         <mat-icon *ngIf="formType === 'signUp'" fontIcon="arrow_back" (click)="goToPreviousPage()"></mat-icon>
         <h1 *ngIf="formType === 'signUp'">Sign up</h1>
-        <h1 *ngIf="formType === 'logIn'">Log</h1>
+        <h1 *ngIf="formType === 'logIn'">Log in</h1>
     </header>
     <form (ngSubmit)="submitForm(form)" #form="ngForm">
         <label *ngIf="formType === 'signUp'" for="">
