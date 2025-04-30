@@ -21,7 +21,7 @@ jobs:
     - name: 🛰️ Upload source maps to Sentry
       run: |
         npx sentry-cli sourcemaps inject --org smartweb-kw --project join-angular ./dist
-        npx sentry-cli sourcemaps upload \
+        npx sentry-cli sourcemaps upload -- \
           --org smartweb-kw \
           --project join-angular \
           --include ./dist/join-front-end/browser \
