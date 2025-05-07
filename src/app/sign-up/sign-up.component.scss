@@ -15,7 +15,8 @@ section {
     width: 100vw;
     position: relative;
     padding: clamp(0.5rem, -0.4412rem + 4.7059vw, 2.5rem);
-    @include position-center();
+    @include position-center($fd: column, $jc: space-between, $ai: center);
+    overflow: auto;
 }
 
 header {
@@ -29,8 +30,6 @@ header {
 }
 
 footer {
-    position: absolute;
-    bottom: clamp(0.5rem, -0.4412rem + 4.7059vw, 2.5rem);
     display: flex;
     gap: clamp(0rem, -1.1765rem + 5.8824vw, 2.5rem);
 
@@ -47,6 +46,11 @@ footer {
 .placeholder {
     width: $logo-width;
     height: calc($logo-height + 10px);
+}
+
+.img-placeholder {
+    min-height: calc($logo-height + 10px);
+    min-width: calc($logo-width + 10px);
 }
 
 .logo-background {
