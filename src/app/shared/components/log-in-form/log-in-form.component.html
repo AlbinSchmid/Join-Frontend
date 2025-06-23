@@ -6,11 +6,12 @@
     </header>
     <form (ngSubmit)="submitForm(form)" #form="ngForm">
         <label *ngIf="formType === 'signUp'" for="">
-            <input type="name" placeholder="Name" required minlength="1" name="name" #name="ngModel"
+            <input type="name" placeholder="Name" required minlength="1" name="name" #name="ngModel" pattern="^\S+$"
                 [(ngModel)]="formData.nameValue">
             <mat-icon fontIcon="mail_outlined"></mat-icon>
             @if (!name.valid && name.touched) {
-            <span class="span-error">Oops! it seems your name is missing</span>
+            <span class="span-error" *ngIf="formData.nameValue.length == 0">Oops! it seems your name is missing</span>
+            <span class="span-error" *ngIf="formData.nameValue.length !== 0">Spaces are not allowed.</span>
             }
         </label>
         <label for="">
